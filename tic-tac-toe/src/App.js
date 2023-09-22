@@ -71,6 +71,9 @@ export default function Game() {
   }
 
   function jumpTo(nextMove) {
+    // Modification to tutorial: ensure history is actually updated
+    const nextHistory = [...history.slice(0, nextMove + 1)];
+    setHistory(nextHistory);
     setCurrentMove(nextMove);
   }
 
