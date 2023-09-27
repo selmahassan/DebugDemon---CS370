@@ -11,7 +11,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import StoreIcon from '@mui/icons-material/Store';
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -55,7 +54,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     ml: 0, 
                     "&.MuiButtonBase-root:hover": {bgcolor: "transparent"},
                   }}
-                  startIcon={<StoreIcon/>}
                 >
                   SwooperMarket
                 </Button>
