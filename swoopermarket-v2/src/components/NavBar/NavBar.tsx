@@ -57,8 +57,16 @@ export default function NavBar() {
             anchor="left"
         >
         <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
-            <Typography variant="h5" sx={{color: "#0033a0"}}>
-                <Link href="/" style={{textDecoration:"none", animation: "none"}}>SwooperMarket</Link>
+            <Typography variant="h5" sx={{color: "#0033a0", paddingTop: 1}}>
+                <Link 
+                    href="/" 
+                    style={{
+                        textDecoration:"none", 
+                        fontWeight:'bold',
+                    }}
+                >
+                    SwooperMarket
+                </Link>
             </Typography>
         </Box>
         <List>
@@ -69,6 +77,7 @@ export default function NavBar() {
                     href={href} 
                     selected={selectedIndex === id}
                     onClick={() => handleListItemClick(id)}
+                    sx={{borderRadius: 2, p:1.5}}
                 >
                 <ListItemIcon>
                     <Icon />
@@ -81,12 +90,13 @@ export default function NavBar() {
         <Box sx={{ mt: 'auto' }} />
         <List>
             {PLACEHOLDER_LINKS.map(({ text, href, icon: Icon, id }) => (
-            <ListItem key={href} disablePadding >
+            <ListItem key={href} disablePadding sx={{fontWeight: 'fontWeightBold', p:1}}>
                 <ListItemButton 
                     component={Link} 
                     href={href} 
                     selected={selectedIndex === id}
                     onClick={() => handleListItemClick(id)}
+                    sx={{borderRadius: 2}}
                 >
                 <ListItemIcon>
                     <Icon />
