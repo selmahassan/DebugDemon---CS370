@@ -18,13 +18,14 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
 import Button from '@mui/material/Button';
+import FlutterDashIcon from '@mui/icons-material/FlutterDash';
 
 export const metadata = {
   title: 'SwooperMarket',
   description: 'SwooperMarket Buy/Sell/Giveaway Project using Next.js App Router + Material UI v5',
 };
 
-const DRAWER_WIDTH = 230;
+const DRAWER_WIDTH = 240;
 
 const LINKS = [
   { text: 'Home', href: '/', icon: HomeIcon },
@@ -43,22 +44,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <ThemeRegistry>
-          <AppBar position="fixed" sx={{ zIndex: 2000, borderBottom: "solid thin gray"}} elevation={0}>
-            <Toolbar sx={{ backgroundColor: 'background.paper' }}>
-              <Typography variant="h6" noWrap component="div" color="#0033a0">
-                <Button 
-                  href="/" 
-                  size="large" 
-                  disableRipple sx={{
-                    ml: 0, 
-                    "&.MuiButtonBase-root:hover": {bgcolor: "transparent"},
-                  }}
-                >
-                  SwooperMarket
-                </Button>
-              </Typography>
-            </Toolbar>
-          </AppBar>
           <Drawer
             sx={{
               width: DRAWER_WIDTH,
@@ -66,7 +51,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               '& .MuiDrawer-paper': {
                 width: DRAWER_WIDTH,
                 boxSizing: 'border-box',
-                top: ['48px', '56px', '64px'],
                 height: 'auto',
                 bottom: 0,
               },
