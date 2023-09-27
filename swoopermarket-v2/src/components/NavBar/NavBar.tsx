@@ -1,3 +1,5 @@
+'use client'
+
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -18,19 +20,25 @@ import { useState } from 'react';
 const DRAWER_WIDTH = 240;
 
 const LINKS = [
-    { text: 'Home', href: '/', icon: HomeIcon },
-    { text: 'New Listing', href: '/newlisting', icon: AddIcon },
-    { text: 'Direct Messages', href: '/dms', icon: ChatIcon },
+    { text: 'Home', href: '/', icon: HomeIcon, id:1 },
+    { text: 'New Listing', href: '/newlisting', icon: AddIcon, id:2 },
+    { text: 'Direct Messages', href: '/dms', icon: ChatIcon, id:3 },
   ];
   
   const PLACEHOLDER_LINKS = [
-    { text: 'Profile', href: '/profile', icon: ManageAccountsIcon },
-    { text: 'Logout', href: '/login', icon: LogoutIcon },
+    { text: 'Profile', href: '/profile', icon: ManageAccountsIcon, id:4 },
+    { text: 'Logout', href: '/login', icon: LogoutIcon, id:5 },
   ];
 
 export default function NavBar() {
-    const [selectedIndex, setSelectedIndex] = useState(0);
-    
+    const [selectedIndex, setSelectedIndex] = useState(1);
+
+    const handleListItemClick = (
+        index: number,
+      ) => {
+        setSelectedIndex(index);
+      };
+
     return (
         <Drawer
             sx={{
@@ -48,23 +56,20 @@ export default function NavBar() {
             variant="permanent"
             anchor="left"
         >
-        <Divider />
         <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
             <Typography variant="h5" sx={{color: "#0033a0"}}>
                 <Link href="/" style={{textDecoration:"none", animation: "none"}}>SwooperMarket</Link>
             </Typography>
         </Box>
         <List>
-            {LINKS.map(({ text, href, icon: Icon }) => (
+            {LINKS.map(({ text, href, icon: Icon, id }) => (
             <ListItem key={href} disablePadding sx={{fontWeight: 'fontWeightBold', p:1}}>
-                <ListItemButton component={Link} href={href} 
-                    sx={{
-                    '&.active': {
-                    color: 'text.primary',
-                    bgcolor: 'action.selected',
-                    fontWeight: 'fontWeightBold',
-                    },
-                }}>
+                <ListItemButton 
+                    component={Link} 
+                    href={href} 
+                    selected={selectedIndex === id}
+                    onClick={() => handleListItemClick(id)}
+                >
                 <ListItemIcon>
                     <Icon />
                 </ListItemIcon>
@@ -73,11 +78,16 @@ export default function NavBar() {
             </ListItem>
             ))}
         </List>
-        <Divider sx={{ mt: 'auto' }} />
+        <Box sx={{ mt: 'auto' }} />
         <List>
-            {PLACEHOLDER_LINKS.map(({ text, href, icon: Icon }) => (
+            {PLACEHOLDER_LINKS.map(({ text, href, icon: Icon, id }) => (
             <ListItem key={href} disablePadding >
-                <ListItemButton component={Link} href={href}>
+                <ListItemButton 
+                    component={Link} 
+                    href={href} 
+                    selected={selectedIndex === id}
+                    onClick={() => handleListItemClick(id)}
+                >
                 <ListItemIcon>
                     <Icon />
                 </ListItemIcon>
