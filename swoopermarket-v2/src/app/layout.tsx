@@ -19,6 +19,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
 import Button from '@mui/material/Button';
+import { borderBottom } from '@mui/system';
 
 export const metadata = {
   title: 'SwooperMarket',
@@ -44,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <ThemeRegistry>
-          <AppBar position="fixed" sx={{ zIndex: 2000 }}>
+          <AppBar position="fixed" sx={{ zIndex: 2000, borderBottom: "solid thin gray"}} elevation={0}>
             <Toolbar sx={{ backgroundColor: 'background.paper' }}>
               <Typography variant="h6" noWrap component="div" color="#0033a0">
                 <Button 
