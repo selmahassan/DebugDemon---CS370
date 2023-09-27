@@ -13,6 +13,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import Link from 'next/link';
+import { useState } from 'react';
 
 const DRAWER_WIDTH = 240;
 
@@ -28,6 +29,8 @@ const LINKS = [
   ];
 
 export default function NavBar() {
+    const [selectedIndex, setSelectedIndex] = useState(0);
+    
     return (
         <Drawer
             sx={{
@@ -53,8 +56,15 @@ export default function NavBar() {
         </Box>
         <List>
             {LINKS.map(({ text, href, icon: Icon }) => (
-            <ListItem key={href} disablePadding>
-                <ListItemButton component={Link} href={href}>
+            <ListItem key={href} disablePadding sx={{fontWeight: 'fontWeightBold', p:1}}>
+                <ListItemButton component={Link} href={href} 
+                    sx={{
+                    '&.active': {
+                    color: 'text.primary',
+                    bgcolor: 'action.selected',
+                    fontWeight: 'fontWeightBold',
+                    },
+                }}>
                 <ListItemIcon>
                     <Icon />
                 </ListItemIcon>
@@ -66,7 +76,7 @@ export default function NavBar() {
         <Divider sx={{ mt: 'auto' }} />
         <List>
             {PLACEHOLDER_LINKS.map(({ text, href, icon: Icon }) => (
-            <ListItem key={href} disablePadding>
+            <ListItem key={href} disablePadding >
                 <ListItemButton component={Link} href={href}>
                 <ListItemIcon>
                     <Icon />
