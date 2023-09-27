@@ -18,7 +18,6 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
 import Button from '@mui/material/Button';
-import { borderBottom } from '@mui/system';
 
 export const metadata = {
   title: 'SwooperMarket',
