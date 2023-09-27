@@ -21,15 +21,15 @@ import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
 import Button from '@mui/material/Button';
 
 export const metadata = {
-  title: 'Next.js App Router + Material UI v5',
-  description: 'Next.js App Router + Material UI v5',
+  title: 'SwooperMarket',
+  description: 'SwooperMarket Buy/Sell/Giveaway Project using Next.js App Router + Material UI v5',
 };
 
-const DRAWER_WIDTH = 240;
+const DRAWER_WIDTH = 230;
 
 const LINKS = [
   { text: 'Home', href: '/', icon: HomeIcon },
-  { text: 'Create New Listing', href: '/newlisting', icon: AddIcon },
+  { text: 'New Listing', href: '/newlisting', icon: AddIcon },
   { text: 'Direct Messages', href: '/dms', icon: ChatIcon },
 ];
 
@@ -38,6 +38,7 @@ const PLACEHOLDER_LINKS = [
   { text: 'Logout', href: '/login', icon: LogoutIcon },
 ];
 
+/* Creates project skeleton with app header and navigation bar */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
