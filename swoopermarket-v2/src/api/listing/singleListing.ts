@@ -11,7 +11,7 @@ export const GET = async (req: Request) => {
     } catch (error) {
         return NextResponse.json({message: "Error", error}, {status: 500});
     }
-    
+
 };
 
 export const PUT = async (req: Request, res: Response) => {
@@ -33,7 +33,7 @@ export const DELETE = async (req: Request, res: Response) => {
         const id = req.url.split("newlisting/")[1];
         const listing = getByID(id);
         if(!listing){return NextResponse.json({message: "Listing does not exist"}, {status: 404});};
-        
+
         deleteListing(id);
         return NextResponse.json({message: "Deleted Listing: ", listing}, {status: 200});
     } catch (error) {
