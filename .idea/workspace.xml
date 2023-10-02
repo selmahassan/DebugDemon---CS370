@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac2e0b1f-e54c-49f1-89f4-ad6367b26bf4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/swoopermarket-v2/src/api/listing/multipleListings.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/swoopermarket-v2/src/api/listing/singleListing.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swoopermarket-v2/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/swoopermarket-v2/src/app/api/newlisting/[id]/route.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/swoopermarket-v2/src/app/api/newlisting/route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,13 +37,16 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Ryan/IdeaProjects",
+    "last_opened_file_path": "C:/Users/Ryan/IdeaProjects/DebugDemon---CS370",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "terminal",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.2.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
@@ -67,7 +65,7 @@
       <option name="presentableId" value="Default" />
       <updated>1696271159841</updated>
       <workItem from="1696271165050" duration="1523000" />
-      <workItem from="1696272736388" duration="2667000" />
+      <workItem from="1696272736388" duration="3028000" />
     </task>
     <servers />
   </component>
