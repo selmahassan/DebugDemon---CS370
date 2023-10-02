@@ -14,17 +14,8 @@ export default function HomePage() {
     <Box sx={{ display: 'flex', alignItems: 'flex-start'}}>
       <div>
         <Grid id="header" container direction="row" justifyContent="space-between" alignItems="center" padding="24px 0px">
-          <Typography variant="h5" sx={{color: "#0033a0"}}>
-            <Link 
-                href="/" 
-                style={{
-                    textDecoration:"none", 
-                    fontWeight:'bold',
-                }}
-            >
-                SwooperMarket
-            </Link>
-          </Typography>
+          {/* TODO: add in logo */}
+          <Typography variant="h5" sx={{color: "#0033a0"}}></Typography>
           <SearchBar placeHolderText="Search SwooperMarket"/>
         </Grid>
         <Listings/>
