@@ -10,7 +10,7 @@ import AlertTitle from '@mui/material/AlertTitle';
 import MediaCard from '@/components/MediaCard';
 import { TextField } from '@mui/material';
 import Link from 'next/link';
-import SearchField from '@/components/SearchField';
+import SearchBar from '@/components/SearchBar';
 
 export default function HomePage() {
   return (
@@ -28,7 +28,7 @@ export default function HomePage() {
               SwooperMarket
           </Link>
         </Typography>
-        <SearchField placeHolderText="Search SwooperMarket"/>
+        <SearchBar placeHolderText="Search SwooperMarket"/>
       </Grid>
         <Grid container rowSpacing={3} columnSpacing={3}>
           <Grid xs={6}>
