@@ -1,6 +1,6 @@
 # Team DebugDemon
 CS 370-3 Team Debug Demon's Repo
-**Team Members:** Kathy Ning, Selma Hassan, Aaron Thatch, Ryan Zhao, Chau Tran, Mei Deng
+**Team Members:** Kathy Ning, Selma Hassan, Aaron Thach, Ryan Zhao, Chau Tran, Mei Deng
 
 ## Project: SwooperMarket (Emory Buy/Sell/Giveaway)
 SwooperMarket is an application that allows Emory students, faculty, and staff to list things they are selling in an efficient and clean manner. Rather than looking through hundreds of messages to see if someone is selling something you want just to find out it was already sold, SwooperMarket will provide a organized user interface for buyers and sellers to make and save some money. Technologies/Frameworks used in this project include: TypeScript, React, Next.js, MUI, and AWS. 
