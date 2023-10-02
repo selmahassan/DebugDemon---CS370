@@ -8,6 +8,7 @@ const singleItems = [
         description: "Blue Three Person Couch w/ Coffee Table and Orange chairs",
         price: 50.99,
         condition: "New",
+        src: "https://source.unsplash.com/random",
         href: ""
     },
     {
@@ -15,6 +16,7 @@ const singleItems = [
         description: "Levis Jeans 541 Mens 38x30",
         price: 38.95,
         condition: "Used",
+        src: "https://source.unsplash.com/random",
         href: ""
     },
     {
@@ -22,6 +24,7 @@ const singleItems = [
         description: "Blue Three Person Couch w/ Coffee Table and Orange chairs",
         price: 50.99,
         condition: "Used",
+        src: "https://source.unsplash.com/random",
         href: ""
     },
     {
@@ -29,6 +32,7 @@ const singleItems = [
         description: "Blue Three Person Couch w/ Coffee Table and Orange chairs",
         price: 50.99,
         condition: "Used",
+        src: "https://source.unsplash.com/random",
         href: ""
     },
     {
@@ -36,6 +40,7 @@ const singleItems = [
         description: "Levis Jeans 541 Mens 38x30",
         price: 38.95,
         condition: "Used",
+        src: "https://source.unsplash.com/random",
         href: ""
     },
     {
@@ -43,6 +48,7 @@ const singleItems = [
         description: "Levis Jeans 541 Mens 38x30",
         price: 38.95,
         condition: "New",
+        src: "https://source.unsplash.com/random",
         href: ""
     }
 ]
@@ -54,12 +60,13 @@ export default function Listings() {
                 Results (6)
             </Typography>
             <Grid id="listings" container rowSpacing={3} columnSpacing={3}>
-                {singleItems.map(({ id, description, price, condition, href }) => (
+                {singleItems.map(({ id, description, price, condition, src, href }) => (
                     <Grid key={id} xs={4}>
                         <SingleItem
                             description={description}
                             price={"$" + price}
                             condition={condition}
+                            src={src}
                             href={href}
                         />
                     </Grid>

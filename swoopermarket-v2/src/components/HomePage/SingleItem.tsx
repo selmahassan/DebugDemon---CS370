@@ -7,13 +7,13 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/system/Unstable_Grid/Grid';
 import Box from '@mui/system/Box';
 
-export default function SingleItem({ description, price, href, condition }: { description: string; price: string; href: string; condition: string }) {
+export default function SingleItem({ description, price, href, condition, src }: { description: string; price: string; href: string; condition: string; src: string }) {
   return (
     <Card>
       <CardActionArea href={href}>
         <Image
-          alt="Random image"
-          src="https://source.unsplash.com/random"
+          alt="Listing Image"
+          src={src}
           width={640}
           height={480}
           style={{
