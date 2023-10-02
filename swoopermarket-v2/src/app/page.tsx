@@ -8,15 +8,28 @@ import ListItem from '@mui/material/ListItem';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import MediaCard from '@/components/MediaCard';
+import { TextField } from '@mui/material';
+import Link from 'next/link';
+import SearchField from '@/components/SearchField';
 
 export default function HomePage() {
   return (
     <Box sx={{ display: 'flex' }}>
       <div>
-        <Alert severity="info" sx={{ mt: 2, mb: 5 }}>
-          <AlertTitle>Hello 👋</AlertTitle>
-          This app uses the Next.js App Router and Material UI v5.
-        </Alert>
+      <Grid container direction="row" justifyContent="space-between" alignItems="center">
+        <Typography variant="h5" sx={{color: "#0033a0", paddingTop: 1}}>
+          <Link 
+              href="/" 
+              style={{
+                  textDecoration:"none", 
+                  fontWeight:'bold',
+              }}
+          >
+              SwooperMarket
+          </Link>
+        </Typography>
+        <SearchField placeHolderText="Search SwooperMarket"/>
+      </Grid>
         <Grid container rowSpacing={3} columnSpacing={3}>
           <Grid xs={6}>
             <MediaCard
