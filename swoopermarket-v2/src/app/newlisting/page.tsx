@@ -73,11 +73,12 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { Button, TextField } from '@mui/material';
+import { AppBar, Button, CssBaseline, Paper, TextField, Toolbar } from '@mui/material';
+import Form from '@/components/NewListing/Form';
 
 export default function StarredPage() {
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: HTMLFormElement) => {
     event.preventDefault();
   
     // Gather form data
@@ -114,23 +115,44 @@ export default function StarredPage() {
     }
   };  
 
+  // return (
+  //   <Container>
+  //     <Typography variant="h5">Create a New Listing</Typography>
+
+  //     <Box component="form" onSubmit={handleSubmit}>
+
+  //       <TextField name="title" label="Title" />
+
+  //       <TextField name="description" label="Description" multiline rows={4} />
+
+  //       <TextField name="price" label="Price" type="number" />
+
+  //       <Button type="submit" variant="contained">
+  //         Submit
+  //       </Button>
+
+  //     </Box>
+  //   </Container>
+  // );
   return (
-    <Container>
-      <Typography variant="h5">Create a New Listing</Typography>
-
-      <Box component="form" onSubmit={handleSubmit}>
-
-        <TextField name="title" label="Title" />
-
-        <TextField name="description" label="Description" multiline rows={4} />
-
-        <TextField name="price" label="Price" type="number" />
-
-        <Button type="submit" variant="contained">
-          Submit
-        </Button>
-
-      </Box>
-    </Container>
+    <>
+      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 2 } }}>
+          <Typography component="h1" variant="h4" align="center">
+            Create New Listing
+          </Typography>
+          <Form/>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button
+              variant="contained"
+              onClick={handleSubmit}
+              sx={{ mt: 3, ml: 1 }}
+            >
+              Submit
+            </Button>
+          </Box>
+        </Paper>
+      </Container>
+    </>
   );
 }
