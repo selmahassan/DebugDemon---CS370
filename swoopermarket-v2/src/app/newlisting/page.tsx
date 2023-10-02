@@ -73,7 +73,7 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { AppBar, Button, CssBaseline, Paper, TextField, Toolbar } from '@mui/material';
+import { AppBar, Button, CssBaseline, Grid, Paper, TextField, Toolbar } from '@mui/material';
 import Form from '@/components/NewListing/Form';
 
 export default function StarredPage() {
@@ -135,8 +135,8 @@ export default function StarredPage() {
   //   </Container>
   // );
   return (
-    <>
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+      <>
+        <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 2 } }}>
           <Typography component="h1" variant="h4" align="center">
             Create New Listing
@@ -153,6 +153,6 @@ export default function StarredPage() {
           </Box>
         </Paper>
       </Container>
-    </>
+      </>
   );
 }
