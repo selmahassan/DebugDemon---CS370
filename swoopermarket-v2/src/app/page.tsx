@@ -5,32 +5,29 @@ import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
 import MediaCard from '@/components/MediaCard';
-import { TextField } from '@mui/material';
 import Link from 'next/link';
 import SearchBar from '@/components/SearchBar';
 
 export default function HomePage() {
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', alignItems: 'flex-start'}}>
       <div>
-      <Grid container direction="row" justifyContent="space-between" alignItems="center">
-        <Typography variant="h5" sx={{color: "#0033a0", paddingTop: 1}}>
-          <Link 
-              href="/" 
-              style={{
-                  textDecoration:"none", 
-                  fontWeight:'bold',
-              }}
-          >
-              SwooperMarket
-          </Link>
-        </Typography>
-        <SearchBar placeHolderText="Search SwooperMarket"/>
-      </Grid>
-        <Grid container rowSpacing={3} columnSpacing={3}>
+        <Grid id="header" container direction="row" justifyContent="space-between" alignItems="center" padding="24px 0px">
+          <Typography variant="h5" sx={{color: "#0033a0", paddingTop: 1}}>
+            <Link 
+                href="/" 
+                style={{
+                    textDecoration:"none", 
+                    fontWeight:'bold',
+                }}
+            >
+                SwooperMarket
+            </Link>
+          </Typography>
+          <SearchBar placeHolderText="Search SwooperMarket"/>
+        </Grid>
+        <Grid id="listings" container rowSpacing={3} columnSpacing={3}>
           <Grid xs={6}>
             <MediaCard
               heading="CMYK"
