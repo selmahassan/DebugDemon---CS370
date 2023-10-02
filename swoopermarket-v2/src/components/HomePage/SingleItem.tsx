@@ -27,10 +27,10 @@ export default function SingleItem({ description, price, href, condition }: { de
             {description}
           </Typography>
           <Grid container direction="row" justifyContent="space-between" alignItems="center" padding="8px 0px">
-            <Box sx={{ border: '1px solid grey', padding: '4px', borderRadius: '5px'}}>
+            <Box sx={{ border: '1px solid grey', padding: '4px 6px', borderRadius: '5px'}}>
               {condition}
             </Box>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="h6" color="text.secondary" fontWeight="fontWeightBold">
               {price}
             </Typography>
           </Grid>
