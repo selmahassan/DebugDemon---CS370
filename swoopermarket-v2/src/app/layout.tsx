@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               flexGrow: 1,
               bgcolor: 'background.default',
               ml: `${DRAWER_WIDTH}px`,
-              mt: ['48px', '56px', '64px'],
+              mt: ['0px', '0px', '-25px'],
               p: 3,
             }}
           >
