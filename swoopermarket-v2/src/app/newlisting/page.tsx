@@ -73,7 +73,7 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { AppBar, Button, Checkbox, CssBaseline, FormControlLabel, Grid, Paper, TextField, ThemeProvider, Toolbar, createTheme } from '@mui/material';
+import { AppBar, Button, Checkbox, CssBaseline, FormControlLabel, Grid, MenuItem, Paper, TextField, ThemeProvider, Toolbar, createTheme } from '@mui/material';
 
 export default function StarredPage() {
 
@@ -125,7 +125,45 @@ export default function StarredPage() {
             }
         }
     },
-})
+  })
+
+  const categories = [
+    {
+      key: 'school_supplies',
+      text: 'School Supplies',
+    },
+    {
+      key: 'furniture',
+      text: 'Furniture',
+    },
+    {
+      key: 'electronics',
+      text: 'Electronics',
+    },
+    {
+      key: 'misc',
+      text: 'Other/Miscellaneous',
+    },
+  ];
+
+  const condition = [
+    {
+      key: 'brand_new',
+      text: 'Brand New',
+    },
+    {
+      key: 'like_new',
+      text: 'Like New',
+    },
+    {
+      key: 'good',
+      text: 'Good',
+    },
+    {
+      key: 'fair',
+      text: 'Fair',
+    },
+  ];
 
   return (
     <>
@@ -156,7 +194,7 @@ export default function StarredPage() {
                 label="Item Name"
                 fullWidth
                 variant="standard"
-                sx={{mb: 5}}
+                sx={{mb: 3}}
               />
             </Grid>
             <Grid item xs={12}>
@@ -167,30 +205,54 @@ export default function StarredPage() {
                 multiline
                 fullWidth
                 rows={4}
-                sx={{mb: 5}}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom>
+                Upload Image
+              </Typography>
+              <TextField
+                required
+                type="file"
+                id="image"
+                name="image"
+                sx={{mb: 1}}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom sx={{mb:-2}}>
+                Item Specifics
+              </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                id="category"
+                select
                 required
-                id="firstName"
-                name="firstName"
-                label="First name"
                 fullWidth
-                autoComplete="given-name"
-                variant="standard"
-              />
+                label="Item Category"
+              >
+                {categories.map((option) => (
+                  <MenuItem key={option.key} value={option.key}>
+                    {option.text}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                required
-                id="lastName"
-                name="lastName"
-                label="Last name"
-                fullWidth
-                autoComplete="family-name"
-                variant="standard"
-              />
+                  id="condition"
+                  select
+                  required
+                  fullWidth
+                  label="Item Condition"
+                >
+                  {condition.map((option) => (
+                    <MenuItem key={option.key} value={option.key}>
+                      {option.text}
+                    </MenuItem>
+                  ))}
+              </TextField>
             </Grid>
             <Grid item xs={12}>
               <TextField
