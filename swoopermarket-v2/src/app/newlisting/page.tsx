@@ -139,26 +139,37 @@ export default function StarredPage() {
                 noWrap
                 sx={{ marginLeft: '240px'}}
               >
-                New Listing
+                Create New Listing
               </Typography>
             </Toolbar>
         </AppBar>
       </ThemeProvider>
-      <Container component="main" maxWidth="lg" sx={{ mb: 4 }}>
+      <Container component="main" maxWidth="lg" sx={{ mb: 4, mt: 10 }}>
       <Paper elevation={0} sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 2 } }}>
         <Box component="form" onSubmit={handleSubmit}>
-          <Grid item xs={12} sm={6}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
               <TextField
                 required
                 id="title"
                 name="title"
-                label="Title"
+                label="Item Name"
                 fullWidth
-                autoComplete="given-name"
                 variant="standard"
+                sx={{mb: 5}}
               />
             </Grid>
-          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="description"
+                label="Item Description"
+                multiline
+                fullWidth
+                rows={4}
+                sx={{mb: 5}}
+              />
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 required
