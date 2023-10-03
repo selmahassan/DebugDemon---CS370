@@ -73,7 +73,7 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { AppBar, Button, Checkbox, CssBaseline, FormControlLabel, Grid, Paper, TextField, Toolbar } from '@mui/material';
+import { AppBar, Button, Checkbox, CssBaseline, FormControlLabel, Grid, Paper, TextField, ThemeProvider, Toolbar, createTheme } from '@mui/material';
 
 export default function StarredPage() {
 
@@ -114,138 +114,154 @@ export default function StarredPage() {
     }
   };  
 
-  // return (
-  //   <Container>
-  //     <Typography variant="h5">Create a New Listing</Typography>
+  const theme = createTheme({
+    components: {
+        MuiToolbar: {
+            styleOverrides: {
+                dense: {
+                    height: 75,
+                    minHeight: 50
+                }
+            }
+        }
+    },
+})
 
-  //     <Box component="form" onSubmit={handleSubmit}>
-
-  //       <TextField name="title" label="Title" />
-
-  //       <TextField name="description" label="Description" multiline rows={4} />
-
-  //       <TextField name="price" label="Price" type="number" />
-
-  //       <Button type="submit" variant="contained">
-  //         Submit
-  //       </Button>
-
-  //     </Box>
-  //   </Container>
-  // );
   return (
-      <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
-        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 2 } }}>
-          <Typography component="h1" variant="h4" align="center">
-            Create New Listing
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit}>
-            <Typography variant="h6" gutterBottom>
-              Title
-            </Typography>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="firstName"
-                  name="firstName"
-                  label="First name"
-                  fullWidth
-                  autoComplete="given-name"
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="lastName"
-                  name="lastName"
-                  label="Last name"
-                  fullWidth
-                  autoComplete="family-name"
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  id="address1"
-                  name="address1"
-                  label="Address line 1"
-                  fullWidth
-                  autoComplete="shipping address-line1"
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="address2"
-                  name="address2"
-                  label="Address line 2"
-                  fullWidth
-                  autoComplete="shipping address-line2"
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="city"
-                  name="city"
-                  label="City"
-                  fullWidth
-                  autoComplete="shipping address-level2"
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="state"
-                  name="state"
-                  label="State/Province/Region"
-                  fullWidth
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="zip"
-                  name="zip"
-                  label="Zip / Postal code"
-                  fullWidth
-                  autoComplete="shipping postal-code"
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  id="country"
-                  name="country"
-                  label="Country"
-                  fullWidth
-                  autoComplete="shipping country"
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-                  label="Use default location"
-                />
-              </Grid>
+    <>
+      <ThemeProvider theme={theme}>
+        <AppBar position='absolute' elevation={0}>
+            <Toolbar variant="dense" sx={{ pr: '24px', backgroundColor: '#f2a900' }} >
+              <Typography
+                component="h1"
+                variant="h4"
+                color="inherit"
+                noWrap
+                sx={{ marginLeft: '240px'}}
+              >
+                New Listing
+              </Typography>
+            </Toolbar>
+        </AppBar>
+      </ThemeProvider>
+      <Container component="main" maxWidth="lg" sx={{ mb: 4 }}>
+      <Paper elevation={0} sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 2 } }}>
+        <Box component="form" onSubmit={handleSubmit}>
+          <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="title"
+                name="title"
+                label="Title"
+                fullWidth
+                autoComplete="given-name"
+                variant="standard"
+              />
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 5, mb: 2 }}
-            >
-              List Item
-            </Button>
-          </Box>
-        </Paper>
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="firstName"
+                name="firstName"
+                label="First name"
+                fullWidth
+                autoComplete="given-name"
+                variant="standard"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="lastName"
+                name="lastName"
+                label="Last name"
+                fullWidth
+                autoComplete="family-name"
+                variant="standard"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="address1"
+                name="address1"
+                label="Address line 1"
+                fullWidth
+                autoComplete="shipping address-line1"
+                variant="standard"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="address2"
+                name="address2"
+                label="Address line 2"
+                fullWidth
+                autoComplete="shipping address-line2"
+                variant="standard"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="city"
+                name="city"
+                label="City"
+                fullWidth
+                autoComplete="shipping address-level2"
+                variant="standard"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="state"
+                name="state"
+                label="State/Province/Region"
+                fullWidth
+                variant="standard"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="zip"
+                name="zip"
+                label="Zip / Postal code"
+                fullWidth
+                autoComplete="shipping postal-code"
+                variant="standard"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                id="country"
+                name="country"
+                label="Country"
+                fullWidth
+                autoComplete="shipping country"
+                variant="standard"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
+                label="Use default location"
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 5, mb: 2 }}
+          >
+            List Item
+          </Button>
+        </Box>
+      </Paper>
       </Container>
+    </>
   );
 }
