@@ -14,6 +14,10 @@ export default function StarredPage() {
     console.log({
       title: data.get('title'),
       description: data.get('description'),
+      file: data.get('image'),
+      category: data.get('category'),
+      condition: data.get('condition'),
+      price: data.get('price')
     });
   };
 
@@ -130,21 +134,23 @@ export default function StarredPage() {
               <TextField
                 required
                 fullWidth
-                label="Title"
                 id="title"
+                name="title"
+                label="Title"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 required
                 id="description"
+                name="description"
                 label="Item Description"
                 multiline
                 fullWidth
                 rows={4}
               />
             </Grid>
-            {/* <Grid item xs={12}>
+            <Grid item xs={12}>
               <Typography variant="h6" gutterBottom>
                 Upload Image
               </Typography>
@@ -164,6 +170,7 @@ export default function StarredPage() {
             <Grid item xs={12} sm={6}>
               <TextField
                 id="category"
+                name="category"
                 select
                 required
                 fullWidth
@@ -179,6 +186,7 @@ export default function StarredPage() {
             <Grid item xs={12} sm={6}>
               <TextField
                   id="condition"
+                  name="condition"
                   select
                   required
                   fullWidth
@@ -200,6 +208,7 @@ export default function StarredPage() {
               <FormControl variant="outlined">
                 <OutlinedInput
                   id="price"
+                  name="price"
                   startAdornment={<InputAdornment position="end">$</InputAdornment>}
                   aria-describedby="price"
                 />
@@ -227,7 +236,7 @@ export default function StarredPage() {
               >
                 Preview Listing
               </Button>
-            </Grid> */}
+            </Grid>
             <Grid item xs={12} sm={6}>
               <Button
                 type="submit"
