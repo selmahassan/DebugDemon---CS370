@@ -10,7 +10,8 @@ import Box from '@mui/system/Box';
 export default function SingleItem({ description, price, href, condition, src }: { description: string; price: string; href: string; condition: string; src: string }) {
   return (
     <Card>
-      <CardActionArea href={href}>
+      {/* TODO: add different links for different cards */}
+      <CardActionArea href="/singleitem">
         <Image
           alt="Listing Image"
           src={src}
