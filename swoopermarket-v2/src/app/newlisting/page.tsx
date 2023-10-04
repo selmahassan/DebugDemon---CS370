@@ -73,7 +73,7 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { AppBar, Button, Checkbox, CssBaseline, FormControlLabel, Grid, MenuItem, Paper, TextField, ThemeProvider, Toolbar, createTheme } from '@mui/material';
+import { AppBar, Button, Checkbox, CssBaseline, FormControl, FormControlLabel, Grid, InputAdornment, InputLabel, MenuItem, OutlinedInput, Paper, TextField, ThemeProvider, Toolbar, createTheme } from '@mui/material';
 
 export default function StarredPage() {
 
@@ -189,12 +189,9 @@ export default function StarredPage() {
             <Grid item xs={12}>
               <TextField
                 required
-                id="title"
-                name="title"
-                label="Item Name"
                 fullWidth
-                variant="standard"
-                sx={{mb: 3}}
+                label="Title"
+                id="title"
               />
             </Grid>
             <Grid item xs={12}>
@@ -255,83 +252,54 @@ export default function StarredPage() {
               </TextField>
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                id="address1"
-                name="address1"
-                label="Address line 1"
-                fullWidth
-                autoComplete="shipping address-line1"
-                variant="standard"
-              />
+              <Typography variant="h6" gutterBottom sx={{mb:-2}}>
+                Pricing
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl variant="outlined">
+                <OutlinedInput
+                  id="price"
+                  startAdornment={<InputAdornment position="end">$</InputAdornment>}
+                  aria-describedby="price"
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom sx={{mb:-2}}>
+                Pickup Location
+              </Typography>
             </Grid>
             <Grid item xs={12}>
               <TextField
-                id="address2"
-                name="address2"
-                label="Address line 2"
-                fullWidth
-                autoComplete="shipping address-line2"
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
                 required
-                id="city"
-                name="city"
-                label="City"
                 fullWidth
-                autoComplete="shipping address-level2"
-                variant="standard"
+                id="pickup"
+                name="pickup"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                id="state"
-                name="state"
-                label="State/Province/Region"
+              <Button
                 fullWidth
-                variant="standard"
-              />
+                variant="contained"
+                disableElevation
+                sx={{ mt: 2, mb: 2 }}
+              >
+                Preview Listing
+              </Button>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="zip"
-                name="zip"
-                label="Zip / Postal code"
+              <Button
+                type="submit"
                 fullWidth
-                autoComplete="shipping postal-code"
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="country"
-                name="country"
-                label="Country"
-                fullWidth
-                autoComplete="shipping country"
-                variant="standard"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-                label="Use default location"
-              />
+                variant="contained"
+                disableElevation
+                sx={{ mt: 2, mb: 2 }}
+              >
+                List Item
+              </Button>
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 5, mb: 2 }}
-          >
-            List Item
-          </Button>
         </Box>
       </Paper>
       </Container>
