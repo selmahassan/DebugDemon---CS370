@@ -1,5 +1,5 @@
 import Grid from '@mui/material/Unstable_Grid2';
-import SingleItem from '@/components/HomePage/SingleItem';
+import ListingCard from '@/components/HomePage/ListingCard';
 import { Typography } from '@mui/material';
 
 const singleItems = [
@@ -62,7 +62,7 @@ export default function Listings() {
             <Grid id="listings" container rowSpacing={3} columnSpacing={3}>
                 {singleItems.map(({ id, description, price, condition, src, href }) => (
                     <Grid key={id} xs={4}>
-                        <SingleItem
+                        <ListingCard
                             description={description}
                             price={"$" + price}
                             condition={condition}
