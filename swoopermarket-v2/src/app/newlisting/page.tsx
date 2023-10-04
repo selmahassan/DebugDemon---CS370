@@ -77,42 +77,51 @@ import { AppBar, Button, Checkbox, CssBaseline, FormControl, FormControlLabel, G
 
 export default function StarredPage() {
 
-  const handleSubmit = async (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      title: data.get('title'),
+      description: data.get('description'),
+    });
+  };
+
+  // const handleSubmit = async (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
+  //   event.preventDefault();
   
-    // Gather form data
-    const formData = new FormData(event.currentTarget);
-    const listingData = {
-      title: formData.get('title') as string,
-      description: formData.get('description') as string,
-      price: parseFloat(formData.get('price') as string), // Parse price as a float
-      // Add other fields as needed
-    };
-    console.log(listingData);
+  //   // Gather form data
+  //   const formData = new FormData(event.currentTarget);
+  //   const listingData = {
+  //     title: formData.get('title') as string,
+  //     description: formData.get('description') as string,
+  //     price: parseFloat(formData.get('price') as string), // Parse price as a float
+  //     // Add other fields as needed
+  //   };
+  //   console.log(listingData);
   
-    try {
-      const response = await fetch('../../api/route.ts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(listingData),
-      });
-      console.log(response);
+  //   try {
+  //     const response = await fetch('../../api/route.ts', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(listingData),
+  //     });
+  //     console.log(response);
   
-      if (response.ok) {
-        // Handle success, e.g., show a success message or redirect to a confirmation page
-        const responseData = await response.json();
-        console.log('Listing created:', responseData);
-      } else {
-        // Handle the error case, e.g., show an error message to the user
-        console.error('Error creating listing:', response.statusText);
-      }
-    } catch (error) {
-      // Handle unexpected errors
-      console.error('Error creating listing:', error);
-    }
-  };  
+  //     if (response.ok) {
+  //       // Handle success, e.g., show a success message or redirect to a confirmation page
+  //       const responseData = await response.json();
+  //       console.log('Listing created:', responseData);
+  //     } else {
+  //       // Handle the error case, e.g., show an error message to the user
+  //       console.error('Error creating listing:', response.statusText);
+  //     }
+  //   } catch (error) {
+  //     // Handle unexpected errors
+  //     console.error('Error creating listing:', error);
+  //   }
+  // };  
 
   const theme = createTheme({
     components: {
@@ -204,7 +213,7 @@ export default function StarredPage() {
                 rows={4}
               />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Typography variant="h6" gutterBottom>
                 Upload Image
               </Typography>
@@ -287,7 +296,7 @@ export default function StarredPage() {
               >
                 Preview Listing
               </Button>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} sm={6}>
               <Button
                 type="submit"
