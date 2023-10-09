@@ -1,4 +1,4 @@
-import { getListings, postListing } from "@/types/listingType";
+import { getListings, postListing } from "@/app/api/types/listingType";
 import { NextResponse } from "next/server";
 import { json } from "stream/consumers";
 
@@ -12,9 +12,10 @@ export const GET = async (req: Request, res: Response) => {
 };
 
 export const POST = async (req: Request, res: Response) => {
-    const {title, description, price} = await req.json();
+    const {id, title, description, image, category, condition, price, pickup} = await req.json();
+    
     try {
-        const listing = {title, description, price, date: new Date(), id: Date.now().toString()};
+        const listing = {title, description, image, category, condition, price, pickup, date: new Date(), listingid: Date.now().toString()};
         postListing(listing);
         return NextResponse.json({message: "Listing: ", listing}, {status: 201});
     } catch (error) {

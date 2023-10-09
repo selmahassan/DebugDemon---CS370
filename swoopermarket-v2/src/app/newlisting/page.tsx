@@ -1,62 +1,38 @@
 'use client'
-
+import { Listing } from "@/app/api/types/listingType";
+import { POST } from "@/app/api/listing/route";
 import * as React from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { AppBar, Button, Checkbox, CssBaseline, FormControl, FormControlLabel, Grid, InputAdornment, InputLabel, MenuItem, OutlinedInput, Paper, TextField, ThemeProvider, Toolbar, createTheme } from '@mui/material';
 
-export default function StarredPage() {
+export default function TasksPage() {
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      title: data.get('title'),
-      description: data.get('description'),
-      file: data.get('image'),
-      category: data.get('category'),
-      condition: data.get('condition'),
-      price: data.get('price')
-    });
-  };
+    
+    const listing : Listing = {
+      listingid: data.get('title') as string,
+      title: data.get('title') as string,
+      description: data.get('description') as string,
+      image: data.get('image') as string,
+      category: data.get('category') as string,
+      condition: data.get('condition') as string,
+      price: data.get('price') as string,
+      pickup: data.get('pickup') as string,
+    };
 
-  // const handleSubmit = async (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
-  //   event.preventDefault();
-  
-  //   // Gather form data
-  //   const formData = new FormData(event.currentTarget);
-  //   const listingData = {
-  //     title: formData.get('title') as string,
-  //     description: formData.get('description') as string,
-  //     price: parseFloat(formData.get('price') as string), // Parse price as a float
-  //     // Add other fields as needed
-  //   };
-  //   console.log(listingData);
-  
-  //   try {
-  //     const response = await fetch('../../api/route.ts', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(listingData),
-  //     });
-  //     console.log(response);
-  
-  //     if (response.ok) {
-  //       // Handle success, e.g., show a success message or redirect to a confirmation page
-  //       const responseData = await response.json();
-  //       console.log('Listing created:', responseData);
-  //     } else {
-  //       // Handle the error case, e.g., show an error message to the user
-  //       console.error('Error creating listing:', response.statusText);
-  //     }
-  //   } catch (error) {
-  //     // Handle unexpected errors
-  //     console.error('Error creating listing:', error);
-  //   }
-  // };  
+    fetch('/api/listing', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(listing)
+    });
+    
+  };
 
   const theme = createTheme({
     components: {

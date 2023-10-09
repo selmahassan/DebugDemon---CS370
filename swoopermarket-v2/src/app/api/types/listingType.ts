@@ -1,8 +1,12 @@
 export type Listing = {
-    id: string;
-    title: string;
-    description: string;
-    price: number;
+    listingid: string,
+    title: string,
+    description: string,
+    image: string,
+    category: string,
+    condition: string,
+    price: string,
+    pickup: string
 };
 
 let listings: Listing[] = [];
@@ -15,11 +19,11 @@ export const postListing = (listing: Listing) => {
 };
 
 export const deleteListing = (id: string) => {
-    listings = listings.filter((listing) => listing.id !== id);
+    listings = listings.filter((listing) => listing.listingid !== id);
 };
 
-export const updateListing = (id: string, title: string, description: string, price: number) => {
-    const listing = listings.find((listing) => listing.id === id);
+export const updateListing = (id: string, title: string, description: string, price: string) => {
+    const listing = listings.find((listing) => listing.listingid === id);
 
     if(listing){
         listing.title = title;
@@ -31,6 +35,6 @@ export const updateListing = (id: string, title: string, description: string, pr
 };
 
 export const getByID = (id: string) => {
-    return listings.find((listing) => listing.id === id);
+    return listings.find((listing) => listing.listingid === id);
 };
 

@@ -1,4 +1,4 @@
-import { deleteListing, getByID, updateListing } from "@/types/listingType";
+import { deleteListing, getByID, updateListing } from "@/app/api/types/listingType";
 import { NextResponse } from "next/server";
 
 export const GET = async (req: Request) => {
