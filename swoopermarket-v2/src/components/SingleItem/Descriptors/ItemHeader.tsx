@@ -9,7 +9,7 @@ export default function ItemHeader() {
             <Typography variant="h4" color="initial">{'Nike Go FlyEase'}</Typography>
             <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1}>
                 <Typography variant="body1" color="initial">Seller: </Typography>
-                <Avatar src={'src'} sx={{ width: 32, height: 32 }}/>
+                <Avatar src={'src'} sx={{ width: 28, height: 28 }}/>
                 <Link href={'href'} variant="body1">{'Michael Jordan'}</Link>
             </Stack>
         </Stack>
