@@ -12,6 +12,7 @@ export default function ItemBody() {
             <Typography variant="body1" color="initial">{'Price: $' + '75'}</Typography>
             <Typography variant="body1" color="initial">{'Condition: ' + 'New'}</Typography>
             <Stack direction="row">
+                {/* TODO: add space after "pickup" */}
                 <Typography variant="body1" color="initial">Pickup: </Typography>
                 <Link href={'href'} variant="body1">{'Dobbs Hall Main Lobby'}</Link>
             </Stack>
