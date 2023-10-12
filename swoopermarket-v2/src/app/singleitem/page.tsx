@@ -10,6 +10,7 @@ export default function SingleItem() {
     <Box sx={{ display: 'flex', alignItems: 'flex-start'}}>
       <div>
         <Header/>
+        {/* TODO: add "back to listings" and category links */}
         <Grid container direction="row" spacing={2} padding={2} columns={{sm: 8, md: 12}}>
           <Grid item sm={8} md={7}>
             <ItemPhotos/>
