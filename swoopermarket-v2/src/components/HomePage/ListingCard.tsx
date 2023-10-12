@@ -19,7 +19,7 @@ export default function SingleItem({ description, price, href, condition, src }:
           height={480}
           style={{
             maxWidth: '100%',
-            height: '200px',
+            height: '300px',
             objectFit: 'cover',
           }}
         />

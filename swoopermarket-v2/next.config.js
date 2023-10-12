@@ -16,6 +16,7 @@ const nextConfig = {
         pathname: '/random',
       },
     ],
+    domains: ["static.nike.com", "lsco.scene7.com", "images.unsplash.com", "m.media-amazon.com"]
   },
 };
 
