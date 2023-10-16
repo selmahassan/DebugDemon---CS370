@@ -13,9 +13,11 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 export default function SignInSide() {
+  const router = useRouter()
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -23,7 +25,7 @@ export default function SignInSide() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    redirect('/newlisting') //TODO: Redirect
+    router.push('/') //TODO: Redirect
   };
 
   return (
@@ -69,7 +71,7 @@ export default function SignInSide() {
               id="email"
               label="Email Address"
               name="email"
-              autoComplete="email"
+              // autoComplete="email"
               autoFocus
             />
             <TextField
@@ -80,7 +82,7 @@ export default function SignInSide() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              // autoComplete="current-password"
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
