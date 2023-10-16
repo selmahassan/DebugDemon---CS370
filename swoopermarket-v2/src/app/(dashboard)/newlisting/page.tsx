@@ -21,43 +21,6 @@ export default function StarredPage() {
     });
   };
 
-  // const handleSubmit = async (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
-  //   event.preventDefault();
-  
-  //   // Gather form data
-  //   const formData = new FormData(event.currentTarget);
-  //   const listingData = {
-  //     title: formData.get('title') as string,
-  //     description: formData.get('description') as string,
-  //     price: parseFloat(formData.get('price') as string), // Parse price as a float
-  //     // Add other fields as needed
-  //   };
-  //   console.log(listingData);
-  
-  //   try {
-  //     const response = await fetch('../../api/route.ts', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(listingData),
-  //     });
-  //     console.log(response);
-  
-  //     if (response.ok) {
-  //       // Handle success, e.g., show a success message or redirect to a confirmation page
-  //       const responseData = await response.json();
-  //       console.log('Listing created:', responseData);
-  //     } else {
-  //       // Handle the error case, e.g., show an error message to the user
-  //       console.error('Error creating listing:', response.statusText);
-  //     }
-  //   } catch (error) {
-  //     // Handle unexpected errors
-  //     console.error('Error creating listing:', error);
-  //   }
-  // };  
-
   const theme = createTheme({
     components: {
         MuiToolbar: {
