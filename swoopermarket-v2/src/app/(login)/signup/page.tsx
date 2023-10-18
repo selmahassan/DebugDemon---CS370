@@ -43,38 +43,47 @@ export default function SignUp() {
         email: "",
         rePassword: "",
     })
-  
+
+    const onChangeEmail = (e: { target: { value: string; }; }) => {
+        if (!e.target.value.match(".+@emory\.edu")) {
+            setErrors({...errors, email: 'email must end in "@emory.edu"'})
+        } else {
+            setErrors({...errors, email: ''})
+        }
+        setNewUserForm({...newUserForm, email: e.target.value});
+    };
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
+
+    const onChangePassword = (e: { target: { value: string; }; }) => {
+        setNewUserForm({...newUserForm, password: e.target.value});
+    };
+
+    const handleClickShowRePassword = () => setShowRePassword((show) => !show);
+    const handleMouseDownRePassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
+
+    const onChangeRePassword = (e: { target: { value: string; }; }) => {
+        setNewUserForm({...newUserForm, rePassword: e.target.value});
+        if (e.target.value !== newUserForm.password) {
+            setErrors({...errors, rePassword: 'Passwords Do Not Match' })
+        } else {
+            setErrors({...errors, rePassword: ''})
+        }
+    };
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
-
-  const onChangePassword = (e: { target: { value: string; }; }) => {
-    setNewUserForm({...newUserForm, password: e.target.value});
-  };
-
-  const handleClickShowRePassword = () => setShowRePassword((show) => !show);
-  const handleMouseDownRePassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
-
-  const onChangeRePassword = (e: { target: { value: string; }; }) => {
-    setNewUserForm({...newUserForm, rePassword: e.target.value});
-    if (e.target.value !== newUserForm.password) {
-        setErrors({...errors, rePassword: 'Passwords Do Not Match' })
-      } else {
-        setErrors({...errors, rePassword: ''})
-      }
-  };
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        console.log({
+        email: data.get('email'),
+        password: data.get('password'),
+        });
+    };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -124,6 +133,10 @@ export default function SignUp() {
                     label="Email Address"
                     name="email"
                     autoComplete="email"
+                    error={errors.email !== ""}
+                    helperText={errors.email}
+                    value={newUserForm.email || ''}
+                    onChange={ onChangeEmail }
                 />
                 </Grid>
                 <Grid item xs={12}>
@@ -173,6 +186,7 @@ export default function SignUp() {
                         label="rePassword"
                         value={newUserForm.rePassword || ''}
                         onChange={ onChangeRePassword }
+                        error={errors.rePassword !== ""}
                     />
                     {errors.rePassword !== "" && (
                         <FormHelperText error id="rePassword-error">
