@@ -17,19 +17,31 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import FormHelperText from '@mui/material/FormHelperText';
 
 interface NewUserForm {
     email: string;
     password: string;
+    rePassword: string;
+}
+
+interface errors {
+    email: string;
+    rePassword: string;
 }
 
 export default function SignUp() {
     // hide/display password
     const [showPassword, setShowPassword] = React.useState(false);
-    // const [password, setPassword] React.useState<string>("");
+    const [showRePassword, setShowRePassword] = React.useState(false);
     const [newUserForm, setNewUserForm] = React.useState<NewUserForm>({
         email: "",
         password: "",
+        rePassword: "",
+    })
+    const [errors, setErrors] = React.useState<errors>({
+        email: "",
+        rePassword: "",
     })
   
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -48,6 +60,20 @@ export default function SignUp() {
 
   const onChangePassword = (e: { target: { value: string; }; }) => {
     setNewUserForm({...newUserForm, password: e.target.value});
+  };
+
+  const handleClickShowRePassword = () => setShowRePassword((show) => !show);
+  const handleMouseDownRePassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
+  const onChangeRePassword = (e: { target: { value: string; }; }) => {
+    setNewUserForm({...newUserForm, rePassword: e.target.value});
+    if (e.target.value !== newUserForm.password) {
+        setErrors({...errors, rePassword: 'Passwords Do Not Match' })
+      } else {
+        setErrors({...errors, rePassword: ''})
+      }
   };
 
   return (
@@ -102,7 +128,7 @@ export default function SignUp() {
                 </Grid>
                 <Grid item xs={12}>
                 <FormControl required fullWidth variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                    <InputLabel htmlFor="password">Password</InputLabel>
                     <OutlinedInput
                         id="password"
                         name="password"
@@ -123,6 +149,36 @@ export default function SignUp() {
                         value={newUserForm.password || ''}
                         onChange={ onChangePassword }
                     />
+                </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                <FormControl required fullWidth variant="outlined">
+                    <InputLabel htmlFor="re-password">Re-Enter Password</InputLabel>
+                    <OutlinedInput
+                        id="rePassword"
+                        name="rePassword"
+                        type={showRePassword ? 'text' : 'password'}
+                        endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowRePassword}
+                            onMouseDown={handleMouseDownRePassword}
+                            edge="end"
+                            >
+                            {showRePassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                        }
+                        label="rePassword"
+                        value={newUserForm.rePassword || ''}
+                        onChange={ onChangeRePassword }
+                    />
+                    {errors.rePassword !== "" && (
+                        <FormHelperText error id="rePassword-error">
+                            {errors.rePassword}
+                        </FormHelperText>
+                    )}
                 </FormControl>
                 </Grid>
             </Grid>
