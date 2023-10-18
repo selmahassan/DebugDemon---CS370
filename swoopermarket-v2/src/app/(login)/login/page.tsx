@@ -70,7 +70,7 @@ export default function Login() {
               id="email"
               label="Email Address"
               name="email"
-              // autoComplete="email"
+              autoComplete="email"
               autoFocus
             />
             <TextField
@@ -81,7 +81,7 @@ export default function Login() {
               label="Password"
               type="password"
               id="password"
-              // autoComplete="current-password"
+              autoComplete="current-password"
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}

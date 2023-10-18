@@ -68,6 +68,7 @@ export default function ForgotPassword() {
               label="Email Address"
               name="email"
               autoFocus
+              autoComplete="email"
             />
             <Button
               type="submit"
