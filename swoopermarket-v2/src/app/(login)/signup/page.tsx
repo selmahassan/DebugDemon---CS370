@@ -18,8 +18,21 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
+interface NewUserForm {
+    email: string;
+    password: string;
+}
+
 export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    // hide/display password
+    const [showPassword, setShowPassword] = React.useState(false);
+    // const [password, setPassword] React.useState<string>("");
+    const [newUserForm, setNewUserForm] = React.useState<NewUserForm>({
+        email: "",
+        password: "",
+    })
+  
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
@@ -28,11 +41,13 @@ export default function SignUp() {
     });
   };
 
-  // hide/display password
-  const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+  };
+
+  const onChangePassword = (e: { target: { value: string; }; }) => {
+    setNewUserForm({...newUserForm, password: e.target.value});
   };
 
   return (
@@ -105,6 +120,8 @@ export default function SignUp() {
                         </InputAdornment>
                         }
                         label="Password"
+                        value={newUserForm.password || ''}
+                        onChange={ onChangePassword }
                     />
                 </FormControl>
                 </Grid>
