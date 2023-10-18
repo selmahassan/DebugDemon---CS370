@@ -10,7 +10,8 @@ import Box from '@mui/system/Box';
 export default function SingleItem({ description, price, href, condition, src }: { description: string; price: string; href: string; condition: string; src: string }) {
   return (
     <Card>
-      <CardActionArea href={href}>
+      {/* TODO: add different links for different cards */}
+      <CardActionArea href="/singleitem">
         <Image
           alt="Listing Image"
           src={src}
@@ -18,7 +19,7 @@ export default function SingleItem({ description, price, href, condition, src }:
           height={480}
           style={{
             maxWidth: '100%',
-            height: '200px',
+            height: '300px',
             objectFit: 'cover',
           }}
         />
