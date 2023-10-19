@@ -13,9 +13,21 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/navigation'
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-export default function SignInSide() {
+export default function Login() {
+  const [showPassword, setShowPassword] = React.useState(false);
   const router = useRouter()
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -62,7 +74,7 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -70,19 +82,30 @@ export default function SignInSide() {
               id="email"
               label="Email Address"
               name="email"
-              // autoComplete="email"
+              autoComplete="email"
               autoFocus
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              // autoComplete="current-password"
-            />
+            <FormControl required fullWidth variant="outlined">
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <OutlinedInput
+                    id="password"
+                    name="password"
+                    type={showPassword ? 'text' : 'password'}
+                    endAdornment={
+                    <InputAdornment position="end">
+                        <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                        >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                    </InputAdornment>
+                    }
+                    label="Password"
+                />
+            </FormControl>
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
@@ -97,12 +120,12 @@ export default function SignInSide() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" style={{ textDecoration:"none" }}>
+                <Link href="/forgot-password" style={{ textDecoration:"none" }}>
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" style={{ textDecoration:"none" }}>
+                <Link href="/signup" style={{ textDecoration:"none" }}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
