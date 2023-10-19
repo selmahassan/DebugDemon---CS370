@@ -31,9 +31,8 @@ interface errors {
 }
 
 export default function SignUp() {
-    // hide/display password
-    const [showPassword, setShowPassword] = React.useState(false);
-    const [showRePassword, setShowRePassword] = React.useState(false);
+    const [showPassword, setShowPassword] = React.useState(false); // hide/display password
+    const [showRePassword, setShowRePassword] = React.useState(false); // 
     const [newUserForm, setNewUserForm] = React.useState<NewUserForm>({
         email: "",
         password: "",
@@ -196,14 +195,25 @@ export default function SignUp() {
                 </FormControl>
                 </Grid>
             </Grid>
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-            >
-                Sign Up
-            </Button>
+            {(errors.rePassword || errors.email) ? 
+                <Button
+                    // type="submit"
+                    disabled
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                >
+                    Sign Up
+                </Button> : 
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                >
+                    Sign Up
+                </Button>
+            }
             <Grid container justifyContent="flex-end">
                 <Grid item>
                 <Link href="/login" style={{ textDecoration:"none" }}>
