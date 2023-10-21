@@ -16,7 +16,7 @@ export default function SingleItem() {
       <div>
         <Header/>
         <Stack direction="row" sx={{pl: 2, pr: 2}} justifyContent="flex-start" alignItems="center" spacing={2}>
-          <Button sx={{borderRadius: 50, width: "fit-content"}} startIcon={<ArrowBack/>}>Back to listings</Button>
+          <Button href="/" sx={{borderRadius: 50, width: "fit-content"}} startIcon={<ArrowBack/>}>Back to listings</Button>
           <Stack direction="row">
             <Typography variant="body1" color="initial">Listed in category: </Typography>
             <Link href={'href'} variant="body1">{'Clothing'}</Link>
