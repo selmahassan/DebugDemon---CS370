@@ -16,7 +16,6 @@ export default function ItemBody() {
                 <Typography variant="body1" color="initial">Pickup: </Typography>
                 <Link href={'href'} variant="body1">{'Dobbs Hall Main Lobby'}</Link>
             </Stack>
-            <Typography variant="body1" color="initial">{'Price: $' + '75'}</Typography>
         </Stack>
     );
 }
