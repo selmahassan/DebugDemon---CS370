@@ -1,5 +1,4 @@
 import { sql } from '@vercel/postgres';
-import { getMessages, sendMessage } from "@/types/messageType";
 import { NextResponse } from "next/server";
 
 // Endpoint to get messages
