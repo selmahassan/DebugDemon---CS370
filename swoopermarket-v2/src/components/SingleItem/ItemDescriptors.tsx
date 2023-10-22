@@ -5,13 +5,32 @@ import ItemHeader from './Descriptors/ItemHeader';
 import ItemBody from './Descriptors/ItemBody';
 import ItemInterest from './Descriptors/ItemInterest';
 
-export default function ItemDescriptors() {
+type Descriptor = {
+    listingTitle: string,
+    sellerId: string,
+    description: string,
+    price: number,
+    condition: string,
+    pickup: string
+}
+
+export default function ItemDescriptors({ descriptors } : { descriptors: Descriptor }) {
     return (
         <Stack direction="column" spacing={2}>
-            <ItemHeader />
+            <ItemHeader 
+                title={descriptors.listingTitle}
+                seller={descriptors.sellerId}
+            />
             <Divider light />
-            <ItemBody />
-            <ItemInterest />
+            <ItemBody 
+                description={descriptors.description}
+                price={descriptors.price}
+                condition={descriptors.condition}
+                pickup={descriptors.pickup}
+            />
+            <ItemInterest 
+                seller={descriptors.sellerId}
+            />
         </Stack>
     );
 }
