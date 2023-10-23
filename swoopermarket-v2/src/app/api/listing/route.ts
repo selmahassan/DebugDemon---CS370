@@ -1,4 +1,5 @@
 import { getListings, postListing } from "@/app/api/types/listingType";
+import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 import { json } from "stream/consumers";
 
@@ -16,8 +17,15 @@ export const POST = async (req: Request, res: Response) => {
     
     try {
         const listing = {title, description, image, category, condition, price, pickup, date: new Date(), listingid: Date.now().toString()};
-        postListing(listing);
-        return NextResponse.json({message: "Listing: ", listing}, {status: 201});
+        
+        try{
+            const messages =  await sql`SELECT * FROM messages;`;
+            return NextResponse.json({ messages }, { status: 200 });
+        }
+        catch(error) {
+            return NextResponse.json({ message: "Error", error }, { status: 500 });
+        }
+
     } catch (error) {
         return NextResponse.json({message: "Error", error}, {status: 500});
     }
