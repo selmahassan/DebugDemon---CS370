@@ -1,3 +1,6 @@
+import { sql } from '@vercel/postgres'
+import { NextResponse } from 'next/server';
+
 export type Listing = {
     listingid: string,
     title: string,
@@ -15,6 +18,7 @@ let listings: Listing[] = [];
 export const getListings = () => listings;
 
 export const postListing = (listing: Listing) => {
+    
     listings.push(listing)
 };
 
