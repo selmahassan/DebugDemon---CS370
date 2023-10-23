@@ -1,10 +1,8 @@
 'use client'
 
-import * as React from 'react';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { AppBar, Button, FormControl, Grid, InputAdornment, MenuItem, OutlinedInput, Paper, TextField, ThemeProvider, Toolbar, createTheme } from '@mui/material';
+import React, { useState} from 'react';
+import { Button, FormControl, Grid, InputAdornment, MenuItem, OutlinedInput, Paper, TextField, ThemeProvider, AppBar, Toolbar, createTheme, Typography, Box, Container} from '@mui/material';
+import PreviewListing from './preview/page';
 
 export default function StarredPage() {
 
@@ -17,7 +15,8 @@ export default function StarredPage() {
       file: data.get('image'),
       category: data.get('category'),
       condition: data.get('condition'),
-      price: data.get('price')
+      price: data.get('price'),
+      pickup: data.get('pickup')
     });
   };
 
@@ -33,6 +32,29 @@ export default function StarredPage() {
         }
     },
   })
+
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    category: '',
+    condition: '',
+    price: 0,
+    pickup: '',
+  });
+
+  const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const [showPreview, setShowPreview] = useState(false);
+
+  const handlePreviewClick = () => {
+    setShowPreview(true);
+  };
 
   const categories = [
     {
@@ -100,6 +122,8 @@ export default function StarredPage() {
                 id="title"
                 name="title"
                 label="Title"
+                value={formData.title}
+                onChange={handleFormChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -111,12 +135,15 @@ export default function StarredPage() {
                 multiline
                 fullWidth
                 rows={4}
+                value={formData.description}
+                onChange={handleFormChange}
               />
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h6" gutterBottom>
                 Upload Image
               </Typography>
+              {/* TODO: option to add multiple images */}
               <TextField
                 required
                 type="file"
@@ -138,6 +165,8 @@ export default function StarredPage() {
                 required
                 fullWidth
                 label="Item Category"
+                value={formData.category}
+                onChange={handleFormChange}
               >
                 {categories.map((option) => (
                   <MenuItem key={option.key} value={option.key}>
@@ -154,6 +183,8 @@ export default function StarredPage() {
                   required
                   fullWidth
                   label="Item Condition"
+                  value={formData.condition}
+                  onChange={handleFormChange}
                 >
                   {condition.map((option) => (
                     <MenuItem key={option.key} value={option.key}>
@@ -170,10 +201,13 @@ export default function StarredPage() {
             <Grid item xs={12}>
               <FormControl variant="outlined">
                 <OutlinedInput
+                  type="number"
                   id="price"
                   name="price"
                   startAdornment={<InputAdornment position="end">$</InputAdornment>}
                   aria-describedby="price"
+                  value={formData.price}
+                  onChange={handleFormChange}
                 />
               </FormControl>
             </Grid>
@@ -188,6 +222,8 @@ export default function StarredPage() {
                 fullWidth
                 id="pickup"
                 name="pickup"
+                value={formData.pickup}
+                onChange={handleFormChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -196,6 +232,7 @@ export default function StarredPage() {
                 variant="contained"
                 disableElevation
                 sx={{ mt: 2, mb: 2 }}
+                onClick={handlePreviewClick}
               >
                 Preview Listing
               </Button>
@@ -213,6 +250,26 @@ export default function StarredPage() {
             </Grid>
           </Grid>
         </Box>
+        {showPreview && (
+            <div
+              style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)', // Semi-transparent black background
+                zIndex: 1000,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+            <Paper>
+              <PreviewListing formData={formData} setShowPreview={setShowPreview} />
+            </Paper>
+          </div>
+        )}
       </Paper>
       </Container>
     </>
