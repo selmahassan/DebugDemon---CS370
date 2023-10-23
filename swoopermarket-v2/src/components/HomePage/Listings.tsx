@@ -1,6 +1,7 @@
 import Grid from '@mui/material/Unstable_Grid2';
 import ListingCard from '@/components/HomePage/ListingCard';
 import { Typography } from '@mui/material';
+import SearchBar from '@/components/SearchBar';
 
 const singleItems = [
     {
