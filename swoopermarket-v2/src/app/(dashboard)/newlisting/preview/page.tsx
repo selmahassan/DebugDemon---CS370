@@ -14,8 +14,8 @@ type FormData = {
     pickup: string;
 };
 
-
-type SetShowPreview = (show: boolean) => void;
+// type SetShowPreview = (show: boolean) => void;
+type SetShowPreview = React.Dispatch<React.SetStateAction<boolean>>;
 
 export default function PreviewListing({ formData, setShowPreview } : { formData: FormData, setShowPreview: SetShowPreview}) {
   const handleBackClick = () => {
