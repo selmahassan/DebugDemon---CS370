@@ -3,21 +3,21 @@ import ListingCard from '@/components/HomePage/ListingCard';
 
 const profileItems = [
     {
-        id: 1,
+        id: '1',
         description: "Pet Alligator",
         price: 48,
         condition: "Like New",
         src: "/images/profileListings/alligator.jpg",
     },
     {
-        id: 2,
+        id: '2',
         description: "Shrink Ray Gun",
         price: 126,
         condition: "Used",
         src: "/images/profileListings/shrink ray gun.jpg",
     },
     {
-        id: 3,
+        id: '3',
         description: "Missile",
         price: 516,
         condition: "Used",
