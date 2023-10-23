@@ -72,6 +72,74 @@ tempItems.set("2", {
     pickup: "Clairmont CRC Building F"
   }
 });
+tempItems.set("3", {
+  category: "",
+  photos: [
+    {
+      id: "",
+      src: ""
+    }
+  ],
+  descriptors: {
+    listingTitle: "",
+    sellerId: "",
+    description: "",
+    price: 0,
+    condition: "",
+    pickup: ""
+  }
+});
+tempItems.set("4", {
+  category: "",
+  photos: [
+    {
+      id: "",
+      src: ""
+    }
+  ],
+  descriptors: {
+    listingTitle: "",
+    sellerId: "",
+    description: "",
+    price: 0,
+    condition: "",
+    pickup: ""
+  }
+});
+tempItems.set("5", {
+  category: "",
+  photos: [
+    {
+      id: "",
+      src: ""
+    }
+  ],
+  descriptors: {
+    listingTitle: "",
+    sellerId: "",
+    description: "",
+    price: 0,
+    condition: "",
+    pickup: ""
+  }
+});
+tempItems.set("6", {
+  category: "",
+  photos: [
+    {
+      id: "",
+      src: ""
+    }
+  ],
+  descriptors: {
+    listingTitle: "",
+    sellerId: "",
+    description: "",
+    price: 0,
+    condition: "",
+    pickup: ""
+  }
+});
 
 export default function SingleItem() {
   const param = useParams();
