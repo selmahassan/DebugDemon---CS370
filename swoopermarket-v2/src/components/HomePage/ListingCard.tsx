@@ -7,14 +7,21 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/system/Unstable_Grid/Grid';
 import Box from '@mui/system/Box';
 
-export default function SingleItem({ description, price, href, condition, src }: { description: string; price: string; href: string; condition: string; src: string }) {
+type ItemType = {
+  id: string;
+  src: string;
+  description: string;
+  condition: string;
+  price: number;
+};
+
+export default function ListingCard({ item }: { item: ItemType }) {
   return (
     <Card>
-      {/* TODO: add different links for different cards */}
-      <CardActionArea href="/singleitem">
+      <CardActionArea href={`/singleitem/${item.id}`}>
         <Image
           alt="Listing Image"
-          src={src}
+          src={item.src}
           width={640}
           height={480}
           style={{
@@ -25,14 +32,14 @@ export default function SingleItem({ description, price, href, condition, src }:
         />
         <CardContent>
           <Typography gutterBottom component="div">
-            {description}
+            {item.description}
           </Typography>
           <Grid container direction="row" justifyContent="space-between" alignItems="center" padding="8px 0px">
             <Box sx={{ border: '1px solid grey', padding: '4px 6px', borderRadius: '5px'}}>
-              {condition}
+              {item.condition}
             </Box>
             <Typography variant="h6" color="text.secondary" fontWeight="fontWeightBold">
-              {price}
+              {`$${item.price}`}
             </Typography>
           </Grid>
         </CardContent>
