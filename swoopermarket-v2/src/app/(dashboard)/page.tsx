@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <Box sx={{ display: 'flex', alignItems: 'flex-start'}}>
       <div>
-        <Header/>
+        {/* <Header/> */}
         <Listings/>
       </div>
     </Box>
