@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 import * as React from 'react';
 import { Box, Grid, Stack, Link, Button, Typography } from '@mui/material';
 import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
@@ -17,7 +17,7 @@ type FormData = {
 // type SetShowPreview = (show: boolean) => void;
 type SetShowPreview = React.Dispatch<React.SetStateAction<boolean>>;
 
-export default function PreviewListing({ formData, setShowPreview } : { formData: FormData; setShowPreview: SetShowPreview}) {
+export default function PreviewListing({ formData, setShowPreview } : { formData: FormData; setShowPreview: SetShowPreview }) {
   const handleBackClick = () => {
     setShowPreview(false); // Hide the preview and go back to the form
   };
