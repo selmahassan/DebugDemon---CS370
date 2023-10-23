@@ -50,7 +50,7 @@ export default function StarredPage() {
     });
   };
 
-  const [showPreview, setShowPreview] = useState(false);
+  const [showPreview, setShowPreview] = useState<boolean>(false);
 
   const handlePreviewClick = () => {
     setShowPreview(true);

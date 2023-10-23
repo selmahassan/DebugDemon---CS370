@@ -1,4 +1,4 @@
-// 'use client'
+'use client'
 import * as React from 'react';
 import { Box, Grid, Stack, Link, Button, Typography } from '@mui/material';
 import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
