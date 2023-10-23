@@ -5,7 +5,7 @@ import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
 
-interface PreviewListingProps {
+type PreviewListingProps = {
   formData: {
     title: string;
     description: string;
