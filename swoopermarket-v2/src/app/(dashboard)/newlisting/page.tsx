@@ -14,14 +14,12 @@ export default function TasksPage() {
     const data = new FormData(event.currentTarget);
     
     const listing : Listing = {
-      listingid: data.get('title') as string,
+      listingid: data.get('title') as unknown as number,
       title: data.get('title') as string,
       description: data.get('description') as string,
-      image: data.get('image') as string,
       category: data.get('category') as string,
       condition: data.get('condition') as string,
-      price: data.get('price') as string,
-      pickup: data.get('pickup') as string,
+      price: data.get('price') as unknown as number,
     };
 
     fetch('/api/listing', {

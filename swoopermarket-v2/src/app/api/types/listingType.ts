@@ -2,14 +2,12 @@ import { sql } from '@vercel/postgres'
 import { NextResponse } from 'next/server';
 
 export type Listing = {
-    listingid: string,
+    listingid: number,
     title: string,
     description: string,
-    image: string,
     category: string,
     condition: string,
-    price: string,
-    pickup: string
+    price: number,
 };
 
 let listings: Listing[] = [];
@@ -22,11 +20,11 @@ export const postListing = (listing: Listing) => {
     listings.push(listing)
 };
 
-export const deleteListing = (id: string) => {
+export const deleteListing = (id: number) => {
     listings = listings.filter((listing) => listing.listingid !== id);
 };
 
-export const updateListing = (id: string, title: string, description: string, price: string) => {
+export const updateListing = (id: number, title: string, description: string, price: number) => {
     const listing = listings.find((listing) => listing.listingid === id);
 
     if(listing){
@@ -38,7 +36,7 @@ export const updateListing = (id: string, title: string, description: string, pr
     }
 };
 
-export const getByID = (id: string) => {
+export const getByID = (id: number) => {
     return listings.find((listing) => listing.listingid === id);
 };
 
