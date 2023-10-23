@@ -50,6 +50,11 @@ const singleItems = [
 export default function Listings() {
     return (
         <div>
+            <Grid id="header" container direction="row" justifyContent="space-between" alignItems="center" padding="24px 0px">
+                {/* TODO: add in logo */}
+                <Typography variant="h5" sx={{color: "#0033a0"}}></Typography>
+                <SearchBar placeHolderText="Search SwooperMarket"/>
+            </Grid>
             <Typography sx={{color: "#0033a0", padding: "10px 0px"}}>
                 Results (6)
             </Typography>
