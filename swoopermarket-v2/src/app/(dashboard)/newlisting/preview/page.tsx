@@ -5,19 +5,19 @@ import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
 
-type PreviewListingProps = {
-  formData: {
+type FormData = {
     title: string;
     description: string;
     category: string;
     condition: string;
     price: number;
     pickup: string;
-  };
-  setShowPreview: (show: boolean) => void;
-}
+};
 
-export default function PreviewListing({ formData, setShowPreview }: PreviewListingProps) {
+
+type SetShowPreview = (show: boolean) => void;
+
+export default function PreviewListing({ formData, setShowPreview } : { formData: FormData, setShowPreview: SetShowPreview}) {
   const handleBackClick = () => {
     setShowPreview(false); // Hide the preview and go back to the form
   };
