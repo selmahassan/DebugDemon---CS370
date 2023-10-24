@@ -6,14 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/system/Unstable_Grid/Grid';
 import Box from '@mui/system/Box';
-
-type ItemType = {
-  id: string;
-  src: string;
-  description: string;
-  condition: string;
-  price: number;
-};
+import { ItemType } from '@/types/itemType';
 
 export default function ListingCard({ item }: { item: ItemType }) {
   return (

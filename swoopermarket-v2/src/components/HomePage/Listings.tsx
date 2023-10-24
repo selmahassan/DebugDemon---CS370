@@ -11,11 +11,25 @@ const singleItems = [
         src: "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/c76e2119-acb7-4944-9085-d4f5ae2bda4a/go-flyease-easy-on-off-shoes-LGmqKx.png",
     },
     {
+        id: '8',
+        description: "Shrink Ray Gun",
+        price: 126,
+        condition: "Used",
+        src: "/images/profileListings/shrink ray gun.jpg",
+    },
+    {
         id: "2",
         description: "Levi's Baggy Dad Women's Jeans",
         price: 38.75,
         condition: "Used",
         src: "https://lsco.scene7.com/is/image/lsco/A34940028-alt3-pdp-lse?fmt=jpeg&qlt=70&resMode=bisharp&fit=crop,0&op_usm=1.25,0.6,8&wid=2000&hei=1800",
+    },
+    {
+        id: '9',
+        description: "Missile",
+        price: 516,
+        condition: "Used",
+        src: "/images/profileListings/missle.jpg",
     },
     {
         id: "3",
@@ -44,6 +58,13 @@ const singleItems = [
         price: 38.95,
         condition: "New",
         src: "https://m.media-amazon.com/images/I/71FxVPHqhWL._AC_UF700,800_QL80_.jpg",
+    },
+    {
+        id: '7',
+        description: "Pet Alligator",
+        price: 48,
+        condition: "Like New",
+        src: "/images/profileListings/alligator.jpg",
     }
 ]
 
@@ -51,7 +72,7 @@ export default function Listings() {
     return (
         <div>
             <Typography sx={{color: "#0033a0", padding: "10px 0px"}}>
-                Results (6)
+                Results (9)
             </Typography>
             <Grid id="listings" container rowSpacing={3} columnSpacing={3}>
                 {singleItems.map((item) => (

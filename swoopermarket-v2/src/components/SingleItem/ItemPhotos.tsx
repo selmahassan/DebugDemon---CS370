@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { useState } from "react";
 import Grid from "@mui/material/Grid";
 
@@ -8,13 +8,23 @@ type PhotoType = {
 };
 
 export default function ItemPhotos({ photos } : { photos: PhotoType[] }) {
-    const [selectedImg, setSelectedImg] = useState(photos[0].src)
+    const [selectedImg, setSelectedImg] = useState(photos[0].src);
+    const [lastClickedIndex, setLastClickedIndex] = useState(0);
+    const [isHovered, setIsHovered] = useState(0);
     
     return (
         <Grid container direction="row">
             <Grid container item direction="column" justifyContent="flex-start" alignItems="flex-start" xs={2}>
-                {photos.map(item => (
-                    <Grid item key="" onClick={()=> {setSelectedImg(item.src)}}>
+                {photos.map((item, index) => (
+                    <Grid item
+                        key=""
+                        onClick={()=> {
+                            setSelectedImg(item.src);
+                            setLastClickedIndex(index);
+                        }}
+                        onMouseEnter={() => setIsHovered(index)}
+                        onMouseLeave={() => setIsHovered(lastClickedIndex)} 
+                    >
                         {/* TODO: add hover effect */}
                         <img
                             src={item.src}
@@ -22,7 +32,10 @@ export default function ItemPhotos({ photos } : { photos: PhotoType[] }) {
                             height='100vw'
                             style={{
                                 maxWidth: '100%',
-                                objectFit: 'cover'
+                                objectFit: 'cover',
+                                cursor:'pointer',
+                                transition: "border 0.25s ease",
+                                border: isHovered === index ? "3px solid #42a5f5" : "none"
                             }}
                             loading='lazy'
                         />
