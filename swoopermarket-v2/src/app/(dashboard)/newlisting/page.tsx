@@ -1,5 +1,6 @@
 'use client'
 
+import { Listing } from '@/types';
 import React, { useState} from 'react';
 import { Button, FormControl, Grid, InputAdornment, MenuItem, OutlinedInput, Paper, TextField, ThemeProvider, AppBar, Toolbar, createTheme, Typography, Box, Container, Stack, Link } from '@mui/material';
 import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
@@ -11,15 +12,24 @@ export default function StarredPage() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      title: data.get('title'),
-      description: data.get('description'),
-      file: data.get('image'),
-      category: data.get('category'),
-      condition: data.get('condition'),
-      price: data.get('price'),
-      pickup: data.get('pickup')
+    
+    const listing : Listing = {
+      listingid: Date.now as unknown as number,
+      title: data.get('title') as string,
+      description: data.get('description') as string,
+      category: data.get('category') as string,
+      condition: data.get('condition') as string,
+      price: data.get('price') as unknown as number,
+    };
+
+    fetch('/api/listing', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(listing)
     });
+    
   };
 
   const theme = createTheme({
