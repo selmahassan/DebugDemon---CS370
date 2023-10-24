@@ -1,23 +1,21 @@
-import { getListings, postListing } from "@/app/api/types/listingType";
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
-import { Connection } from "pg";
-import { json } from "stream/consumers";
 
+// get all listings in DB
 export const GET = async (req: Request, res: Response) => {
     try {
-        const messages =  await sql`SELECT * FROM messages;`;
+        const messages =  await sql`SELECT * FROM product_listing;`;
         return NextResponse.json({ messages }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ message: "Error", error }, { status: 500 });
     }
 };
 
+// post a new listing into DB
 export const POST = async (req: Request, res: Response) => {
     const {id, title, description, image, category, condition, price, pickup} = await req.json();
-    console.log({title}, {description}, {image}, {category}, {price}, {pickup});
 
-    let listing_id = 123
+    let listing_id = 1
     let user_id = "selma"
     let product_name = String(title)
     let hard_description = String(description)

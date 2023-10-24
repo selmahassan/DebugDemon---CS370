@@ -1,24 +1,33 @@
-import { getUsers, postUser } from "@/app/api/types/userType";
+import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
-import { json } from "stream/consumers";
 
+// get all user profiles in DB
 export const GET = async (req: Request, res: Response) => {
     try {
-        const users = getUsers();
-        return NextResponse.json({message: "Users: ", users}, {status: 200});
+        const messages =  await sql`SELECT * FROM user_table;`;
+        const users = messages.rows
+
+        return NextResponse.json({ users }, { status: 200 });
     } catch (error) {
-        return NextResponse.json({message: "Error", error}, {status: 500});
+        return NextResponse.json({ message: "Error", error }, { status: 500 });
     }
 };
 
+// add a new user to the DB
 export const POST = async (req: Request, res: Response) => {
-    const {userid, name, image, username} = await req.json();
-    
+    const {id, pass, first_name, last_name} = await req.json();
+
+    let user_id = 1
+    let password = "selma"
+    let first = String(first_name)
+    let last = String(last_name)
+
     try {
-        const user = {name, image, username, date: new Date(), userid: Date.now().toString()};
-        postUser(user);
-        return NextResponse.json({message: "User: ", user}, {status: 201});
+        const messages =  await sql`INSERT INTO user_table (Userid, pass, Descr, first_name, last_name) VALUES (${user_id}, ${password}, ${first}, ${last});`;
+        
+        return NextResponse.json({ messages }, { status: 200 });
     } catch (error) {
+        console.log("Caught error")
         return NextResponse.json({message: "Error", error}, {status: 500});
     }
 };

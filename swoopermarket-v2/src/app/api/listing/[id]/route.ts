@@ -1,42 +1,76 @@
-import { deleteListing, getByID, updateListing } from "@/app/api/types/listingType";
+import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
+// fetch specific listing
 export const GET = async (req: Request) => {
     try {
-        const id = req.url.split("newlisting/")[1];
+        const url_id = req.url.split("api/listing/")[1];
+        let listing_id = parseInt(url_id);
 
-        const listing = getByID(Number(id));
+        const messages =  await sql`SELECT * FROM product_listing WHERE Listing_id = ${listing_id};`; 
+        const product = messages.rows;
 
-        if(!listing){return NextResponse.json({message: "Listing does not exist"}, {status: 404});};
-        return NextResponse.json({message: "Listing found: ", listing}, {status: 200});
+        if(product.length == 0){
+            return NextResponse.json({message: "Listing not found: ", product}, {status: 200});
+        } else {
+            return NextResponse.json({message: "Messages: ", product}, {status: 200});
+        }
+
     } catch (error) {
         return NextResponse.json({message: "Error", error}, {status: 500});
     }
 
 };
 
+// edit listing 
 export const PUT = async (req: Request, res: Response) => {
-    const {title, description, price} = await req.json();
-    try {
-        const id = req.url.split("newlisting/")[1];
-        const listing = getByID(Number(id));
-        if(!listing){return NextResponse.json({message: "Listing does not exist"}, {status: 404});};
+    const {id, title, description, image, category, condition, price, pickup} = await req.json();
 
-        updateListing(Number(id), title, description, price);
-        return NextResponse.json({message: "Updated Listing: ", listing}, {status: 200});
+    let product_name = String(title)
+    let hard_description = String(description)
+    let category_id = 1
+    let hard_price = Number(price) 
+    
+    try {
+        const url_id = req.url.split("api/listing/")[1];
+        let listing_id = parseInt(url_id);
+
+        const messages =  await sql`UPDATE product_listing 
+            SET product_name = ${product_name}, 
+                descr = ${hard_description}, 
+                category_id = ${category_id}, 
+                price = ${hard_price},
+                modified_at = ${Number(Date.now)}
+            WHERE listing_id = ${listing_id} 
+            RETURNING *;`;
+        const product = messages.rows;
+
+        if(product.length == 0){
+            return NextResponse.json({message: "Listing not found: ", product}, {status: 200});
+        } else {
+            return NextResponse.json({message: "Messages: ", product}, {status: 200});
+        }
+
     } catch (error) {
         return NextResponse.json({message: "Error", error}, {status: 500});
     }
 };
 
+// delete specific listing
 export const DELETE = async (req: Request, res: Response) => {
     try {
-        const id = req.url.split("newlisting/")[1];
-        const listing = getByID(Number(id));
-        if(!listing){return NextResponse.json({message: "Listing does not exist"}, {status: 404});};
+        const url_id = req.url.split("api/listing/")[1];
+        const listing_id = parseInt(url_id);
 
-        deleteListing(Number(id));
-        return NextResponse.json({message: "Deleted Listing: ", listing}, {status: 200});
+        const messages =  await sql`DELETE FROM product_listing WHERE listing_id = ${listing_id} RETURNING *;`; 
+        const product = messages.rows;
+
+        if(product.length == 0){
+            return NextResponse.json({message: "Listing not found: ", product}, {status: 200});
+        } else {
+            return NextResponse.json({message: "Messages: ", product}, {status: 200});
+        }
+
     } catch (error) {
         return NextResponse.json({message: "Error", error}, {status: 500});
     }

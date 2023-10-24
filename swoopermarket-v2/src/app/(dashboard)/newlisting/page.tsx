@@ -1,12 +1,12 @@
 'use client'
-import { Listing } from "@/app/api/types/listingType";
-import { POST } from "@/app/api/listing/route";
 import * as React from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { AppBar, Button, FormControl, Grid, InputAdornment, MenuItem, OutlinedInput, Paper, TextField, ThemeProvider, Toolbar, createTheme } from '@mui/material';
-
+import { Listing } from '@/types';
+// data type conflicts 
+// neon db error 255p02 
 export default function TasksPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -14,7 +14,7 @@ export default function TasksPage() {
     const data = new FormData(event.currentTarget);
     
     const listing : Listing = {
-      listingid: data.get('title') as unknown as number,
+      listingid: Date.now as unknown as number,
       title: data.get('title') as string,
       description: data.get('description') as string,
       category: data.get('category') as string,
