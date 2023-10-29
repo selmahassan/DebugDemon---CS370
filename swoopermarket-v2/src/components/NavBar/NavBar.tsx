@@ -31,14 +31,108 @@ const LINKS = [
 
 export default function NavBar() {
     const [selectedIndex, setSelectedIndex] = useState(1);
+    const [mobileOpen, setMobileOpen] = useState(false);
+
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
 
     const handleListItemClick = (
         index: number,
       ) => {
         setSelectedIndex(index);
       };
+    
+    const drawer = (
+        <>
+            <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
+                <Typography variant="h5" sx={{color: "#0033a0", paddingTop: 1}}>
+                    <Link 
+                        href="/" 
+                        style={{
+                            textDecoration:"none", 
+                            fontWeight:'bold',
+                        }}
+                    >
+                        SwooperMarket
+                    </Link>
+                </Typography>
+            </Box>
+            <List>
+                {LINKS.map(({ text, href, icon: Icon, id }) => (
+                <ListItem key={href} disablePadding sx={{fontWeight: 'fontWeightBold', p:1}}>
+                    <ListItemButton 
+                        component={Link} 
+                        href={href} 
+                        selected={selectedIndex === id}
+                        onClick={() => handleListItemClick(id)}
+                        sx={{borderRadius: 2, p:1.5}}
+                    >
+                    <ListItemIcon>
+                        <Icon />
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                    </ListItemButton>
+                </ListItem>
+                ))}
+            </List>
+            <Box sx={{ mt: 'auto' }} />
+            <List>
+                {PLACEHOLDER_LINKS.map(({ text, href, icon: Icon, id }) => (
+                <ListItem key={href} disablePadding sx={{fontWeight: 'fontWeightBold', p:1}}>
+                    <ListItemButton 
+                        component={Link} 
+                        href={href} 
+                        selected={selectedIndex === id}
+                        onClick={() => handleListItemClick(id)}
+                        sx={{borderRadius: 2}}
+                    >
+                    <ListItemIcon>
+                        <Icon />
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                    </ListItemButton>
+                </ListItem>
+                ))}
+            </List>
+        </>
+    )
 
     return (
+            // <Box
+            //     component="nav"
+            //     sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+            //     aria-label="nav bar"
+            // >
+            //     <Drawer
+            //     container={container}
+            //     variant="temporary"
+            //     open={mobileOpen}
+            //     onClose={handleDrawerToggle}
+            //     ModalProps={{
+            //         keepMounted: true, // Better open performance on mobile.
+            //     }}
+            //     sx={{
+            //         display: { xs: 'block', sm: 'none' },
+            //         '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            //     }}
+            //     >
+            //     {drawer}
+            //     </Drawer>
+            //     <Drawer
+            //     variant="permanent"
+            //     sx={{
+            //         display: { xs: 'none', sm: 'block' },
+            //         '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            //     }}
+            //     open
+            //     >
+            //     {drawer}
+            //     </Drawer>
+            // </Box>
+
+
+
         <Drawer
             sx={{
                 width: DRAWER_WIDTH,
@@ -55,56 +149,7 @@ export default function NavBar() {
             variant="permanent"
             anchor="left"
         >
-        <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
-            <Typography variant="h5" sx={{color: "#0033a0", paddingTop: 1}}>
-                <Link 
-                    href="/" 
-                    style={{
-                        textDecoration:"none", 
-                        fontWeight:'bold',
-                    }}
-                >
-                    SwooperMarket
-                </Link>
-            </Typography>
-        </Box>
-        <List>
-            {LINKS.map(({ text, href, icon: Icon, id }) => (
-            <ListItem key={href} disablePadding sx={{fontWeight: 'fontWeightBold', p:1}}>
-                <ListItemButton 
-                    component={Link} 
-                    href={href} 
-                    selected={selectedIndex === id}
-                    onClick={() => handleListItemClick(id)}
-                    sx={{borderRadius: 2, p:1.5}}
-                >
-                <ListItemIcon>
-                    <Icon />
-                </ListItemIcon>
-                <ListItemText primary={text} />
-                </ListItemButton>
-            </ListItem>
-            ))}
-        </List>
-        <Box sx={{ mt: 'auto' }} />
-        <List>
-            {PLACEHOLDER_LINKS.map(({ text, href, icon: Icon, id }) => (
-            <ListItem key={href} disablePadding sx={{fontWeight: 'fontWeightBold', p:1}}>
-                <ListItemButton 
-                    component={Link} 
-                    href={href} 
-                    selected={selectedIndex === id}
-                    onClick={() => handleListItemClick(id)}
-                    sx={{borderRadius: 2}}
-                >
-                <ListItemIcon>
-                    <Icon />
-                </ListItemIcon>
-                <ListItemText primary={text} />
-                </ListItemButton>
-            </ListItem>
-            ))}
-        </List>
+            {drawer}
         </Drawer>
     );
 }
