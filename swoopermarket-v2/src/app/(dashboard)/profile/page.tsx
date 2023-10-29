@@ -13,12 +13,12 @@ export default function ProfilePage() {
     return (
         <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
             <div>
-                <Header />
-                <Stack direction="row" sx={{ pl: 2, pr: 2 }} justifyContent="flex-start" alignItems="center" spacing={2}>
+                {/* <Header /> */}
+                {/* <Stack direction="row" sx={{ pl: 2, pr: 2 }} justifyContent="flex-start" alignItems="center" spacing={2}>
                     <Button href="/" sx={{ borderRadius: 50, width: "fit-content" }} startIcon={<ArrowBack />}>
                         Back to listings
                     </Button>
-                </Stack>
+                </Stack> */}
                 <Stack direction="column" spacing={1} alignItems="center">
                     <Avatar alt="Profile Picture" src="/images/avatar/gru.jpg" sx={{ width: 200, height: 200 }} />
                     <Rating name="read-only" defaultValue={1.5} precision={0.5} readOnly />
