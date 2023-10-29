@@ -9,7 +9,7 @@ SwooperMarket is an application that allows Emory students, faculty, and staff t
 ## Directories
 ### swoopermarket-v2
 **Description** This directory contains the main code used in our SwooperMarket project. 
-This project used the Next.js App Router example project from MUI: https://github.com/mui/material-ui/tree/master/examples/material-ui-nextjs-ts
+This project used the Next.js App Router example project from MUI as a starter template: https://github.com/mui/material-ui/tree/master/examples/material-ui-nextjs-ts
 **How to Run the Code Locally**
 1. Clone directory
 2. Install Node.js: https://nodejs.org/en
@@ -25,3 +25,4 @@ This project used the Next.js App Router example project from MUI: https://githu
 ## Presentations
 * 09/18 - Project Proposal: https://docs.google.com/presentation/d/1CN1L5qzbfZ36iasnEfbnyM1ggaoaDLPaq4VrSelETxM/edit?usp=sharing
 * 09/25 - Sprint Review 1: https://docs.google.com/document/d/1qOvvU3PZ2Gv04pNsHEgQhKdodr8ctFujuvNLRG04Fw4/edit?usp=sharing
+* The remaining sprint reviews were presented using our team JIRA board, which displays tasks and sprint reports (e.g., velocity, sprint burndown charts, etc.)
