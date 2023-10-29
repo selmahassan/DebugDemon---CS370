@@ -125,7 +125,7 @@ export default function StarredPage() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <AppBar position='absolute' elevation={0}>
+        <AppBar elevation={0}>
             <Toolbar variant="dense" sx={{ pr: '24px', backgroundColor: '#f2a900' }} >
               <Typography
                 component="h1"

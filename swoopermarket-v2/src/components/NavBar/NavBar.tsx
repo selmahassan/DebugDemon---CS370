@@ -101,19 +101,38 @@ export default function NavBar() {
 
     return (
         <>
-            <IconButton
+            <AppBar
+                position="fixed"
                 color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
+                elevation={0}
                 sx={{
-                    // display: { sm: 'none'},
-                    ml: 2,
-                    mt: 2,
+                width: { sm: `calc(100% - ${DRAWER_WIDTH}px)` },
+                ml: { sm: `${DRAWER_WIDTH}px` },
                 }}
             >
-                <MenuIcon />
-            </IconButton>
+                <Toolbar>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={handleDrawerToggle}
+                    sx={{ mr: 2, display: { sm: 'none' } }}
+                >
+                    <MenuIcon />
+                </IconButton>
+                <Typography variant="h5" sx={{color: "#0033a0", display: { sm: 'none' }}}>
+                    <Link 
+                        href="/" 
+                        style={{
+                            textDecoration:"none", 
+                            fontWeight:'bold',
+                        }}
+                    >
+                        SwooperMarket
+                    </Link>
+                </Typography>
+                </Toolbar>
+            </AppBar>
             <Box
                 component="nav"
                 sx={{ width: { sm: DRAWER_WIDTH }, flexShrink: { sm: 0 } }}
@@ -145,27 +164,6 @@ export default function NavBar() {
                 </Drawer>
             </Box>
         </>
-
-
-
-        // <Drawer
-        //     sx={{
-        //         width: DRAWER_WIDTH,
-        //         flexShrink: 0,
-        //         '& .MuiDrawer-paper': {
-        //         width: DRAWER_WIDTH,
-        //         boxSizing: 'border-box',
-        //         height: 'auto',
-        //         bottom: 0,
-        //         bgcolor: 'background.default',
-        //         },
-        //     }}
-        //     open
-        //     variant="permanent"
-        //     anchor="left"
-        // >
-        //     {drawer}
-        // </Drawer>
     );
 }
 
