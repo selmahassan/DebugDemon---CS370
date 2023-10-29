@@ -12,6 +12,7 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useParams } from 'next/navigation';
+import CommentSection from '@/components/SingleItem/CommentSection';
 
 const tempItems = new Map();
 tempItems.set("1", {
@@ -140,6 +141,57 @@ tempItems.set("6", {
     pickup: ""
   }
 });
+tempItems.set("7", {
+  category: "",
+  photos: [
+    {
+      id: "",
+      src: ""
+    }
+  ],
+  descriptors: {
+    listingTitle: "",
+    sellerId: "",
+    description: "",
+    price: 0,
+    condition: "",
+    pickup: ""
+  }
+});
+tempItems.set("8", {
+  category: "",
+  photos: [
+    {
+      id: "",
+      src: ""
+    }
+  ],
+  descriptors: {
+    listingTitle: "",
+    sellerId: "",
+    description: "",
+    price: 0,
+    condition: "",
+    pickup: ""
+  }
+});
+tempItems.set("9", {
+  category: "",
+  photos: [
+    {
+      id: "",
+      src: ""
+    }
+  ],
+  descriptors: {
+    listingTitle: "",
+    sellerId: "",
+    description: "",
+    price: 0,
+    condition: "",
+    pickup: ""
+  }
+});
 
 export default function SingleItem() {
   const param = useParams();
@@ -156,14 +208,17 @@ export default function SingleItem() {
             <Link href={'href'} variant="body1">{tempItems.get(itemId).category}</Link>
           </Stack>
         </Stack>
-        <Grid container direction="row" spacing={2} padding={2} columns={{sm: 8, md: 12}}>
-          <Grid item sm={8} md={7}>
-            <ItemPhotos photos={tempItems.get(itemId).photos}/>
+        <Stack direction="column" padding={2}>
+          <Grid container direction="row" spacing={3} columns={{sm: 8, md: 12}}>
+            <Grid item sm={8} md={7}>
+              <ItemPhotos photos={tempItems.get(itemId).photos}/>
+            </Grid>
+            <Grid item sm={8} md={5}>
+              <ItemDescriptors descriptors={tempItems.get(itemId).descriptors}/>
+            </Grid>
           </Grid>
-          <Grid item sm={8} md={5}>
-            <ItemDescriptors descriptors={tempItems.get(itemId).descriptors}/>
-          </Grid>
-        </Grid>
+          <CommentSection/>
+        </Stack>
       </div>
     </Box>
   );
