@@ -22,7 +22,6 @@ const DRAWER_WIDTH = 240;
 const LINKS = [
     { text: 'Home', href: '/', icon: HomeIcon, id:1 },
     { text: 'New Listing', href: '/newlisting', icon: AddIcon, id:2 },
-    { text: 'Direct Messages', href: '/dms', icon: ChatIcon, id:3 },
   ];
   
   const PLACEHOLDER_LINKS = [
