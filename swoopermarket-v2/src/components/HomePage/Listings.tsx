@@ -1,3 +1,5 @@
+"use client";
+import React, { useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import ListingCard from '@/components/HomePage/ListingCard';
 import { Typography } from '@mui/material';
@@ -71,23 +73,37 @@ const singleItems = [
 ]
 
 export default function Listings() {
+    const [searchQuery, setSearchQuery] = useState('');
+    const searchResults = singleItems.filter((item) =>
+      item.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  
+    const handleSearch = (query: string) => {
+      setSearchQuery(query);
+    };
+  
     return (
-        <div>
-            <Grid id="header" container direction="row" justifyContent="space-between" alignItems="center" padding="24px 0px">
-                {/* TODO: add in logo */}
-                <Typography variant="h5" sx={{color: "#0033a0"}}></Typography>
-                <SearchBar placeHolderText="Search SwooperMarket"/>
+      <div>
+        <Grid id="header" container direction="row" justifyContent="space-between" alignItems="center" padding="24px 0px">
+          {/* TODO: add in logo */}
+          <Typography variant="h5" sx={{ color: "#0033a0" }}>
+            Your Logo
+          </Typography>
+          <SearchBar
+            placeHolderText="Search SwooperMarket"
+            onSearch={handleSearch}
+          />
+        </Grid>
+        <Typography sx={{ color: "#0033a0", padding: "10px 0px" }}>
+          Results ({searchResults.length})
+        </Typography>
+        <Grid id="listings" container rowSpacing={3} columnSpacing={3}>
+          {searchResults.map((item) => (
+            <Grid key={item.id} xs={12} sm={6} md={4}>
+              <ListingCard item={item} />
             </Grid>
-            <Typography sx={{color: "#0033a0", padding: "10px 0px"}}>
-                Results (9)
-            </Typography>
-            <Grid id="listings" container rowSpacing={3} columnSpacing={3}>
-                {singleItems.map((item) => (
-                    <Grid key={item.id} xs={12} sm={6} md={4}>
-                        <ListingCard item={item}/>
-                    </Grid>
-                ))}
-            </Grid>
-        </div>
-    )
-}
+          ))}
+        </Grid>
+      </div>
+    );
+  }
