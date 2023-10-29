@@ -36,7 +36,7 @@ export default function UserComment({ key, username, comment, numOfLikes, time }
 
     // TODO: write function
     const handleReply = () => {
-        
+
     }
     
     return (
@@ -65,7 +65,7 @@ export default function UserComment({ key, username, comment, numOfLikes, time }
                             Delete
                         </Button>
                     </Stack>
-                    <Stack direction="row" spacing={.5} justifyContent="flex-end" alignItems="center">
+                    <Stack direction="row" justifyContent="flex-end" alignItems="center">
                         <IconButton aria-label="empty-like" onClick={handleLike}>
                             <FavoriteBorderIcon sx={{ display: emptyButtonVisable}} />
                             <FavoriteIcon sx={{ display: filledButtonVisable, color:"red" }} />

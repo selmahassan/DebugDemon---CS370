@@ -17,7 +17,7 @@ const comments: Comment[] = [
         id: "1",
         username: "Gru",
         comment: "I'm interested in buy this product. Would you be open to negotiating the price?",
-        numOfLikes: 0,
+        numOfLikes: 3,
         time: "2 days ago"
     },
     {
