@@ -8,7 +8,6 @@ export default function Header() {
         <Grid id="header" container direction="row" justifyContent="space-between" alignItems="center" padding="24px 0px">
             {/* TODO: add in logo */}
             <Typography variant="h5" sx={{color: "#0033a0"}}></Typography>
-            <SearchBar placeHolderText="Search SwooperMarket"/>
         </Grid>
     )
 }

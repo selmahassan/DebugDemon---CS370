@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import ListingCard from '@/components/HomePage/ListingCard';
@@ -93,7 +92,7 @@ export default async function Listings() {
     const [searchQuery, setSearchQuery] = useState('');
     
     const searchResults = singleItems.filter((item) =>
-      item.description.toLowerCase().includes(searchQuery.toLowerCase())
+      item.descr.toLowerCase().includes(searchQuery.toLowerCase())
     );
   
     const handleSearch = (query: string) => {
