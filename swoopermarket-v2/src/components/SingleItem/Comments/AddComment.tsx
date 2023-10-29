@@ -21,7 +21,7 @@ const AddComment: React.FC<CommentProps> = ({ commentsList, setCommentsList, num
     const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setComment(event.target.value);
 
-        if(comment == ''){
+        if(event.target.value == ''){
             setDisabled(true);
         }else{
             setDisabled(false);
@@ -47,6 +47,8 @@ const AddComment: React.FC<CommentProps> = ({ commentsList, setCommentsList, num
         }
         setCommentsList([newComment, ...commentsList]);
         setNumOfComments(numOfComments + 1)
+        setComment('');
+        setButtonsVisible("none");
     }
 
     return (
