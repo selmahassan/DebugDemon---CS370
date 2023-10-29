@@ -12,7 +12,7 @@ export default function ListingCard({ item }: { item: ItemType }) {
   return (
     <Card>
       <CardActionArea href={`/singleitem/${item.id}`}>
-        <Image
+        {/* <Image
           alt="Listing Image"
           src={item.src}
           width={640}
@@ -22,15 +22,15 @@ export default function ListingCard({ item }: { item: ItemType }) {
             height: '300px',
             objectFit: 'cover',
           }}
-        />
+        /> */}
         <CardContent>
           <Typography gutterBottom component="div">
-            {item.description}
+            {item.desc}
           </Typography>
           <Grid container direction="row" justifyContent="space-between" alignItems="center" padding="8px 0px">
-            <Box sx={{ border: '1px solid grey', padding: '4px 6px', borderRadius: '5px'}}>
+            {/* <Box sx={{ border: '1px solid grey', padding: '4px 6px', borderRadius: '5px'}}>
               {item.condition}
-            </Box>
+            </Box> */}
             <Typography variant="h6" color="text.secondary" fontWeight="fontWeightBold">
               {`$${item.price}`}
             </Typography>
