@@ -1,3 +1,5 @@
+"use client";
+import React, { useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import ListingCard from '@/components/HomePage/ListingCard';
 import { Typography } from '@mui/material';
@@ -88,16 +90,36 @@ async function getData() {
   }
 
 export default async function Listings() {
-    const listings = await getData()
+    const [searchQuery, setSearchQuery] = useState('');
+    
+    const searchResults = singleItems.filter((item) =>
+      item.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  
+    const handleSearch = (query: string) => {
+      setSearchQuery(query);
+    };
+          
+    const listings = await getData();
 
     return (
         <>
             <Grid id="header" container direction="row" justifyContent="space-between" alignItems="center" padding="24px 0px">
                 <Typography variant="h5" sx={{color: "#0033a0"}}></Typography>
-                <SearchBar placeHolderText="Search SwooperMarket"/>
+                <SearchBar
+                  placeHolderText="Search SwooperMarket"
+                  onSearch={handleSearch}
+                />
             </Grid>
             <Typography sx={{color: "#0033a0", padding: "10px 0px"}}>
                 Results ({listings.rows.length})
+            </Typography>
+            <SearchBar
+                placeHolderText="Search SwooperMarket"
+                onSearch={handleSearch}
+            />
+            <Typography sx={{ color: "#0033a0", padding: "10px 0px" }}>
+              Results ({searchResults.length})
             </Typography>
             <Grid id="listings" container rowSpacing={3} columnSpacing={3}>
                 {listings.rows.map((item: ItemType) => (
@@ -105,11 +127,6 @@ export default async function Listings() {
                         <ListingCard item={item}/>
                     </Grid>
                 ))}
-                {/* {singleItems.map((item) => (
-                    <Grid key={item.listing_id} xs={12} sm={6} md={4}>
-                        <ListingCard item={item}/>
-                    </Grid>
-                ))} */}
             </Grid>
         </>
     )
