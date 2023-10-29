@@ -11,9 +11,10 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import MenuIcon from '@mui/icons-material/Menu';
 import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
+import { AppBar, Grid, IconButton, Toolbar, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -99,58 +100,72 @@ export default function NavBar() {
     )
 
     return (
-            // <Box
-            //     component="nav"
-            //     sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-            //     aria-label="nav bar"
-            // >
-            //     <Drawer
-            //     container={container}
-            //     variant="temporary"
-            //     open={mobileOpen}
-            //     onClose={handleDrawerToggle}
-            //     ModalProps={{
-            //         keepMounted: true, // Better open performance on mobile.
-            //     }}
-            //     sx={{
-            //         display: { xs: 'block', sm: 'none' },
-            //         '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-            //     }}
-            //     >
-            //     {drawer}
-            //     </Drawer>
-            //     <Drawer
-            //     variant="permanent"
-            //     sx={{
-            //         display: { xs: 'none', sm: 'block' },
-            //         '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-            //     }}
-            //     open
-            //     >
-            //     {drawer}
-            //     </Drawer>
-            // </Box>
+        <>
+            <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{
+                    // display: { sm: 'none'},
+                    ml: 2,
+                    mt: 2,
+                }}
+            >
+                <MenuIcon />
+            </IconButton>
+            <Box
+                component="nav"
+                sx={{ width: { sm: DRAWER_WIDTH }, flexShrink: { sm: 0 } }}
+                aria-label="nav bar"
+            >
+                <Drawer
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                ModalProps={{
+                    keepMounted: true, // Better open performance on mobile.
+                }}
+                sx={{
+                    display: { xs: 'block', sm: 'none' },
+                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: DRAWER_WIDTH },
+                }}
+                >
+                {drawer}
+                </Drawer>
+                <Drawer
+                variant="permanent"
+                sx={{
+                    display: { xs: 'none', sm: 'block' },
+                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: DRAWER_WIDTH },
+                }}
+                open
+                >
+                {drawer}
+                </Drawer>
+            </Box>
+        </>
 
 
 
-        <Drawer
-            sx={{
-                width: DRAWER_WIDTH,
-                flexShrink: 0,
-                '& .MuiDrawer-paper': {
-                width: DRAWER_WIDTH,
-                boxSizing: 'border-box',
-                height: 'auto',
-                bottom: 0,
-                bgcolor: 'background.default',
-                },
-            }}
-            open
-            variant="permanent"
-            anchor="left"
-        >
-            {drawer}
-        </Drawer>
+        // <Drawer
+        //     sx={{
+        //         width: DRAWER_WIDTH,
+        //         flexShrink: 0,
+        //         '& .MuiDrawer-paper': {
+        //         width: DRAWER_WIDTH,
+        //         boxSizing: 'border-box',
+        //         height: 'auto',
+        //         bottom: 0,
+        //         bgcolor: 'background.default',
+        //         },
+        //     }}
+        //     open
+        //     variant="permanent"
+        //     anchor="left"
+        // >
+        //     {drawer}
+        // </Drawer>
     );
 }
 
