@@ -13,6 +13,8 @@ export default function UserComment({ key, username, comment, numOfLikes, time }
     const [filledButtonVisable, setFilledButtonVisible] = useState("none");
     const [countLikes, setCountLikes] = useState(numOfLikes);
 
+    const displayDeleteButton = username == "my_username" ? "" : "none";
+
     const handleLike = () => {
         if(!isLiked) {
             setCountLikes(countLikes + 1);
@@ -26,6 +28,16 @@ export default function UserComment({ key, username, comment, numOfLikes, time }
             setFilledButtonVisible("none");
         }
     }
+
+    // TODO: write function
+    const handleDelete = () => {
+
+    }
+
+    // TODO: write function
+    const handleReply = () => {
+        
+    }
     
     return (
         <Stack id={key} direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={2} sx={{ width: '100%' }}>
@@ -37,7 +49,22 @@ export default function UserComment({ key, username, comment, numOfLikes, time }
                 </Stack>
                 <Typography variant="body1" color="initial">{comment}</Typography>
                 <Stack direction="row" justifyContent="space-between" alignContent="center">
-                    <Button variant="text" sx={{borderRadius: 50, width: "fit-content"}}>Reply</Button>
+                    <Stack direction="row" alignItems="center">
+                        <Button 
+                            variant="text" 
+                            sx={{borderRadius: 50, width: "fit-content"}}
+                            onClick={handleReply}
+                        >
+                            Reply
+                        </Button>
+                        <Button
+                            variant="text"
+                            sx={{borderRadius: 50, width: "fit-content", color: "gray", display: displayDeleteButton}}
+                            onClick={handleDelete}
+                        >
+                            Delete
+                        </Button>
+                    </Stack>
                     <Stack direction="row" spacing={.5} justifyContent="flex-end" alignItems="center">
                         <IconButton aria-label="empty-like" onClick={handleLike}>
                             <FavoriteBorderIcon sx={{ display: emptyButtonVisable}} />
