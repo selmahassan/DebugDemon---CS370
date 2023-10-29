@@ -126,7 +126,7 @@ export default function StarredPage() {
           <Typography
             component="h1"
             variant="h4"
-            noWrap
+            // noWrap
             sx={{mb: 2}}
           >
             Create New Listing
