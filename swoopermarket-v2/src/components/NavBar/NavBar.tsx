@@ -2,11 +2,9 @@
 
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
-import ChatIcon from '@mui/icons-material/Chat';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Drawer from '@mui/material/Drawer';
-import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -14,7 +12,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import MenuIcon from '@mui/icons-material/Menu';
 import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
-import { AppBar, Grid, IconButton, Toolbar, Typography } from '@mui/material';
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useState } from 'react';
 
