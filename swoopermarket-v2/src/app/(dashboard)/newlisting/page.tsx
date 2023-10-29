@@ -2,7 +2,23 @@
 
 import { Listing } from '@/types';
 import React, { useState} from 'react';
-import { Button, FormControl, Grid, InputAdornment, MenuItem, OutlinedInput, Paper, TextField, ThemeProvider, AppBar, Toolbar, createTheme, Typography, Box, Container, Stack, Link } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import Link from '@mui/material/Link';
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import Grid from '@mui/material/Grid';
+import InputAdornment from '@mui/material/InputAdornment';
+import MenuItem from '@mui/material/MenuItem';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
+import Toolbar from '@mui/material/Toolbar';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import createTheme from '@mui/material/styles/createTheme';
 import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
