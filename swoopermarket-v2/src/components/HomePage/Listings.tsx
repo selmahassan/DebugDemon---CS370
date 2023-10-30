@@ -10,6 +10,7 @@ import SearchBar from '@/components/SearchBar';
 const singleItems = [
     {
         id: "1",
+        category: "Clothing",
         description: "Nike Go FlyEase",
         price: 75.00,
         condition: "New",
@@ -17,6 +18,7 @@ const singleItems = [
     },
     {
         id: '8',
+        category: "Weaponry",
         description: "Shrink Ray Gun",
         price: 126,
         condition: "Used",
@@ -24,6 +26,7 @@ const singleItems = [
     },
     {
         id: "2",
+        category: "Clothing",
         description: "Levi's Baggy Dad Women's Jeans",
         price: 38.75,
         condition: "Used",
@@ -31,6 +34,7 @@ const singleItems = [
     },
     {
         id: '9',
+        category: "Weaponry",
         description: "Missile",
         price: 516,
         condition: "Used",
@@ -38,6 +42,7 @@ const singleItems = [
     },
     {
         id: "3",
+        category: "Furniture",
         description: "Green Two-Person Couch w/ Really Comfy Cushions",
         price: 250.99,
         condition: "Used",
@@ -45,6 +50,7 @@ const singleItems = [
     },
     {
         id: "4",
+        category: "Appliances",
         description: "Full Length Mirror",
         price: 50.99,
         condition: "Used",
@@ -52,6 +58,7 @@ const singleItems = [
     },
     {
         id: "5",
+        category: "Appliances",
         description: "Minifridge w/ Freezer",
         price: 40.57,
         condition: "Used",
@@ -59,6 +66,7 @@ const singleItems = [
     },
     {
         id: "6",
+        category: "Appliances",
         description: "Microwave",
         price: 38.95,
         condition: "New",
@@ -66,6 +74,7 @@ const singleItems = [
     },
     {
         id: '7',
+        category: "Animals",
         description: "Pet Alligator",
         price: 48,
         condition: "Like New",
@@ -108,6 +117,26 @@ export default function Listings() {
               return item.condition === "Used";
             }
         })
+        .filter((item) => {
+          if (categoryOption === 'all') {
+            return item;
+          }
+          else if (categoryOption === 'clothing') {
+            return item.category === "Clothing";
+          }
+          else if (categoryOption === 'weaponry') {
+            return item.category === "Weaponry";
+          }
+          else if (categoryOption === 'furniture') {
+            return item.category === "Furniture";
+          }
+          else if (categoryOption === 'appliances') {
+            return item.category === "Appliances";
+          }
+          else if (categoryOption === 'animals') {
+            return item.category === "Animals";
+          }
+      })
         .sort((a, b) => {
             if (sortOption === 'recent') {
                 return b.id.localeCompare(a.id);
@@ -180,6 +209,10 @@ export default function Listings() {
                             sx={{ color: "#0033a0" }}>
                             <MenuItem value="all">All</MenuItem>
                             <MenuItem value="clothing">Clothing</MenuItem>
+                            <MenuItem value="weaponry">Weaponry</MenuItem>
+                            <MenuItem value="appliances">Appliances</MenuItem>
+                            <MenuItem value="furniture">Furniture</MenuItem>
+                            <MenuItem value="animals">Animals</MenuItem>
                         </Select>
                     </FormControl>
                 </div>
