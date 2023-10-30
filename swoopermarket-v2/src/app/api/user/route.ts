@@ -15,16 +15,10 @@ export const GET = async (req: Request, res: Response) => {
 
 // add a new user to the DB
 export const POST = async (req: Request, res: Response) => {
-    const {id, pass, first_name, last_name} = await req.json();
-
-    let user_id = 1
-    let password = "selma"
-    let first = String(first_name)
-    let last = String(last_name)
+    const {userid, firstName, lastName, email, password} = await req.json();
 
     try {
-        const messages =  await sql`INSERT INTO user_table (Userid, pass, Descr, first_name, last_name) VALUES (${user_id}, ${password}, ${first}, ${last});`;
-        
+        const messages =  await sql`INSERT INTO user_table (Userid, pass, first_name, last_name, email) VALUES (${userid}, ${password}, ${firstName}, ${lastName}, ${email});`;
         return NextResponse.json({ messages }, { status: 200 });
     } catch (error) {
         console.log("Caught error")

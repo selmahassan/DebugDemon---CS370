@@ -13,18 +13,15 @@ export const GET = async (req: Request, res: Response) => {
 
 // post a new listing into DB
 export const POST = async (req: Request, res: Response) => {
-    const {id, title, description, image, category, condition, price, pickup} = await req.json();
+    const {listingid, title, description, image, category, condition, price, pickup} = await req.json();
 
-    let listing_id = 1
-    let user_id = "selma"
-    let product_name = String(title)
-    let hard_description = String(description)
-    let category_id = 1
-    let hard_price = Number(price)
+    let listing_id = 19
+    let user_id = "selma" // TODO : how to fetch user id from newlisting page?
 
-    try {
-        const messages =  await sql`INSERT INTO product_listing (Listing_id, Userid, Product_name, Descr, Category_id, Price) VALUES (${listing_id}, ${user_id}, ${product_name}, ${hard_description}, ${category_id}, ${hard_price});`;
-        
+    try {// TODO: product_listing table doesnt have a condition or pickup column
+        const messages = await sql`INSERT INTO product_listing (Listing_id, Userid, Product_name, Descr, Category_id, Price, Created_at, Modified_at) 
+        VALUES (${listing_id}, ${user_id}, ${title}, ${description}, ${category}, ${price}, NOW(), NOW());`;
+                
         return NextResponse.json({ messages }, { status: 200 });
     } catch (error) {
         console.log("Caught error")
