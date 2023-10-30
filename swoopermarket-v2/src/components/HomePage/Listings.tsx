@@ -75,7 +75,7 @@ const singleItems = [
 ]
 
 
-export default function Listings({listings}) {
+export default function Listings({listings}: {listings:Array<any>}) {
     const [searchQuery, setSearchQuery] = useState('');
     
     const searchResults = listings.filter((item: { descr: string; }) =>
