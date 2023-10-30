@@ -13,7 +13,7 @@ const singleItems = [
     {
         listing_id: 1,
         product_name: "Nike Go FlyEase",
-        description: "Generic Description",
+        descr: "Generic Description",
         category: "Clothing",
         price: 75.00,
         condition: "New",
@@ -22,7 +22,7 @@ const singleItems = [
     {
         listing_id: 8,
         product_name: "Shrink Ray Gun",
-        description: "Generic Description",
+        descr: "Generic Description",
         category: "Weaponry",
         price: 126,
         condition: "Used",
@@ -31,7 +31,7 @@ const singleItems = [
     {
         listing_id: 2,
         product_name: "Levi's Baggy Dad Women's Jeans",
-        description: "Generic Description",
+        descr: "Generic Description",
         category: "Clothing",
         price: 38.75,
         condition: "Used",
@@ -40,7 +40,7 @@ const singleItems = [
     {
         listing_id: 9,
         product_name: "Missile",
-        description: "Generic Description",
+        descr: "Generic Description",
         category: "Weaponry",
         price: 516,
         condition: "Used",
@@ -49,7 +49,7 @@ const singleItems = [
     {
         listing_id: 3,
         product_name: "Green Two-Person Couch w/ Really Comfy Cushions",
-        description: "Generic Description",
+        descr: "Generic Description",
         category: "Furniture",
         price: 250.99,
         condition: "Used",
@@ -58,7 +58,7 @@ const singleItems = [
     {
         listing_id: 4,
         product_name: "Full Length Mirror",
-        description: "Generic Description",
+        descr: "Generic Description",
         category: "Appliances",
         price: 50.99,
         condition: "Used",
@@ -67,7 +67,7 @@ const singleItems = [
     {
         listing_id: 5,
         product_name: "Minifridge w/ Freezer",
-        description: "Generic Description",
+        descr: "Generic Description",
         category: "Appliances",
         price: 40.57,
         condition: "Used",
@@ -76,7 +76,7 @@ const singleItems = [
     {
         listing_id: 6,
         product_name: "Microwave",
-        description: "Generic Description",
+        descr: "Generic Description",
         category: "Appliances",
         price: 38.95,
         condition: "New",
@@ -85,7 +85,7 @@ const singleItems = [
     {
         listing_id: 7,
         product_name: "Pet Alligator",
-        description: "Generic Description",
+        descr: "Generic Description",
         category: "Animals",
         price: 48,
         condition: "Like New",
@@ -105,7 +105,7 @@ export default function Listings({listings}: {listings:Array<any>}) {
     const searchResults = listings
         .filter((item) => {
             if (searchQuery) {
-              return item.description.toLowerCase().includes(searchQuery.toLowerCase());
+              return item.descr.toLowerCase().includes(searchQuery.toLowerCase());
             }
             else return item;
         })
@@ -252,23 +252,14 @@ export default function Listings({listings}: {listings:Array<any>}) {
                 </div>
             </div>
         <br></br>
-        <Typography sx={{ color: "#0033a0", padding: "10px 0px" }}>
+        <Typography sx={{ color: "#0033a0", padding: "10px 0px", mb: 1}}>
           Results ({searchResults.length})
         </Typography>
         <Grid id="listings" container rowSpacing={3} columnSpacing={3}>
-          {searchResults.map((item) => (
+          {searchResults.map((item: ItemType) => (
             <>
-                <Grid key={item.id} xs={12} sm={6} md={4}>
+                <Grid id="listings" container key={item.listing_id} xs={12} sm={4} md={4}>
                     <ListingCard item={item} />
-                </Grid>
-                <Typography sx={{ color: "#0033a0", padding: "10px 0px" }}>
-                    Results ({searchResults.length})
-                </Typography><Grid id="listings" container rowSpacing={3} columnSpacing={3}>
-                {listings.map((item: ItemType) => (
-                    <Grid key={item.listing_id} xs={6} sm={4} md={4}>
-                        <ListingCard item={item} />
-                    </Grid>
-                ))}
                 </Grid>
             </>
           ))}  
