@@ -18,12 +18,6 @@ const avatarImageStyle = {
     height: `${avatarSize}px`,
 };
 
-const editButtonStyle = {
-    position: 'absolute',
-    bottom: 680,
-    right: 580,
-};
-
 export default function ProfilePage() {
     return (
         <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
@@ -31,18 +25,21 @@ export default function ProfilePage() {
                 <Stack direction="column" spacing={1} alignItems="center">
                     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
                         <Avatar alt="Profile Picture" src="/images/avatar/gru.jpg" sx={avatarImageStyle} />
-                        <Tooltip title="Edit Profile">
-                            <IconButton href="/editProfile" sx={editButtonStyle}>
-                                <EditIcon />
-                            </IconButton>
-                        </Tooltip>
                     </div>
+                    <Tooltip title="Edit Profile">
+                        <IconButton href="/editProfile">
+                            <EditIcon />
+                        </IconButton>
+                    </Tooltip>
                     <Rating name="read-only" defaultValue={1.5} precision={0.5} readOnly />
                     <Typography variant="h4" color="initial">
                         Gru
                     </Typography>
                     <Typography variant="body1" color="initial">
                         Email: iWantToStealTheMoon@minions.com
+                    </Typography>
+                    <Typography variant="body1" color="initial">
+                        Phone: 123-456-7890
                     </Typography>
                 </Stack>
                 <Button href="/newlisting" sx={{ borderRadius: 50, width: "fit-content" }} startIcon={<AddIcon />}>

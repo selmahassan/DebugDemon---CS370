@@ -12,6 +12,7 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 export default function EditProfilePage() {
     const [formData, setFormData] = useState({
         name: 'John Doe',
+        phone: '123-456-7890',
         bio: 'I am a user of this platform.',
         profilePicture: '',
         password: '',
@@ -65,6 +66,16 @@ export default function EditProfilePage() {
                     onChange={handleFormChange}
                   />
                 </Grid>
+                  <Grid item xs={12}>
+                      <TextField
+                          fullWidth
+                          id="phone"
+                          name="phone"
+                          label="Phone Number"
+                          value={formData.phone}
+                          onChange={handleFormChange}
+                      />
+                  </Grid>
                 <Grid item xs={12}>
                   <TextField
                     id="bio"
