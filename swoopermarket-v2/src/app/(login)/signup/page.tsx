@@ -1,5 +1,6 @@
 'use client'
 
+import { User } from '@/types';
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -78,10 +79,24 @@ export default function SignUp() {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-        email: data.get('email'),
-        password: data.get('password'),
-        });
+        
+        const user : User = {
+            userid: data.get('firstName') as string,
+            firstName: data.get('firstName') as string,
+            lastName: data.get('lastName') as string,
+            email: data.get('email') as string,
+            password: data.get('password') as string,
+        };
+
+        console.log(user);
+
+        fetch('../api/user', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+          });
     };
 
   return (

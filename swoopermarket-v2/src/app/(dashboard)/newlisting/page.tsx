@@ -25,17 +25,27 @@ export default function StarredPage() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    
+
+    // TODO : categories mistmatch with database
+    let category_id: number = 4; // gotta initialize it bc const listing wants me to
+    if(data.get('category') == 'school_supplies') category_id = 1; // db says apparel = 1
+    else if (data.get('category') == 'furniture') category_id = 2;
+    else if (data.get('category') == 'electronics') category_id = 3;
+    else category_id = 4; // db says entertainment = 4
+
     const listing : Listing = {
-      listingid: Date.now as unknown as number,
+      listingid: Number(Date.now), // TODO : how are we making the unique listing ids and user ids?
       title: data.get('title') as string,
       description: data.get('description') as string,
-      category: data.get('category') as string,
+      category: category_id,
       condition: data.get('condition') as string,
-      price: data.get('price') as unknown as number,
+      price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
+      pickup: data.get('pickup') as string
     };
 
-    fetch('/api/listing', {
+    console.log(listing);
+
+    fetch('../api/listing', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
