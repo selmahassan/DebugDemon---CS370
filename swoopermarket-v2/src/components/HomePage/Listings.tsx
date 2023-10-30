@@ -87,17 +87,17 @@ const singleItems = [
 export default function Listings({listings}: {listings:Array<any>}) {
     const [searchQuery, setSearchQuery] = useState('');
     
-    // const searchResults = listings.filter((item: { descr: string; }) =>
-    //   item.descr.toLowerCase().includes(searchQuery.toLowerCase())
-    // );
+    const searchResults = listings.filter((item: { descr: string; }) =>
+      item.descr.toLowerCase().includes(searchQuery.toLowerCase())
+    );
   
-    // const handleSearch = (query: string) => {
-    //   setSearchQuery(query);
-    // };
+    const handleSearch = (query: string) => {
+      setSearchQuery(query);
+    };
 
     return (
         <>
-            {/* <Grid id="header" container direction="row" justifyContent="space-between" alignItems="center" padding="24px 0px">
+            <Grid id="header" container direction="row" justifyContent="space-between" alignItems="center" padding="24px 0px">
                 <Typography variant="h5" sx={{color: "#0033a0"}}></Typography>
                 <SearchBar
                   placeHolderText="Search SwooperMarket"
@@ -106,7 +106,7 @@ export default function Listings({listings}: {listings:Array<any>}) {
             </Grid>
             <Typography sx={{ color: "#0033a0", padding: "10px 0px" }}>
               Results ({searchResults.length})
-            </Typography> */}
+            </Typography>
             <Grid id="listings" container rowSpacing={3} columnSpacing={3}>
                 {listings.map((item: ItemType) => (
                     <Grid key={item.listing_id} xs={6} sm={4} md={4}>
