@@ -48,6 +48,7 @@ const AddComment: React.FC<CommentProps> = ({ commentsList, setCommentsList, num
         setCommentsList([newComment, ...commentsList]);
         setNumOfComments(numOfComments + 1)
         setComment('');
+        setDisabled(true);
         setButtonsVisible("none");
     }
 
