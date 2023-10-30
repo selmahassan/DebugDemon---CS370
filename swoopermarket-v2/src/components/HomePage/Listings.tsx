@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import ListingCard from '@/components/HomePage/ListingCard';
 import { Typography, FormControl, Select, MenuItem, TextField } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
 import SearchBar from '@/components/SearchBar';
 
 
@@ -123,12 +124,12 @@ export default function Listings() {
       setSearchQuery(query);
     };
 
-    const handleSortChange = (event) => {
-      setSortOption(event.target.value as string);
+    const handleSortChange = (event: SelectChangeEvent<string>) => {
+      setSortOption(event.target.value);
     };
 
-    const handleCategoryChange = (event) => {
-      setCategoryOption(event.target.value as string);
+    const handleCategoryChange = (event: SelectChangeEvent<string>) => {
+      setCategoryOption(event.target.value);
     };
 
     const handlePriceMinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -139,8 +140,8 @@ export default function Listings() {
       setPriceMaxOption(event.target.value);
     };
 
-    const handleConditionChange = (event) => {
-      setConditionOption(event.target.value as string);
+    const handleConditionChange = (event: SelectChangeEvent<string>) => {
+      setConditionOption(event.target.value);
     };
   
     return (
@@ -163,8 +164,7 @@ export default function Listings() {
                         <Select
                             value={sortOption}
                             onChange={handleSortChange}
-                            sx={{ color: "#0033a0" }}
-                        >
+                            sx={{ color: "#0033a0" }}>
                             <MenuItem value="recent">Recent</MenuItem>
                             <MenuItem value="lowToHigh">Price (Low to High)</MenuItem>
                             <MenuItem value="highToLow">Price (High To Low)</MenuItem>
@@ -177,8 +177,7 @@ export default function Listings() {
                         <Select
                             value={categoryOption}
                             onChange={handleCategoryChange}
-                            sx={{ color: "#0033a0" }}
-                        >
+                            sx={{ color: "#0033a0" }}>
                             <MenuItem value="all">All</MenuItem>
                             <MenuItem value="clothing">Clothing</MenuItem>
                         </Select>
@@ -200,8 +199,7 @@ export default function Listings() {
                         <Select
                             value={conditionOption}
                             onChange={handleConditionChange}
-                            sx={{ color: "#0033a0" }}
-                        >
+                            sx={{ color: "#0033a0" }}>
                             <MenuItem value="all">All</MenuItem>
                             <MenuItem value="new">New</MenuItem>
                             <MenuItem value="likenew">Like New</MenuItem>
