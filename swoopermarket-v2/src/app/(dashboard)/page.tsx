@@ -4,7 +4,7 @@ import Listings from '@/components/HomePage/Listings';
 
 async function getData() {
   // TODO: make fetch non-local URL
-  const res = await fetch('http://localhost:3001/api/listing', {
+  const res = await fetch('https://swoopermarket.vercel.app/api/listing', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
