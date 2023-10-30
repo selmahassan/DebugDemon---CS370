@@ -105,7 +105,7 @@ export default function Listings({listings}: {listings:Array<any>}) {
     const searchResults = listings
         .filter((item) => {
             if (searchQuery) {
-              return item.descr.toLowerCase().includes(searchQuery.toLowerCase());
+              return item.product_name.toLowerCase().includes(searchQuery.toLowerCase());
             }
             else return item;
         })
