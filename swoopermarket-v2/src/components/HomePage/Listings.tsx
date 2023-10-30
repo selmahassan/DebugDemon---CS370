@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import ListingCard from '@/components/HomePage/ListingCard';
-import { Typography } from '@mui/material';
+import { Typography, FormControl, Select, MenuItem, TextField } from '@mui/material';
 import SearchBar from '@/components/SearchBar';
 
 
@@ -74,12 +74,73 @@ const singleItems = [
 
 export default function Listings() {
     const [searchQuery, setSearchQuery] = useState('');
-    const searchResults = singleItems.filter((item) =>
-      item.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const [sortOption, setSortOption] = useState('recent');
+    const [categoryOption, setCategoryOption] = useState('all');
+    const [priceMinOption, setPriceMinOption] = useState('');
+    const [priceMaxOption, setPriceMaxOption] = useState('');
+    const [conditionOption, setConditionOption] = useState('all');
+
+    const searchResults = singleItems
+        .filter((item) => {
+            if (searchQuery) {
+              return item.description.toLowerCase().includes(searchQuery.toLowerCase());
+            }
+            else return item;
+        })
+        .filter((item) => {
+            if (priceMinOption && priceMaxOption) {
+              return (item.price >= parseFloat(priceMinOption) && item.price <= parseFloat(priceMaxOption));
+            }
+            else return item;
+        })
+        .filter((item) => {
+            if (conditionOption === 'all') {
+              return item;
+            }
+            else if (conditionOption === 'new') {
+              return item.condition === "New";
+            }
+            else if (conditionOption === 'likenew') {
+              return item.condition === "Like New";
+            }
+            else if (conditionOption === 'used') {
+              return item.condition === "Used";
+            }
+        })
+        .sort((a, b) => {
+            if (sortOption === 'recent') {
+                return b.id.localeCompare(a.id);
+            } else if (sortOption === 'lowToHigh') {
+                return a.price - b.price;
+            } else if (sortOption === 'highToLow') {
+                return b.price - a.price;
+            }
+            return 0;
+        });
+
   
     const handleSearch = (query: string) => {
       setSearchQuery(query);
+    };
+
+    const handleSortChange = (event) => {
+      setSortOption(event.target.value as string);
+    };
+
+    const handleCategoryChange = (event) => {
+      setCategoryOption(event.target.value as string);
+    };
+
+    const handlePriceMinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setPriceMinOption(event.target.value);
+    };
+
+    const handlePriceMaxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setPriceMaxOption(event.target.value);
+    };
+
+    const handleConditionChange = (event) => {
+      setConditionOption(event.target.value as string);
     };
   
     return (
@@ -87,13 +148,69 @@ export default function Listings() {
         <Grid id="header" container direction="row" justifyContent="space-between" alignItems="center" padding="24px 0px">
           {/* TODO: add in logo */}
           <Typography variant="h5" sx={{ color: "#0033a0" }}>
-            Your Logo
+            Swoopermarket Logo
           </Typography>
-          <SearchBar
-            placeHolderText="Search SwooperMarket"
-            onSearch={handleSearch}
-          />
+          <SearchBar placeHolderText="Search SwooperMarket" onSearch={handleSearch}/>
         </Grid>
+        <div>
+            <Typography variant="h6">Filters</Typography>
+            <br />
+        </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+                <div>
+                    <Typography>Sort By</Typography>
+                    <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
+                        <Select
+                            value={sortOption}
+                            onChange={handleSortChange}
+                            sx={{ color: "#0033a0" }}
+                        >
+                            <MenuItem value="recent">Recent</MenuItem>
+                            <MenuItem value="lowToHigh">Price (Low to High)</MenuItem>
+                            <MenuItem value="highToLow">Price (High To Low)</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
+                <div style={{ marginLeft: "10px" }}>
+                    <Typography>Item Category</Typography>
+                    <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
+                        <Select
+                            value={categoryOption}
+                            onChange={handleCategoryChange}
+                            sx={{ color: "#0033a0" }}
+                        >
+                            <MenuItem value="all">All</MenuItem>
+                            <MenuItem value="clothing">Clothing</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
+                <div style = {{marginLeft: "10px"}}>
+                  <Typography>Price</Typography>
+                  <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Min" variant="outlined" value={priceMinOption} onChange={handlePriceMinChange}/>
+                </div>
+                <div>
+                  <Typography sx = {{marginTop: "25px"}}>to</Typography>
+                </div>
+                <div style = {{marginLeft: "10px"}}>
+                  <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "34px"}} id="outlined-basic" label="Max" variant="outlined" value={priceMaxOption} onChange={handlePriceMaxChange}/>
+                </div>
+                <div style={{marginLeft:"10px"}}>
+                    <Typography>Condition</Typography>
+                    <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
+                        <Select
+                            value={conditionOption}
+                            onChange={handleConditionChange}
+                            sx={{ color: "#0033a0" }}
+                        >
+                            <MenuItem value="all">All</MenuItem>
+                            <MenuItem value="new">New</MenuItem>
+                            <MenuItem value="likenew">Like New</MenuItem>
+                            <MenuItem value="used">Used</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
+            </div>
+        <br></br>
         <Typography sx={{ color: "#0033a0", padding: "10px 0px" }}>
           Results ({searchResults.length})
         </Typography>
