@@ -1,4 +1,5 @@
-import { Typography, Grid } from "@mui/material";
+import { Typography } from "@mui/material";
+import Grid from '@mui/material/Unstable_Grid2';
 import ListingCard from '@/components/HomePage/ListingCard';
 import { ItemType } from "@/types/itemType";
 
@@ -28,18 +29,18 @@ const profileItems = [
 
 export default function ProfileListings() {
     return (
-        <div>
+        <>
             <Typography sx={{ color: "#0033a0", padding: "10px 0px" }}>
                 Results ({profileItems.length})
             </Typography>
-            <Grid id="personal listings" container rowSpacing={3} columnSpacing={3}>
+            <Grid id="personal listings" container rowSpacing={3} columnSpacing={3} >
                 {profileItems.map((item: ItemType) => (
-                    <Grid key={item.listing_id} xs={12} sm={4} md={4}>
+                    <Grid key={item.listing_id} xs={6} sm={4} md={4}>
                         <ListingCard item={item}/>
                     </Grid>
                 ))}
             </Grid>
             
-        </div>
+        </>
     );
 }

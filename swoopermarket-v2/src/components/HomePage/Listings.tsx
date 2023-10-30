@@ -109,7 +109,7 @@ export default function Listings({listings}: {listings:Array<any>}) {
             </Typography>
             <Grid id="listings" container rowSpacing={3} columnSpacing={3}>
                 {listings.map((item: ItemType) => (
-                    <Grid key={item.listing_id} xs={12} sm={3} md={6}>
+                    <Grid key={item.listing_id} xs={6} sm={4} md={4}>
                         <ListingCard item={item}/>
                     </Grid>
                 ))}
