@@ -11,10 +11,10 @@ import { ItemType } from '@/types/itemType';
 export default function ListingCard({ item }: { item: ItemType }) {
   return (
     <Card>
-      <CardActionArea href={`/singleitem/${item.id}`}>
+      <CardActionArea href={`/singleitem/${item.listing_id}`}>
         <Image
           alt="Listing Image"
-          src={item.src}
+          src={item.listing_img ? item.listing_img : "https://images.unsplash.com/photo-1674315411321-d65c2d07b850?auto=format&fit=crop&q=80&w=2832&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
           width={640}
           height={480}
           style={{
@@ -24,13 +24,16 @@ export default function ListingCard({ item }: { item: ItemType }) {
           }}
         />
         <CardContent>
+        <Typography gutterBottom component="div" variant='h6'>
+            {item.product_name}
+          </Typography>
           <Typography gutterBottom component="div">
-            {item.description}
+            {item.descr}
           </Typography>
           <Grid container direction="row" justifyContent="space-between" alignItems="center" padding="8px 0px">
-            <Box sx={{ border: '1px solid grey', padding: '4px 6px', borderRadius: '5px'}}>
+            {/* <Box sx={{ border: '1px solid grey', padding: '4px 6px', borderRadius: '5px'}}>
               {item.condition}
-            </Box>
+            </Box> */}
             <Typography variant="h6" color="text.secondary" fontWeight="fontWeightBold">
               {`$${item.price}`}
             </Typography>
