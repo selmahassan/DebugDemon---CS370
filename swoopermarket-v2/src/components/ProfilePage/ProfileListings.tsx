@@ -3,26 +3,29 @@ import ListingCard from '@/components/HomePage/ListingCard';
 
 const profileItems = [
     {
-        id: '11',
-        description: "Pet Alligator",
+        listing_id: 7,
+        product_name: "Pet Alligator",
+        description: "Generic Description",
         price: 48,
         condition: "Like New",
-        src: "/images/profileListings/alligator.jpg",
+        listing_img: "/images/profileListings/alligator.jpg",
     },
     {
-        id: '12',
-        description: "Shrink Ray Gun",
+        listing_id: 8,
+        product_name: "Shrink Ray Gun",
+        description: "Generic Description",
         price: 126,
         condition: "Used",
-        src: "/images/profileListings/shrink ray gun.jpg",
+        listing_img: "/images/profileListings/shrink ray gun.jpg",
     },
     {
-        id: '13',
-        description: "Missile",
+        listing_id: 9,
+        product_name: "Missile",
+        description: "Generic Description",
         price: 516,
         condition: "Used",
-        src: "/images/profileListings/missle.jpg",
-    }
+        listing_img: "/images/profileListings/missle.jpg",
+    },
 ];
 
 export default function ProfileListings() {

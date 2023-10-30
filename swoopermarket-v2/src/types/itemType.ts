@@ -6,6 +6,4 @@ export type ItemType = {
     condition: string;
     price: number;
     listing_img: any;
-    id: string; 
-    description: string;
 };
