@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import ListingCard from '@/components/HomePage/ListingCard';
@@ -72,34 +74,17 @@ const singleItems = [
     }
 ]
 
-async function getData() {
-    // TODO: make fetch non-local URL
-    const res = await fetch('http://localhost:3000/api/listing', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    });
-    
-    if (!res.ok) {
-      throw new Error('Failed to fetch data')
-    }
-   
-    return res.json()
-  }
 
-export default async function Listings() {
+export default function Listings({listings}) {
     const [searchQuery, setSearchQuery] = useState('');
     
-    const searchResults = singleItems.filter((item) =>
+    const searchResults = listings.filter((item: { descr: string; }) =>
       item.descr.toLowerCase().includes(searchQuery.toLowerCase())
     );
   
     const handleSearch = (query: string) => {
       setSearchQuery(query);
     };
-          
-    const listings = await getData();
 
     return (
         <>
@@ -110,18 +95,11 @@ export default async function Listings() {
                   onSearch={handleSearch}
                 />
             </Grid>
-            <Typography sx={{color: "#0033a0", padding: "10px 0px"}}>
-                Results ({listings.rows.length})
-            </Typography>
-            <SearchBar
-                placeHolderText="Search SwooperMarket"
-                onSearch={handleSearch}
-            />
             <Typography sx={{ color: "#0033a0", padding: "10px 0px" }}>
               Results ({searchResults.length})
             </Typography>
             <Grid id="listings" container rowSpacing={3} columnSpacing={3}>
-                {listings.rows.map((item: ItemType) => (
+                {listings.map((item: ItemType) => (
                     <Grid key={item.listing_id} xs={12} sm={3} md={6}>
                         <ListingCard item={item}/>
                     </Grid>
