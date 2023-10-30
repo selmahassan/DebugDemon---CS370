@@ -255,10 +255,10 @@ export default function Listings({listings}: {listings:Array<any>}) {
         <Typography sx={{ color: "#0033a0", padding: "10px 0px", mb: 1}}>
           Results ({searchResults.length})
         </Typography>
-        <Grid id="listings" container rowSpacing={3} columnSpacing={3}>
+        <Grid container rowSpacing={3} columnSpacing={3}>
           {searchResults.map((item: ItemType) => (
             <>
-                <Grid id="listings" container key={item.listing_id} xs={12} sm={4} md={4}>
+                <Grid id="listings" key={item.listing_id} xs={12} sm={4} md={4}>
                     <ListingCard item={item} />
                 </Grid>
             </>
