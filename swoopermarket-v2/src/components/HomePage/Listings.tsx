@@ -87,13 +87,13 @@ const singleItems = [
 export default function Listings({listings}: {listings:Array<any>}) {
     const [searchQuery, setSearchQuery] = useState('');
     
-    const searchResults = listings.filter((item: { descr: string; }) =>
-      item.descr.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // const searchResults = listings.filter((item: { descr: string; }) =>
+    //   item.descr.toLowerCase().includes(searchQuery.toLowerCase())
+    // );
   
-    const handleSearch = (query: string) => {
-      setSearchQuery(query);
-    };
+    // const handleSearch = (query: string) => {
+    //   setSearchQuery(query);
+    // };
 
     return (
         <>
