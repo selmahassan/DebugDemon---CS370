@@ -29,15 +29,37 @@ export default function Login() {
     event.preventDefault();
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+const [errorMessage, setErrorMessage] = React.useState('');
+
+const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+  const data = new FormData(event.currentTarget);
+
+  const email = data.get('email') as string;
+  const password = data.get('password') as string;
+
+  try {
+    const response = await fetch('/api/userlogin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, pass: password }),
     });
-    router.push('/') //TODO: Redirect
-  };
+
+    const result = await response.json();
+
+    if (response.status === 200) {
+      router.push('/'); // Redirect to the main page or dashboard
+    } else {
+      setErrorMessage(result.message);
+    }
+
+  } catch (error) {
+    console.error(error);
+    setErrorMessage('An error occurred. Please try again.');
+  }
+};
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
@@ -75,6 +97,7 @@ export default function Login() {
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             <TextField
               margin="normal"
               required
