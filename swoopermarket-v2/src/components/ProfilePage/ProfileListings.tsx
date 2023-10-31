@@ -35,7 +35,7 @@ export default function ProfileListings() {
             </Typography>
             <Grid id="personal listings" container rowSpacing={3} columnSpacing={3} >
                 {profileItems.map((item: ItemType) => (
-                    <Grid key={item.listing_id} xs={6} sm={4} md={4}>
+                    <Grid key={item.listing_id} xs={12} sm={4} md={4}>
                         <ListingCard item={item}/>
                     </Grid>
                 ))}

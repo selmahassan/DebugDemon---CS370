@@ -193,69 +193,71 @@ export default function Listings({listings}: {listings:Array<any>}) {
           <SearchBar placeHolderText="Search SwooperMarket" onSearch={handleSearch}/>
         </Grid>
         <div>
-            <Typography variant="h6">Filters</Typography>
+            <Typography variant="h6" style={{ marginLeft: "10px" }}>Filters</Typography>
             <br />
         </div>
-            <div style={{ display: "flex", alignItems: "center" }}>
-                <div>
-                    <Typography>Sort By</Typography>
-                    <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
-                        <Select
-                            value={sortOption}
-                            onChange={handleSortChange}
-                            sx={{ color: "#0033a0" }}>
-                            <MenuItem value="recent">Recent</MenuItem>
-                            <MenuItem value="lowToHigh">Price (Low to High)</MenuItem>
-                            <MenuItem value="highToLow">Price (High To Low)</MenuItem>
-                        </Select>
-                    </FormControl>
-                </div>
-                <div style={{ marginLeft: "10px" }}>
-                    <Typography>Item Category</Typography>
-                    <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
-                        <Select
-                            value={categoryOption}
-                            onChange={handleCategoryChange}
-                            sx={{ color: "#0033a0" }}>
-                            <MenuItem value="all">All</MenuItem>
-                            <MenuItem value="clothing">Clothing</MenuItem>
-                            <MenuItem value="weaponry">Weaponry</MenuItem>
-                            <MenuItem value="appliances">Appliances</MenuItem>
-                            <MenuItem value="furniture">Furniture</MenuItem>
-                            <MenuItem value="animals">Animals</MenuItem>
-                        </Select>
-                    </FormControl>
-                </div>
-                <div style = {{marginLeft: "10px"}}>
-                  <Typography>Price</Typography>
-                  <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Min" variant="outlined" value={priceMinOption} onChange={handlePriceMinChange}/>
-                </div>
-                <div>
-                  <Typography sx = {{marginTop: "25px"}}>to</Typography>
-                </div>
-                <div style = {{marginLeft: "10px"}}>
-                  <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "34px"}} id="outlined-basic" label="Max" variant="outlined" value={priceMaxOption} onChange={handlePriceMaxChange}/>
-                </div>
-                <div style={{marginLeft:"10px"}}>
-                    <Typography>Condition</Typography>
-                    <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
-                        <Select
-                            value={conditionOption}
-                            onChange={handleConditionChange}
-                            sx={{ color: "#0033a0" }}>
-                            <MenuItem value="all">All</MenuItem>
-                            <MenuItem value="new">New</MenuItem>
-                            <MenuItem value="likenew">Like New</MenuItem>
-                            <MenuItem value="used">Used</MenuItem>
-                        </Select>
-                    </FormControl>
-                </div>
+        <Grid id="filter" container rowSpacing={2} columnSpacing={2}>
+          <Grid id="sort-by" xs={6} sm={2}>
+              <div style={{ marginLeft: "10px" }}>
+                  <Typography>Sort By</Typography>
+                  <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
+                      <Select
+                          value={sortOption}
+                          onChange={handleSortChange}
+                          sx={{ color: "#0033a0" }}>
+                          <MenuItem value="recent">Recent</MenuItem>
+                          <MenuItem value="lowToHigh">Price (Low to High)</MenuItem>
+                          <MenuItem value="highToLow">Price (High To Low)</MenuItem>
+                      </Select>
+                  </FormControl>
+              </div>
+          </Grid>
+          <Grid id="item-category" xs={6} sm={2}>
+            <div style={{ marginLeft: "10px" }}>
+                <Typography>Item Category</Typography>
+                <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
+                    <Select
+                        value={categoryOption}
+                        onChange={handleCategoryChange}
+                        sx={{ color: "#0033a0" }}>
+                        <MenuItem value="all">All</MenuItem>
+                        <MenuItem value="clothing">Clothing</MenuItem>
+                        <MenuItem value="weaponry">Weaponry</MenuItem>
+                        <MenuItem value="appliances">Appliances</MenuItem>
+                        <MenuItem value="furniture">Furniture</MenuItem>
+                        <MenuItem value="animals">Animals</MenuItem>
+                    </Select>
+                </FormControl>
             </div>
-        <br></br>
-        <Typography sx={{ color: "#0033a0", padding: "10px 0px", mb: 1}}>
+          </Grid>
+          <Grid id="price" xs={6} sm={2}>
+            <div style={{marginLeft:"10px"}}>
+              <Typography>Price</Typography>
+              <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Min" variant="outlined" value={priceMinOption} onChange={handlePriceMinChange}/>
+              <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Max" variant="outlined" value={priceMaxOption} onChange={handlePriceMaxChange}/>
+            </div>
+          </Grid>
+          <Grid id="condition" xs={6} sm={2}>
+            <div style={{marginLeft:"10px"}}>
+              <Typography>Condition</Typography>
+              <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
+                  <Select
+                      value={conditionOption}
+                      onChange={handleConditionChange}
+                      sx={{ color: "#0033a0" }}>
+                      <MenuItem value="all">All</MenuItem>
+                      <MenuItem value="new">New</MenuItem>
+                      <MenuItem value="likenew">Like New</MenuItem>
+                      <MenuItem value="used">Used</MenuItem>
+                  </Select>
+              </FormControl>
+            </div>
+          </Grid>
+        </Grid>
+        <Typography sx={{ color: "#0033a0", padding: "10px 0px", mb: 1, mt: 2}}>
           Results ({searchResults.length})
         </Typography>
-        <Grid container rowSpacing={3} columnSpacing={3}>
+        <Grid id="listing-container" container rowSpacing={3} columnSpacing={3}>
           {searchResults.map((item: ItemType) => (
             <>
                 <Grid id="listings" key={item.listing_id} xs={12} sm={4} md={4}>
