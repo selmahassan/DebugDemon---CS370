@@ -230,7 +230,7 @@ export default function Listings({listings}: {listings:Array<any>}) {
                 </FormControl>
             </div>
           </Grid>
-          <Grid id="price" xs={12} sm={6}>
+          <Grid id="price" xs={12} sm={2}>
             <div style={{marginLeft:"10px"}}>
               <Typography>Price</Typography>
               <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Min" variant="outlined" value={priceMinOption} onChange={handlePriceMinChange}/>
