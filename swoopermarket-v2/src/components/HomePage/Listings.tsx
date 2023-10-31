@@ -197,7 +197,7 @@ export default function Listings({listings}: {listings:Array<any>}) {
             <br />
         </div>
         <Grid id="filter" container rowSpacing={2} columnSpacing={2}>
-          <Grid id="sort-by" xs={6} sm={2}>
+          <Grid id="sort-by" xs={12} sm={2}>
               <div style={{ marginLeft: "10px" }}>
                   <Typography>Sort By</Typography>
                   <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
@@ -212,7 +212,7 @@ export default function Listings({listings}: {listings:Array<any>}) {
                   </FormControl>
               </div>
           </Grid>
-          <Grid id="item-category" xs={6} sm={2}>
+          <Grid id="item-category" xs={12} sm={2}>
             <div style={{ marginLeft: "10px" }}>
                 <Typography>Item Category</Typography>
                 <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
@@ -230,14 +230,14 @@ export default function Listings({listings}: {listings:Array<any>}) {
                 </FormControl>
             </div>
           </Grid>
-          <Grid id="price" xs={6} sm={2}>
+          <Grid id="price" xs={12} sm={6}>
             <div style={{marginLeft:"10px"}}>
               <Typography>Price</Typography>
               <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Min" variant="outlined" value={priceMinOption} onChange={handlePriceMinChange}/>
               <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Max" variant="outlined" value={priceMaxOption} onChange={handlePriceMaxChange}/>
             </div>
           </Grid>
-          <Grid id="condition" xs={6} sm={2}>
+          <Grid id="condition" xs={12} sm={2}>
             <div style={{marginLeft:"10px"}}>
               <Typography>Condition</Typography>
               <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
