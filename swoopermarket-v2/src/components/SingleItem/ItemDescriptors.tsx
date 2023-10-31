@@ -8,6 +8,8 @@ import ItemInterest from './Descriptors/ItemInterest';
 type Descriptor = {
     listingTitle: string,
     sellerId: string,
+    email: string,
+    phone: string,
     description: string,
     price: number,
     condition: string,
@@ -20,6 +22,9 @@ export default function ItemDescriptors({ descriptors } : { descriptors: Descrip
             <ItemHeader 
                 title={descriptors.listingTitle}
                 seller={descriptors.sellerId}
+                email={descriptors.email}
+                phone={descriptors.phone}
+
             />
             <Divider light />
             <ItemBody 
