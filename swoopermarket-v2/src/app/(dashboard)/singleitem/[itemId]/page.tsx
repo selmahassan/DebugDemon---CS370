@@ -38,6 +38,8 @@ tempItems.set("1", {
   descriptors: {
     listingTitle: "Nike Go FlyEase",
     sellerId: "Michael Jordan",
+    email: "michael.jordan@emory.edu",
+    phone: "111-111-1111",
     description: "I am selling brand new size 12 men’s Nike Go FlyEase shoes at a discounted price. These shoes can easily be put on/off without reaching down. There is nothing wrong with these shoes, just too small for me.",
     price: 75,
     condition: "New",
@@ -67,6 +69,8 @@ tempItems.set("2", {
   descriptors: {
     listingTitle: "Levi's Baggy Dad Women's Jeans",
     sellerId: "Emma Chamberlain",
+    email: "emma.chamberlain@emory.edu",
+    phone: "111-111-1111",
     description: "These jeans are slightly used, but they're pretty much new. They fit really well around the waist, and they're loose around the legs. Just did fit my style anymore, but they're really cute anyways.",
     price: 38.75,
     condition: "Used",
@@ -84,6 +88,8 @@ tempItems.set("3", {
   descriptors: {
     listingTitle: "",
     sellerId: "",
+    email: "",
+    phone: "",
     description: "",
     price: 0,
     condition: "",
@@ -101,6 +107,8 @@ tempItems.set("4", {
   descriptors: {
     listingTitle: "",
     sellerId: "",
+    email: "",
+    phone: "",
     description: "",
     price: 0,
     condition: "",
@@ -118,6 +126,8 @@ tempItems.set("5", {
   descriptors: {
     listingTitle: "",
     sellerId: "",
+    email: "",
+    phone: "",
     description: "",
     price: 0,
     condition: "",
@@ -135,6 +145,8 @@ tempItems.set("6", {
   descriptors: {
     listingTitle: "",
     sellerId: "",
+    email: "",
+    phone: "",
     description: "",
     price: 0,
     condition: "",
@@ -152,6 +164,8 @@ tempItems.set("7", {
   descriptors: {
     listingTitle: "",
     sellerId: "",
+    email: "",
+    phone: "",
     description: "",
     price: 0,
     condition: "",
@@ -169,6 +183,8 @@ tempItems.set("8", {
   descriptors: {
     listingTitle: "",
     sellerId: "",
+    email: "",
+    phone: "",
     description: "",
     price: 0,
     condition: "",
@@ -186,6 +202,8 @@ tempItems.set("9", {
   descriptors: {
     listingTitle: "",
     sellerId: "",
+    email: "",
+    phone: "",
     description: "",
     price: 0,
     condition: "",
