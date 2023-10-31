@@ -314,7 +314,9 @@ export default function StarredPage() {
                             description: formData.description,
                             price: formData.price,
                             condition: formData.condition,
-                            pickup: formData.pickup
+                            pickup: formData.pickup,
+                            email: "my_email",
+                            phone: "my_phone",
                         }}/>
                       </Grid>
                     </Grid>
