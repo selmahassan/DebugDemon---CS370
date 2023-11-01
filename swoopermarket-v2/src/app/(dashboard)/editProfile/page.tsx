@@ -1,5 +1,6 @@
 'use client'
 
+import { User } from '@/types';
 import React, { useState} from 'react';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -27,18 +28,33 @@ export default function EditProfilePage() {
         });
     };
 
+    // TODO : how to even get to this page on frontend? is there an edit profile button anywhere to get to this page?
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        // TODO: Make the api call to change the profile information
-        // fetch('/api/editProfile', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(listing)
-        // });
+        // TODO : there's two different User types, one uses name (first and last concatenated) and the other one (from signup) uses firstname lastname. 
+        // it's bc the pages ask for diff fields. this one doesn't let you change email, but there is a user bio
+        const user : User = {
+          userid: data.get('name') as string,
+          firstName: data.get('name') as string,
+          lastName: data.get('name') as string,
+          bio: data.get('bio') as string,
+          email: data.get('email') as string,
+          password: data.get('password') as string,
+        };
+
+        console.log(user);
+
+        // TODO : Make the api call to change the profile information
+        // TODO : Can't reach PUT call bc put relies on url having ~/editProfile/[user_id]. from user id it can go an update in the DB the matching profile, is there any way to automatically append user id to url when they're logged in and have clicked on edit profile button?
+        fetch('../api/user/[id]', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        });
 
     };
 
