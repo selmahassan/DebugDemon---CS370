@@ -18,7 +18,7 @@ export const POST = async (req: Request, res: Response) => {
     const {userid, firstName, lastName, email, password} = await req.json();
 
     try {
-        const messages =  await sql`INSERT INTO user_table (Userid, pass, first_name, last_name, email) VALUES (${userid}, ${password}, ${firstName}, ${lastName}, ${email});`;
+        const messages =  await sql`INSERT INTO user_table (Userid, pass, first_name, last_name, email) VALUES (${2}, ${password}, ${firstName}, ${lastName}, ${email});`;
         return NextResponse.json({ messages }, { status: 200 });
     } catch (error) {
         console.log("Caught error")
