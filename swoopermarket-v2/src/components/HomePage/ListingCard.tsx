@@ -5,7 +5,6 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/system/Unstable_Grid/Grid';
-import Box from '@mui/system/Box';
 import { ItemType } from '@/types/itemType';
 
 export default function ListingCard({ item }: { item: ItemType }) {
@@ -19,7 +18,7 @@ export default function ListingCard({ item }: { item: ItemType }) {
           height={480}
           style={{
             maxWidth: '100%',
-            height: '300px',
+            height: '250px',
             objectFit: 'cover',
           }}
         />
