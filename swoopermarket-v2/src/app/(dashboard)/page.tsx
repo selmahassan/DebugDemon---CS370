@@ -3,12 +3,12 @@ import Box from '@mui/material/Box';
 import Listings from '@/components/HomePage/Listings';
 
 async function getData() {
-  // TODO: make fetch non-local URL
   const res = await fetch(process.env.API_URL + 'api/listing', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
     },
+    cache: 'no-store'
   });
   
   if (!res.ok) {

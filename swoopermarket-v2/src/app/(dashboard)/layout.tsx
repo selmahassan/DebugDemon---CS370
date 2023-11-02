@@ -14,7 +14,7 @@ const DRAWER_WIDTH = 240;
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
+      <body suppressHydrationWarning={true}>
         <ThemeRegistry>
           <NavBar/>
           <Box
