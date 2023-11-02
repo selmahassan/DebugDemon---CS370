@@ -76,7 +76,6 @@ export default function Listings({listings}: {listings:Array<any>}) {
             }
             return 0;
         });
-
   
     const handleSearch = (query: string) => {
       setSearchQuery(query);
@@ -105,68 +104,57 @@ export default function Listings({listings}: {listings:Array<any>}) {
     return (
       <>
         <Grid id="header" container direction="row" justifyContent="space-between" alignItems="center" padding="24px 0px">
-          <SearchBar placeHolderText="Search SwooperMarket" onSearch={handleSearch}/>
+            <SearchBar placeHolderText="Search SwooperMarket" onSearch={handleSearch}/>
         </Grid>
-        <div>
-            <Typography variant="h6" style={{ marginLeft: "10px" }}>Filters</Typography>
-            <br />
-        </div>
+        <Typography variant="h6" style={{ marginBottom: "5px" }}>Filters</Typography>
         <Grid id="filter" container rowSpacing={2} columnSpacing={2}>
-          <Grid id="sort-by" key={1} xs={12} sm={2}>
-              <div style={{ marginLeft: "10px" }}>
-                  <Typography>Sort By</Typography>
-                  <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
-                      <Select
-                          value={sortOption}
-                          onChange={handleSortChange}
-                          sx={{ color: "#0033a0" }}>
-                          <MenuItem value="recent">Recent</MenuItem>
-                          <MenuItem value="lowToHigh">Price (Low to High)</MenuItem>
-                          <MenuItem value="highToLow">Price (High To Low)</MenuItem>
-                      </Select>
-                  </FormControl>
-              </div>
+          <Grid id="sort-by" key={1} xs={12} sm={2} sx={{mr:2}}>
+            <Typography>Sort By</Typography>
+            <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
+                <Select
+                    value={sortOption}
+                    onChange={handleSortChange}
+                    sx={{ color: "#0033a0" }}>
+                    <MenuItem value="recent">Recent</MenuItem>
+                    <MenuItem value="lowToHigh">Price (Low to High)</MenuItem>
+                    <MenuItem value="highToLow">Price (High To Low)</MenuItem>
+                </Select>
+            </FormControl>
           </Grid>
-          <Grid id="item-category" key={2} xs={12} sm={2}>
-            <div style={{ marginLeft: "10px" }}>
-                <Typography>Item Category</Typography>
-                <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
-                    <Select
-                        value={categoryOption}
-                        onChange={handleCategoryChange}
-                        sx={{ color: "#0033a0" }}>
-                        <MenuItem value="all">All</MenuItem>
-                        <MenuItem value="clothing">Clothing</MenuItem>
-                        <MenuItem value="weaponry">Weaponry</MenuItem>
-                        <MenuItem value="appliances">Appliances</MenuItem>
-                        <MenuItem value="furniture">Furniture</MenuItem>
-                        <MenuItem value="animals">Animals</MenuItem>
-                    </Select>
-                </FormControl>
-            </div>
+          <Grid id="item-category" key={2} xs={12} sm={2} sx={{mr:2}}>
+            <Typography>Item Category</Typography>
+            <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
+                <Select
+                    value={categoryOption}
+                    onChange={handleCategoryChange}
+                    sx={{ color: "#0033a0" }}>
+                    <MenuItem value="all">All</MenuItem>
+                    <MenuItem value="clothing">Clothing</MenuItem>
+                    <MenuItem value="weaponry">Weaponry</MenuItem>
+                    <MenuItem value="appliances">Appliances</MenuItem>
+                    <MenuItem value="furniture">Furniture</MenuItem>
+                    <MenuItem value="animals">Animals</MenuItem>
+                </Select>
+            </FormControl>
           </Grid>
-          <Grid id="price" key={3} xs={12} sm={2}>
-            <div style={{marginLeft:"10px"}}>
-              <Typography>Price</Typography>
-              <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Min" variant="outlined" value={priceMinOption} onChange={handlePriceMinChange}/>
-              <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Max" variant="outlined" value={priceMaxOption} onChange={handlePriceMaxChange}/>
-            </div>
+          <Grid id="price" key={3} xs={12} sm={2} sx={{mr:2}}>
+            <Typography>Price</Typography>
+            <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Min" variant="outlined" value={priceMinOption} onChange={handlePriceMinChange}/>
+            <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Max" variant="outlined" value={priceMaxOption} onChange={handlePriceMaxChange}/>
           </Grid>
-          <Grid id="condition" key={4} xs={12} sm={2}>
-            <div style={{marginLeft:"10px"}}>
-              <Typography>Condition</Typography>
-              <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
-                  <Select
-                      value={conditionOption}
-                      onChange={handleConditionChange}
-                      sx={{ color: "#0033a0" }}>
-                      <MenuItem value="all">All</MenuItem>
-                      <MenuItem value="new">New</MenuItem>
-                      <MenuItem value="likenew">Like New</MenuItem>
-                      <MenuItem value="used">Used</MenuItem>
-                  </Select>
-              </FormControl>
-            </div>
+          <Grid id="condition" key={4} xs={12} sm={3} sx={{mr:2}}>
+            <Typography>Condition</Typography>
+            <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
+                <Select
+                    value={conditionOption}
+                    onChange={handleConditionChange}
+                    sx={{ color: "#0033a0" }}>
+                    <MenuItem value="all">All</MenuItem>
+                    <MenuItem value="new">New</MenuItem>
+                    <MenuItem value="likenew">Like New</MenuItem>
+                    <MenuItem value="used">Used</MenuItem>
+                </Select>
+            </FormControl>
           </Grid>
         </Grid>
         <Typography sx={{ color: "#0033a0", padding: "10px 0px", mb: 1, mt: 2}}>
