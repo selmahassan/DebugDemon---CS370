@@ -137,12 +137,7 @@ export default function Listings({listings}: {listings:Array<any>}) {
                 </Select>
             </FormControl>
           </Grid>
-          <Grid id="price" key={3} xs={12} sm={2} sx={{mr:2}}>
-            <Typography>Price</Typography>
-            <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Min" variant="outlined" value={priceMinOption} onChange={handlePriceMinChange}/>
-            <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Max" variant="outlined" value={priceMaxOption} onChange={handlePriceMaxChange}/>
-          </Grid>
-          <Grid id="condition" key={4} xs={12} sm={3} sx={{mr:2}}>
+          <Grid id="condition" key={4} xs={12} sm={2} sx={{mr:2}}>
             <Typography>Condition</Typography>
             <FormControl sx = {{ minWidth: 192.19, marginRight: "10px", marginTop: "10px"}}>
                 <Select
@@ -156,17 +151,20 @@ export default function Listings({listings}: {listings:Array<any>}) {
                 </Select>
             </FormControl>
           </Grid>
+          <Grid id="price" key={3} xs={12} sm={5} sx={{mr:2}}>
+            <Typography>Price</Typography>
+            <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Min" variant="outlined" value={priceMinOption} onChange={handlePriceMinChange}/>
+            <TextField sx={{minWidth: 192.19, marginRight: "10px", marginTop: "10px"}} id="outlined-basic" label="Max" variant="outlined" value={priceMaxOption} onChange={handlePriceMaxChange}/>
+          </Grid>
         </Grid>
         <Typography sx={{ color: "#0033a0", padding: "10px 0px", mb: 1, mt: 2}}>
           Results ({searchResults.length})
         </Typography>
         <Grid id="listing-container" container rowSpacing={3} columnSpacing={3}>
           {searchResults.map((item: ItemType) => (
-            <>
-                <Grid id="listings" key={item.listing_id} xs={12} sm={4} md={4}>
-                    <ListingCard item={item} />
-                </Grid>
-            </>
+            <Grid id="listings" key={item.listing_id} xs={12} sm={4} md={4}>
+              <ListingCard item={item} />
+            </Grid>
           ))}  
         </Grid>
     </>
