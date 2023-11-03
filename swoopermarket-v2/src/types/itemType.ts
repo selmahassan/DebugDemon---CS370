@@ -4,4 +4,5 @@ export type ItemType = {
     descr: string;
     price: number;
     listing_img: any;
+    category_id: number;
 };
