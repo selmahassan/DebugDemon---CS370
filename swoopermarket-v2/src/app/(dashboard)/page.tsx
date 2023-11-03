@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Listings from '@/components/HomePage/Listings';
 
-async function getData() {
+async function getListings() {
   const res = await fetch(process.env.API_URL + 'api/listing', {
     method: 'GET',
     headers: {
@@ -19,7 +19,7 @@ async function getData() {
 }
 
 export default async function HomePage() {
-  const res = await getData();
+  const res = await getListings();
   let listings = res.rows
 
   return (
