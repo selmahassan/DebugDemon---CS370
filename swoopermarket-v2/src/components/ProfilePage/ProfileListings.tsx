@@ -10,6 +10,7 @@ const profileItems = [
         descr: "Generic Description",
         price: 48,
         listing_img: "/images/profileListings/alligator.jpg",
+        category_id: 4,
     },
     {
         listing_id: 8,
@@ -17,6 +18,7 @@ const profileItems = [
         descr: "Generic Description",
         price: 126,
         listing_img: "/images/profileListings/shrink ray gun.jpg",
+        category_id: 4,
     },
     {
         listing_id: 9,
@@ -24,6 +26,7 @@ const profileItems = [
         descr: "Generic Description",
         price: 516,
         listing_img: "/images/profileListings/missle.jpg",
+        category_id: 4,
     },
 ];
 
