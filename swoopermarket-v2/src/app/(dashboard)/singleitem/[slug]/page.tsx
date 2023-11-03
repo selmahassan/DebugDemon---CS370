@@ -5,15 +5,13 @@ import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import Grid from '@mui/material/Grid';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import Stack from '@mui/material/Stack';
-// import Link from '@mui/material/Link';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CommentSection from '@/components/SingleItem/CommentSection';
 import { ItemType } from '@/types/itemType';
 import { Descriptor } from '@/types/itemDescriptor';
-// import { Category } from '@/enum/itemCategory';
-import { Link } from '@mui/material';
+import { Category } from '@/enums/category';
 
 async function getSingleListing(id: string) {
   const res = await fetch(process.env.API_URL + 'api/listing/' + id, {
@@ -29,8 +27,6 @@ async function getSingleListing(id: string) {
   }
   return res.json()
 }
-
-let Category: string[] = ["None", "School Supplies", "Furniture", "Electronics", "Other", "Tickets", "Housing", "Books"]
 
 export default async function SingleItem({ params }: { params: { slug: string } }) {
   const { slug } = params

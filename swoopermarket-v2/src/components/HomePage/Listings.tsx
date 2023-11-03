@@ -7,6 +7,7 @@ import { Typography, FormControl, Select, MenuItem, TextField } from '@mui/mater
 import { SelectChangeEvent } from '@mui/material/Select';
 import SearchBar from '@/components/SearchBar';
 import { ItemType } from '@/types/itemType';
+import { Category } from '@/enums/category';
 
 
 export default function Listings({listings}: {listings:Array<any>}) {
@@ -45,7 +46,6 @@ export default function Listings({listings}: {listings:Array<any>}) {
             }
         })
         .filter((item) => {
-          let Category: string[] = ["None", "School Supplies", "Furniture", "Electronics", "Other", "Tickets", "Housing", "Books"]
           if (categoryOption === 'all') {
             return item;
           }
