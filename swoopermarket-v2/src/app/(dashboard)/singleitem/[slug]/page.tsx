@@ -5,13 +5,13 @@ import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import Grid from '@mui/material/Grid';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import Stack from '@mui/material/Stack';
-// import Link from '@mui/material/Link';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CommentSection from '@/components/SingleItem/CommentSection';
 import { ItemType } from '@/types/itemType';
 import { Descriptor } from '@/types/itemDescriptor';
+import { Category } from '@/enums/category';
 
 async function getSingleListing(id: string) {
   const res = await fetch(process.env.API_URL + 'api/listing/' + id, {
@@ -54,8 +54,7 @@ export default async function SingleItem({ params }: { params: { slug: string } 
         <Stack direction="row" sx={{pl: 2, pr: 2}} justifyContent="flex-start" alignItems="center" spacing={2}>
           <Button href="/" sx={{borderRadius: 50, width: "fit-content"}} startIcon={<ArrowBack/>}>Back to listings</Button>
           <Stack direction="row">
-            <Typography variant="body1" color="initial">Listed in category: </Typography>
-            {/* <Link href={'href'} variant="body1">{listings.category_id}</Link> */}
+            <Typography variant="body1" color="initial">Listed in category: {Category[listings.category_id]}</Typography>
           </Stack>
         </Stack>
         <Stack direction="column" padding={2}>

@@ -7,6 +7,7 @@ import { Typography, FormControl, Select, MenuItem, TextField } from '@mui/mater
 import { SelectChangeEvent } from '@mui/material/Select';
 import SearchBar from '@/components/SearchBar';
 import { ItemType } from '@/types/itemType';
+import { Category } from '@/enums/category';
 
 
 export default function Listings({listings}: {listings:Array<any>}) {
@@ -48,20 +49,26 @@ export default function Listings({listings}: {listings:Array<any>}) {
           if (categoryOption === 'all') {
             return item;
           }
-          else if (categoryOption === 'clothing') {
-            return item.category === "Clothing";
-          }
-          else if (categoryOption === 'weaponry') {
-            return item.category === "Weaponry";
+          else if (categoryOption === 'school-supplies') {
+            return Category[item.category_id] === "School Supplies";
           }
           else if (categoryOption === 'furniture') {
-            return item.category === "Furniture";
+            return Category[item.category_id] === "Furniture";
           }
-          else if (categoryOption === 'appliances') {
-            return item.category === "Appliances";
+          else if (categoryOption === 'electronics') {
+            return Category[item.category_id] === "Electronics";
           }
-          else if (categoryOption === 'animals') {
-            return item.category === "Animals";
+          else if (categoryOption === 'tickets') {
+            return Category[item.category_id] === "Tickets";
+          }
+          else if (categoryOption === 'housing') {
+            return Category[item.category_id] === "Housing";
+          }
+          else if (categoryOption === 'books') {
+            return Category[item.category_id] === "Books";
+          }
+          else if (categoryOption === 'other') {
+            return Category[item.category_id] === "Other";
           }
       })
         .sort((a, b) => {
@@ -129,11 +136,13 @@ export default function Listings({listings}: {listings:Array<any>}) {
                     onChange={handleCategoryChange}
                     sx={{ color: "#0033a0" }}>
                     <MenuItem value="all">All</MenuItem>
-                    <MenuItem value="clothing">Clothing</MenuItem>
-                    <MenuItem value="weaponry">Weaponry</MenuItem>
-                    <MenuItem value="appliances">Appliances</MenuItem>
+                    <MenuItem value="school-supplies">School Supplies</MenuItem>
                     <MenuItem value="furniture">Furniture</MenuItem>
-                    <MenuItem value="animals">Animals</MenuItem>
+                    <MenuItem value="electronics">Electronics</MenuItem>
+                    <MenuItem value="tickets">Tickets</MenuItem>
+                    <MenuItem value="housing">Housing</MenuItem>
+                    <MenuItem value="books">Books</MenuItem>
+                    <MenuItem value="other">Other</MenuItem>
                 </Select>
             </FormControl>
           </Grid>
