@@ -1,7 +1,6 @@
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
-import Link from "@mui/material/Link";
 
 export default function ItemHeader({ title, seller, email, phone } : { title: string; seller: string, email: string, phone: string }) {
     return (

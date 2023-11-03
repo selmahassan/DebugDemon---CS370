@@ -4,17 +4,7 @@ import Divider from '@mui/material/Divider';
 import ItemHeader from './Descriptors/ItemHeader';
 import ItemBody from './Descriptors/ItemBody';
 import ItemInterest from './Descriptors/ItemInterest';
-
-type Descriptor = {
-    listingTitle: string,
-    sellerId: string,
-    email: string,
-    phone: string,
-    description: string,
-    price: number,
-    condition: string,
-    pickup: string
-}
+import { Descriptor } from '@/types/itemDescriptor';
 
 export default function ItemDescriptors({ descriptors } : { descriptors: Descriptor }) {
     return (
