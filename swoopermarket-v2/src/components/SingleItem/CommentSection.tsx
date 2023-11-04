@@ -5,14 +5,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import AddComment from './Comments/AddComment';
 import UserComment from './Comments/UserComment';
-
-export interface Comment {
-    id: string,
-    username: string,
-    comment: string,
-    numOfLikes: number,
-    time: string
-}
+import { Comment } from '@/types/comment';
 
 const comments: Comment[] = [
     {
@@ -47,10 +40,15 @@ export default function CommentSection() {
             {commentsList.map((item) => (
                 <UserComment
                     key={item.id}
+                    id={item.id}
                     username={item.username}
                     comment={item.comment}
                     numOfLikes={item.numOfLikes}
                     time={item.time}
+                    commentsList={commentsList}
+                    setCommentsList={setCommentsList}
+                    numOfComments={numOfComments}
+                    setNumOfComments={setNumOfComments}
                 />
             ))}
         </Stack>

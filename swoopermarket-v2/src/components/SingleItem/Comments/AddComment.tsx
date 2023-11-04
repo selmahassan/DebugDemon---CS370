@@ -4,14 +4,7 @@ import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-import { Comment } from '../CommentSection';
-
-interface CommentProps {
-    commentsList: Comment[],
-    setCommentsList: React.Dispatch<React.SetStateAction<Comment[]>>,
-    numOfComments: number,
-    setNumOfComments: React.Dispatch<React.SetStateAction<number>>
-}
+import { CommentProps } from '@/types/commentProps';
 
 const AddComment: React.FC<CommentProps> = ({ commentsList, setCommentsList, numOfComments, setNumOfComments }) => {
     const [comment, setComment] = useState('');
@@ -46,7 +39,7 @@ const AddComment: React.FC<CommentProps> = ({ commentsList, setCommentsList, num
             time: "Just now"
         }
         setCommentsList([newComment, ...commentsList]);
-        setNumOfComments(numOfComments + 1)
+        setNumOfComments(numOfComments + 1);
         setComment('');
         setDisabled(true);
         setButtonsVisible("none");
