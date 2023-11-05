@@ -40,11 +40,11 @@ const UserComment: React.FC<CommentProps> = ({ isReply, parentId, id, username, 
 
     // actually deleting comment
     const handleDelete = () => {
-        setNumOfComments(numOfComments - 1);
-
         if(isReply){
+            setNumOfComments(numOfComments - 1);
+
             // find the parent comment from commentsList
-            let updatedCommentsList = commentsList.map((comment) => {
+            const updatedCommentsList = commentsList.map((comment) => {
                 if (comment.id === parentId) {
                     // update the replies array of the parent comment
                     const updatedReplies = comment.replies?.filter((reply) => reply.id !== id) || [];
@@ -55,8 +55,18 @@ const UserComment: React.FC<CommentProps> = ({ isReply, parentId, id, username, 
 
             setCommentsList(updatedCommentsList);
         } else {
+            let count = 0;
+            commentsList.forEach((comment) => {
+                if(comment.id == id){
+                    comment.replies?.forEach((reply) => {
+                        count++;
+                    })
+                }
+            });
+            setNumOfComments(numOfComments - count - 1);
+
             // TODO: when updating to production code w/ database info, ensure that before you delete this parent comment, you must first iterate through all replies and delete each reply 
-            let updatedCommentsList = commentsList.filter((item) => {
+            const updatedCommentsList = commentsList.filter((item) => {
                 return item.id != id
             });
     
