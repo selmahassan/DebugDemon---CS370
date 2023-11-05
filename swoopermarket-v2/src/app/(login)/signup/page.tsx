@@ -98,6 +98,13 @@ export default function SignUp() {
             },
             body: JSON.stringify(user)
           });
+
+        if (response.status === 200) {
+            // Assuming you want to redirect the user to the login page after successful registration
+            router.push('/login'); 
+          } else {
+            setErrorMessage(result.message);
+          }
     };
 
   return (
