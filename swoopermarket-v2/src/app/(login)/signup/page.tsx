@@ -82,7 +82,7 @@ export default function SignUp() {
         
         // TODO : how are we generating user's unique user ids? are we making them choose one or will we make one based off of database
         const user : User = {
-            user: data.get('firstName') as string,
+            userid: data.get('firstName') as string,
             firstName: data.get('firstName') as string,
             lastName: data.get('lastName') as string,
             email: data.get('email') as string,
