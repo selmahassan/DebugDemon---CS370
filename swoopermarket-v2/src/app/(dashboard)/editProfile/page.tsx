@@ -36,8 +36,6 @@ export default function EditProfilePage() {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        setOpenSuccess(true);
-        setOpenError(false);
 
         // TODO : there's two different User types, one uses name (first and last concatenated) and the other one (from signup) uses firstname lastname. 
         // it's bc the pages ask for diff fields. this one doesn't let you change email, but there is a user bio
@@ -61,6 +59,10 @@ export default function EditProfilePage() {
             },
             body: JSON.stringify(user)
         });
+
+        // TODO: need to check if password matches database
+        setOpenSuccess(true);
+        setOpenError(false);
 
         // TODO: if the password isn't right, or no changes to the profile have been made, show error popup
         // setOpenSuccess(false);

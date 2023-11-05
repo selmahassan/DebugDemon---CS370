@@ -22,6 +22,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import StickyAlert from '@/components/StickyAlert';
 
 export default function StarredPage() {
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -53,7 +55,14 @@ export default function StarredPage() {
       },
       body: JSON.stringify(listing)
     });
-    
+
+    // TODO: check if listing can be posted
+    setOpenSuccess(true);
+    setOpenError(false);
+
+    // TODO: api responses before showing error alerts
+    // setOpenSuccess(true);
+    // setOpenError(false);
   };
 
   const theme = createTheme({
@@ -91,22 +100,6 @@ export default function StarredPage() {
   const handlePreviewClick = () => {
     setShowPreview(!showPreview);
   };
-
-  const [openSuccess, setOpenSuccess] = useState(false);
-  const [openError, setOpenError] = useState(false);
-  const [isItemListSuccessful, setIsItemListSuccessful] = useState(false);
-
-  const handleListItem = () => {
-    if(formData.title != '' && formData.description != '' && formData.category != '' && formData.condition != '' && formData.price >= 0 && formData.pickup != '' && !isItemListSuccessful){
-      setOpenSuccess(true);
-      setOpenError(false);
-      setIsItemListSuccessful(true);
-    // TODO: change condition for error message popup
-    } else if (isItemListSuccessful) {
-      setOpenSuccess(false);
-      setOpenError(true);
-    }
-  }
 
   const categories = [
     {
@@ -297,7 +290,6 @@ export default function StarredPage() {
                   variant="contained"
                   disableElevation
                   sx={{ mt: 2, mb: 2 }}
-                  onClick={handleListItem}
                 >
                   List Item
                 </Button>
