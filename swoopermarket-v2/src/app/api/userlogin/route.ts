@@ -1,8 +1,9 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
+import bcrypt from 'bcrypt';
 
 export const POST = async (req: Request, res: Response) => {
-    const {email, pass} = await req.json();
+    const { email, pass } = await req.json();
 
     try {
         // Fetch the user from the database based on the provided email
@@ -14,14 +15,14 @@ export const POST = async (req: Request, res: Response) => {
         }
         
         const user = result.rows[0];
-        console.log(`Received Password: ${pass}`);
-        console.log(`Stored Password for ${email}: ${user.pass}`);
 
-
-        // Check if the entered password matches the stored password
-        if (pass === user.pass) { 
+        // Compare the hashed password from the DB with the provided password
+        const passwordMatch = await bcrypt.compare(pass, user.pass);
+        if (passwordMatch) {
+            // Passwords match, login successful
             return NextResponse.json({ message: "Logged in successfully" }, { status: 200 });
         } else {
+            // Passwords don't match, login failed
             return NextResponse.json({ message: "Invalid password, Please Try Again" }, { status: 401 });
         }
 
@@ -30,3 +31,4 @@ export const POST = async (req: Request, res: Response) => {
         return NextResponse.json({ message: "Please Try Again", error }, { status: 500 });
     }
 };
+
