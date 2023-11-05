@@ -19,6 +19,7 @@ import createTheme from '@mui/material/styles/createTheme';
 import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
+import StickyAlert from '@/components/StickyAlert';
 
 export default function StarredPage() {
 
@@ -91,6 +92,22 @@ export default function StarredPage() {
     setShowPreview(!showPreview);
   };
 
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
+  const [isItemListSuccessful, setIsItemListSuccessful] = useState(false);
+
+  const handleListItem = () => {
+    if(formData.title != '' && formData.description != '' && formData.category != '' && formData.condition != '' && formData.price >= 0 && formData.pickup != '' && !isItemListSuccessful){
+      setOpenSuccess(true);
+      setOpenError(false);
+      setIsItemListSuccessful(true);
+    // TODO: change condition for error message popup
+    } else if (isItemListSuccessful) {
+      setOpenSuccess(false);
+      setOpenError(true);
+    }
+  }
+
   const categories = [
     {
       key: 'school_supplies',
@@ -141,6 +158,14 @@ export default function StarredPage() {
           >
             Create New Listing
           </Typography>
+          <StickyAlert
+            successMessage="You've successfully listed your item on SwooperMarket!"
+            errorMessage="You cannot create a duplicate listing. Try Again."
+            openSuccess={openSuccess}
+            setOpenSuccess={setOpenSuccess}
+            openError={openError}
+            setOpenError={setOpenError}
+          />
           <Box component="form" onSubmit={handleSubmit}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
@@ -272,6 +297,7 @@ export default function StarredPage() {
                   variant="contained"
                   disableElevation
                   sx={{ mt: 2, mb: 2 }}
+                  onClick={handleListItem}
                 >
                   List Item
                 </Button>
