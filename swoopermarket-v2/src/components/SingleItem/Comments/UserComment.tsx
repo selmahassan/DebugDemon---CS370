@@ -8,9 +8,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { CommentProps } from '@/types/commentProps';
-import { Comment } from '@/types/comment';
+import AddComment from './AddComment';
 
-const UserComment: React.FC<CommentProps> = ({ id, username, comment, numOfLikes, time, commentsList, setCommentsList, numOfComments, setNumOfComments }) => {
+const UserComment: React.FC<CommentProps> = ({ isReply, parentId, id, username, comment, numOfLikes, time, commentsList, setCommentsList, numOfComments, setNumOfComments }) => {
     const [isLiked, setIsLiked] = useState(false);
     const [emptyButtonVisable, setEmptyButtonVisible] = useState("");
     const [filledButtonVisable, setFilledButtonVisible] = useState("none");
@@ -42,21 +42,36 @@ const UserComment: React.FC<CommentProps> = ({ id, username, comment, numOfLikes
     const handleDelete = () => {
         setNumOfComments(numOfComments - 1);
 
-        let newArray = commentsList.filter((item) => {
-            return item.id != id
-        });
+        if(isReply){
+            // find the parent comment from commentsList
+            let updatedCommentsList = commentsList.map((comment) => {
+                if (comment.id === parentId) {
+                    // update the replies array of the parent comment
+                    const updatedReplies = comment.replies?.filter((reply) => reply.id !== id) || [];
+                    return { ...comment, replies: updatedReplies };
+                }
+                return comment;
+            });
 
-        setCommentsList(newArray);
-
+            setCommentsList(updatedCommentsList);
+        } else {
+            // TODO: when updating to production code w/ database info, ensure that before you delete this parent comment, you must first iterate through all replies and delete each reply 
+            let updatedCommentsList = commentsList.filter((item) => {
+                return item.id != id
+            });
+    
+            setCommentsList(updatedCommentsList);
+        }
     }
 
-    // TODO: write function
-    const handleReply = () => {
+    const [showReplyField, setShowReplyField] = useState(false);
 
+    const handleReply = () => {
+        setShowReplyField(true);
     }
     
     return (
-        <Stack id={id} direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={2} sx={{ width: '100%' }}>
+        <Stack id={id} direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={2} sx={{ width: '100%' }} paddingLeft={isReply ? 5 : 0}>
             <Avatar src={'src'} sx={{ width: 28, height: 28 }}/>
             <Stack direction="column" sx={{ width: '50%' }}>
                 <Stack direction="row" spacing={1}>
@@ -89,6 +104,19 @@ const UserComment: React.FC<CommentProps> = ({ id, username, comment, numOfLikes
                         <Typography variant="body1" color="initial">{countLikes}</Typography>
                     </Stack>
                 </Stack>
+                {showReplyField && 
+                    <AddComment
+                        parentId={parentId}
+                        repliedId={id}
+                        commentsList={commentsList}
+                        setCommentsList={setCommentsList}
+                        numOfComments={numOfComments}
+                        setNumOfComments={setNumOfComments}
+                        setShowReplyField={setShowReplyField}
+                        isReplyField={true}
+                        isReply={isReply}
+                    />
+                }
             </Stack>
             {showDeleteModal && (
               <div
