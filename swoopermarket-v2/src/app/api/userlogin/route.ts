@@ -1,6 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export const POST = async (req: Request, res: Response) => {
     const { email, pass } = await req.json();
