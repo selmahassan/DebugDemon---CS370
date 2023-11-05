@@ -81,7 +81,6 @@ export default function SignUp() {
         const data = new FormData(event.currentTarget);
         
         // TODO : how are we generating user's unique user ids? are we making them choose one or will we make one based off of database
-       try{
         const user : User = {
             userid: data.get('firstName') as string,
             firstName: data.get('firstName') as string,
@@ -100,18 +99,6 @@ export default function SignUp() {
             },
             body: JSON.stringify(user)
           });
-           
-        const result = await response.json();
-        if (response.status === 200) {
-            // Assuming you want to redirect the user to the login page after successful registration
-            router.push('/login'); 
-          } else {
-            setErrorMessage(result.message);
-          }
-            } catch (error) {
-          console.error(error);
-          setErrorMessage('An error occurred. Please try again.');
-        }
 
     };
 
