@@ -75,7 +75,8 @@ export default function SignUp() {
             setErrors({...errors, rePassword: ''})
         }
     };
-
+    
+    const navigate = useNavigate();
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -92,13 +93,27 @@ export default function SignUp() {
 
         console.log(user);
 
-        fetch('../api/user', {
+        try {
+        const response = await fetch('../api/user', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
-          });
+        });
+
+        if (response.ok) {
+            // Redirect to login page on successful user creation
+            navigate('/login'); // Replace '/login' with the path to your login page
+        } else {
+            // Handle server errors (e.g., user already exists, server error)
+            const errorData = await response.json();
+            console.error('Server error:', errorData);
+        }
+    } catch (error) {
+        // Handle network errors
+        console.error('Network error:', error);
+    }
 
     };
 
