@@ -1,7 +1,7 @@
 'use client'
 
 import { User } from '@/types';
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,6 +19,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import FormHelperText from '@mui/material/FormHelperText';
+import StickyAlert from '@/components/StickyAlert';
 
 interface NewUserForm {
     email: string;
@@ -75,6 +76,9 @@ export default function SignUp() {
             setErrors({...errors, rePassword: ''})
         }
     };
+
+    const [openSuccess, setOpenSuccess] = useState(false);
+    const [openError, setOpenError] = useState(false);
     
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -99,6 +103,14 @@ export default function SignUp() {
             body: JSON.stringify(user)
         });
 
+        // TODO: need to check if account already exists
+        setOpenSuccess(true);
+        setOpenError(false);
+
+        //TODO: show error if account already exists
+        // setOpenSuccess(false);
+        // setOpenError(true);
+
     };
 
   return (
@@ -113,8 +125,16 @@ export default function SignUp() {
             }}
         >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+                <LockOutlinedIcon />
             </Avatar>
+            <StickyAlert
+              successMessage="Account signup successful! Please sign in."
+              errorMessage="Account already exists. Please sign in."
+              openSuccess={openSuccess}
+              setOpenSuccess={setOpenSuccess}
+              openError={openError}
+              setOpenError={setOpenError}
+            />
             <Typography component="h1" variant="h5">
             SwooperMarket Sign Up
             </Typography>
