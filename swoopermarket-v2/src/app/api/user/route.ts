@@ -13,8 +13,8 @@ export const POST = async (req: Request, res: Response) => {
 
     try {
         const result = await sql`
-            INSERT INTO user_table (userid, first_name, last_name, email, pass)
-            VALUES (${userid}, ${firstName}, ${lastName}, ${email}, ${hashedPassword});
+            INSERT INTO user_table (first_name, last_name, email, pass)
+            VALUES (${firstName}, ${lastName}, ${email}, ${hashedPassword});
         `;
         return NextResponse.json({ result }, { status: 201 });
     } catch (error) {
