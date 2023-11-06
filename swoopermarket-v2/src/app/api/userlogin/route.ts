@@ -55,9 +55,7 @@ export const POST = async (req: Request, res: Response) => {
         });
 
         // Return the response
-        return response;
-
-    } 
+        return response; 
 
     } catch (error) {
         console.log("Caught error:", error);
