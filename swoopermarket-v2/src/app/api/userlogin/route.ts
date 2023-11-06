@@ -57,10 +57,7 @@ export const POST = async (req: Request, res: Response) => {
         // Return the response
         return response;
 
-    } catch (error) {
-        console.error('An error occurred:', error);
-        return NextResponse.rewrite(new URL('/api/error', req.url), { status: 500 });
-    }
+    } 
 
     } catch (error) {
         console.log("Caught error:", error);
