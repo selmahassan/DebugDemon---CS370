@@ -29,4 +29,4 @@ To follow this quickstart, you will need access to the existing **debug-demon-cs
    4. What’s the name of your existing project? debug-demon-cs-370
    5. ✅ Linked to swoopermarket/debug-demon-cs-370 (created .vercel)
 4. Pull credentials into your local environment to access your Postgres database: `vercel env pull .env.development.local`
-5. Run `vercel pull` and `vercel env pull .env.development.local` to download project settings.
+5. Run `vercel pull` to download project settings.
