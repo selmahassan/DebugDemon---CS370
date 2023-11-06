@@ -14,7 +14,7 @@ export const POST = async (req: Request, res: Response) => {
     try {
         const result = await sql`
             INSERT INTO user_table (first_name, last_name, email, pass, phone)
-            VALUES (${firstName}, ${lastName}, ${email}, ${hashedPassword}, ${phone);
+            VALUES (${firstName}, ${lastName}, ${email}, ${hashedPassword}, ${phone});
         `;
         return NextResponse.json({ result }, { status: 201 });
     } catch (error) {
