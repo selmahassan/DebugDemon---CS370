@@ -1,6 +1,5 @@
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 
 export default function ItemBody({ description, price, condition, pickup } : { description: string; price: number; condition: string; pickup: string }) {
     return (

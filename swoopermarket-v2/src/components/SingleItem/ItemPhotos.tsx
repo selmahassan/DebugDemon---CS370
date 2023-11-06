@@ -8,14 +8,23 @@ type PhotoType = {
 };
 
 export default function ItemPhotos({ photos } : { photos: PhotoType[] }) {
-    const [selectedImg, setSelectedImg] = useState(photos[0].src);
+    let current_photos = []
+    if (photos.length === 0) {
+        current_photos.push({
+            id: "1",
+            src: "https://images.unsplash.com/photo-1674315411321-d65c2d07b850?auto=format&fit=crop&q=80&w=2832&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        })
+    } else {
+        current_photos = photos
+    }
+    const [selectedImg, setSelectedImg] = useState(current_photos[0].src);
     const [lastClickedIndex, setLastClickedIndex] = useState(0);
     const [isHovered, setIsHovered] = useState(0);
     
     return (
         <Grid container direction="row">
             <Grid container item direction="column" justifyContent="flex-start" alignItems="flex-start" xs={2}>
-                {photos.map((item, index) => (
+                {current_photos.map((item, index) => (
                     <Grid item
                         key=""
                         onClick={()=> {

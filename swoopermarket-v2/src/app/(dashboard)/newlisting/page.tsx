@@ -19,8 +19,11 @@ import createTheme from '@mui/material/styles/createTheme';
 import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
+import StickyAlert from '@/components/StickyAlert';
 
 export default function StarredPage() {
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -52,7 +55,14 @@ export default function StarredPage() {
       },
       body: JSON.stringify(listing)
     });
-    
+
+    // TODO: check if listing can be posted
+    setOpenSuccess(true);
+    setOpenError(false);
+
+    // TODO: api responses before showing error alerts
+    // setOpenSuccess(true);
+    // setOpenError(false);
   };
 
   const theme = createTheme({
@@ -141,6 +151,14 @@ export default function StarredPage() {
           >
             Create New Listing
           </Typography>
+          <StickyAlert
+            successMessage="You've successfully listed your item on SwooperMarket!"
+            errorMessage="You cannot create a duplicate listing. Try Again."
+            openSuccess={openSuccess}
+            setOpenSuccess={setOpenSuccess}
+            openError={openError}
+            setOpenError={setOpenError}
+          />
           <Box component="form" onSubmit={handleSubmit}>
             <Grid container spacing={3}>
               <Grid item xs={12}>

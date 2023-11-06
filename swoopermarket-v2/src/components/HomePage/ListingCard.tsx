@@ -5,10 +5,12 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/system/Unstable_Grid/Grid';
-import Box from '@mui/system/Box';
 import { ItemType } from '@/types/itemType';
+import { Box } from '@mui/material';
+import { Category } from '@/enums/category';
 
 export default function ListingCard({ item }: { item: ItemType }) {
+
   return (
     <Card>
       <CardActionArea href={`/singleitem/${item.listing_id}`}>
@@ -19,7 +21,7 @@ export default function ListingCard({ item }: { item: ItemType }) {
           height={480}
           style={{
             maxWidth: '100%',
-            height: '300px',
+            height: '250px',
             objectFit: 'cover',
           }}
         />
@@ -31,9 +33,9 @@ export default function ListingCard({ item }: { item: ItemType }) {
             {item.descr}
           </Typography>
           <Grid container direction="row" justifyContent="space-between" alignItems="center" padding="8px 0px">
-            {/* <Box sx={{ border: '1px solid grey', padding: '4px 6px', borderRadius: '5px'}}>
-              {item.condition}
-            </Box> */}
+            <Box sx={{ border: '1px solid grey', padding: '4px 6px', borderRadius: '5px'}}>
+              {Category[item.category_id]}
+            </Box>
             <Typography variant="h6" color="text.secondary" fontWeight="fontWeightBold">
               {`$${item.price}`}
             </Typography>

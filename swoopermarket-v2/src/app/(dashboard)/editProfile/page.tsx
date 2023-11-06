@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import ArrowBack from "@mui/icons-material/ArrowBack";
+import StickyAlert from '@/components/StickyAlert';
 
 export default function EditProfilePage() {
     const [formData, setFormData] = useState({
@@ -28,6 +29,9 @@ export default function EditProfilePage() {
         });
     };
 
+    const [openSuccess, setOpenSuccess] = useState(false);
+    const [openError, setOpenError] = useState(false);
+
     // TODO : how to even get to this page on frontend? is there an edit profile button anywhere to get to this page?
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -36,12 +40,13 @@ export default function EditProfilePage() {
         // TODO : there's two different User types, one uses name (first and last concatenated) and the other one (from signup) uses firstname lastname. 
         // it's bc the pages ask for diff fields. this one doesn't let you change email, but there is a user bio
         const user : User = {
-          userid: data.get('name') as string,
-          firstName: data.get('name') as string,
-          lastName: data.get('name') as string,
-          bio: data.get('bio') as string,
-          email: data.get('email') as string,
-          password: data.get('password') as string,
+            userid: data.get('name') as string,
+            firstName: data.get('name') as string,
+            lastName: data.get('name') as string,
+            bio: data.get('bio') as string,
+            phoneNumber: data.get('phone') as string,
+            email: data.get('email') as string,
+            password: data.get('password') as string,
         };
 
         console.log(user);
@@ -56,6 +61,14 @@ export default function EditProfilePage() {
             body: JSON.stringify(user)
         });
 
+        // TODO: need to check if password matches database
+        setOpenSuccess(true);
+        setOpenError(false);
+
+        // TODO: if the password isn't right, or no changes to the profile have been made, show error popup
+        // setOpenSuccess(false);
+        // setOpenError(true);
+
     };
 
     const handleProfilePictureChange = () => {
@@ -65,8 +78,16 @@ export default function EditProfilePage() {
     return (
       <>
         <Container component="main" maxWidth="lg" sx={{ mt: 2, mb: 4 }}>
-            <Button href="/profile" sx={{borderRadius: 50, width: "fit-content"}} startIcon={<ArrowBack/>}>Back to Profile</Button>
+          <Button href="/profile" sx={{borderRadius: 50, width: "fit-content"}} startIcon={<ArrowBack/>}>Back to Profile</Button>
           <Paper elevation={0} sx={{ p: { xs: 2, md: 2 } }}>
+            <StickyAlert
+              successMessage="User profile changes saved!"
+              errorMessage="No changes to user profile have been made. Try Again."
+              openSuccess={openSuccess}
+              setOpenSuccess={setOpenSuccess}
+              openError={openError}
+              setOpenError={setOpenError}
+            />
             <form onSubmit={handleSubmit}>
               <Grid container spacing={3}>
                   <Grid item xs={12}>
