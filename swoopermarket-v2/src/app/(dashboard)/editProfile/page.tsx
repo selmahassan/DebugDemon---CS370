@@ -44,7 +44,7 @@ export default function EditProfilePage() {
             firstName: data.get('name') as string,
             lastName: data.get('name') as string,
             bio: data.get('bio') as string,
-            phoneNumber: data.get('phone') as string,
+            phone: data.get('phone') as string,
             email: data.get('email') as string,
             password: data.get('password') as string,
         };
