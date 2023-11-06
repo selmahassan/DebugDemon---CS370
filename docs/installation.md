@@ -2,7 +2,7 @@
 
 ## How to see the public project
 
-Visit the [Swoopermarket website](https://swoopermarket.vercel.app/) to see the published project.
+Visit the [Swoopermarket website](https://debug-demon-cs-370-swoopermarket.vercel.app/) to see the published project.
 
 ## How to run the project locally
 
