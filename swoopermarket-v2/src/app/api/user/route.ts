@@ -1,27 +1,24 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
+import bcrypt from 'bcrypt';
 
-// get all user profiles in DB
-export const GET = async (req: Request, res: Response) => {
-    try {
-        const messages =  await sql`SELECT * FROM user_table;`;
-        const users = messages.rows
+const SALT_ROUNDS = 10; // 
 
-        return NextResponse.json({ users }, { status: 200 });
-    } catch (error) {
-        return NextResponse.json({ message: "Error", error }, { status: 500 });
-    }
-};
-
-// add a new user to the DB
+// add a new user to the DB with hashed password
 export const POST = async (req: Request, res: Response) => {
-    const {userid, firstName, lastName, email, password} = await req.json();
+    const { firstName, lastName, email, password } = await req.json();
+
+    // Hash the password before saving to the database
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
     try {
-        const messages =  await sql`INSERT INTO user_table (pass, first_name, last_name, email) VALUES (${password}, ${firstName}, ${lastName}, ${email});`;
-        return NextResponse.json({ messages }, { status: 200 });
+        const result = await sql`
+            INSERT INTO user_table (first_name, last_name, email, pass)
+            VALUES (${firstName}, ${lastName}, ${email}, ${hashedPassword});
+        `;
+        return NextResponse.json({ result }, { status: 201 });
     } catch (error) {
-        console.log("Caught error")
-        return NextResponse.json({message: "Error", error}, {status: 500});
+        console.log("Caught error", error);
+        return NextResponse.json({ message: "Error", error }, { status: 500 });
     }
 };
