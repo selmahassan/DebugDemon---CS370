@@ -5,7 +5,7 @@ export type Listing = {
     category: number,
     condition: string,
     price: number,
-    pickup: string
+    pickup: string,
 }
 
 export type User = {

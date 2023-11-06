@@ -1,7 +1,7 @@
 'use client'
 
 import { Listing } from '@/types';
-import React, { useState} from 'react';
+import React, { useState, useRef } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -19,10 +19,20 @@ import createTheme from '@mui/material/styles/createTheme';
 import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
+import type { PutBlobResult } from '@vercel/blob';
 
 export default function StarredPage() {
+  const imputFileRef = useRef<HTMLInputElement>(null);
+  const [blob, setBlob] = useState<PutBlobResult | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -52,6 +62,16 @@ export default function StarredPage() {
       },
       body: JSON.stringify(listing)
     });
+
+    if (selectedFile) {
+      const response = await fetch('/api/avatar/upload?filename=' + selectedFile.name, {
+        method: 'POST',
+        body: selectedFile,
+      });
+
+      const newBlob = (await response.json()) as PutBlobResult;
+      setBlob(newBlob);
+    }
     
   };
 
@@ -178,6 +198,7 @@ export default function StarredPage() {
                   id="image"
                   name="image"
                   sx={{mb: 1}}
+                  onChange={handleFileSelect}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -314,7 +335,9 @@ export default function StarredPage() {
                             description: formData.description,
                             price: formData.price,
                             condition: formData.condition,
-                            pickup: formData.pickup
+                            pickup: formData.pickup,
+                            // email: "my_email",
+                            // phone: "my_phone",
                         }}/>
                       </Grid>
                     </Grid>
