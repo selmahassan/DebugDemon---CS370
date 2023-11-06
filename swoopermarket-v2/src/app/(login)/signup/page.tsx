@@ -94,6 +94,7 @@ export default function SignUp() {
             email: data.get('email') as string,
             password: data.get('password') as string,
             bio: data.get('bio') as string,
+            phoneNumber: data.get('phoneNumber') as string,
         };
 
         // console.log(user);
