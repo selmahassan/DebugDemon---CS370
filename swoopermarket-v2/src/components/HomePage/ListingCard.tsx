@@ -10,6 +10,7 @@ import { Box } from '@mui/material';
 import { Category } from '@/enums/category';
 
 export default function ListingCard({ item }: { item: ItemType }) {
+  const truncatedDescr = item.descr.length > 75 ? item.descr.slice(0, 75) + '...' : item.descr;
 
   return (
     <Card>
@@ -30,7 +31,7 @@ export default function ListingCard({ item }: { item: ItemType }) {
             {item.product_name}
           </Typography>
           <Typography gutterBottom component="div">
-            {item.descr}
+            {truncatedDescr}
           </Typography>
           <Grid container direction="row" justifyContent="space-between" alignItems="center" padding="8px 0px">
             <Box sx={{ border: '1px solid grey', padding: '4px 6px', borderRadius: '5px'}}>
