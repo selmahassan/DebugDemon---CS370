@@ -16,3 +16,10 @@ export type User = {
     password: string,
     bio: string
 }
+
+export type Comment = {
+    comment_id : number;
+    comment_text : string;
+    listing_id : number;
+    user_id : number;
+}

@@ -15,7 +15,7 @@ export default function UserComment({ key, username, comment, numOfLikes, time }
 
     const displayDeleteButton = username == "my_username" ? "" : "none";
 
-    const handleLike = () => {
+    const handleLike = () => { // TODO : consider chopping?
         if(!isLiked) {
             setCountLikes(countLikes + 1);
             setIsLiked(true);
@@ -31,12 +31,12 @@ export default function UserComment({ key, username, comment, numOfLikes, time }
 
     // TODO: write function
     const handleDelete = () => {
-
+        // grab user_id, listing_id, and created_at timestamp. Delete the comment in comments db that matches all those fields
     }
 
     // TODO: write function
     const handleReply = () => {
-
+        // append the op's handle and calls on post new comment again
     }
     
     return (

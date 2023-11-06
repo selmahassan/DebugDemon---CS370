@@ -4,7 +4,7 @@ import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-import { Comment } from '../CommentSection';
+import { Comment } from '@/types';
 
 interface CommentProps {
     commentsList: Comment[],
@@ -38,18 +38,43 @@ const AddComment: React.FC<CommentProps> = ({ commentsList, setCommentsList, num
     }
 
     const handleCommentClick = () => {
-        const newComment = {
-            id: "" + Math.random(),
-            username: "my_username",
-            comment: comment,
-            numOfLikes: 0,
-            time: "Just now"
-        }
-        setCommentsList([newComment, ...commentsList]);
-        setNumOfComments(numOfComments + 1)
-        setComment('');
-        setDisabled(true);
-        setButtonsVisible("none");
+
+        console.log(comment);
+
+        fetch('../api/comments', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(comment)
+        });
+        
+        // TODO : 
+        // grab user_id + listing_id from cookies?
+        // how to get actual comment text?
+        // Pass user_id, listing_id, and comment_text to POST api
+        // DB auto generates comment_id and created_at timestamp
+        // Invoke a reload of the comments section so that new comment gets displayed
+        // Display comments using the GET method which gets all comments with this listing_id, and will display the user_id, comment_text, and created_at timestamp of each comment
+
+
+        // const newComment : Comment{
+            // comment_text : String(comment);
+            // listing_id : number;
+            // user_id : number;
+        // }
+        // const newComment = {
+        //     id: "" + Math.random(), // TODO : get user_id from cookies
+        //     username: "my_username",
+        //     comment: comment,
+        //     numOfLikes: 0,
+        //     time: "Just now"
+        // }
+        // setCommentsList([newComment, ...commentsList]);
+        // setNumOfComments(numOfComments + 1)
+        // setComment('');
+        // setDisabled(true);
+        // setButtonsVisible("none");
     }
 
     return (
