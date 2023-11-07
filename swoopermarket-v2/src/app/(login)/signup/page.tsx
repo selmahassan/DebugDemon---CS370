@@ -81,6 +81,7 @@ export default function SignUp() {
 
     const [openSuccess, setOpenSuccess] = useState(false);
     const [openError, setOpenError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -108,28 +109,23 @@ export default function SignUp() {
             });
 
             // console.log(response)
+            const result = await response.json();
     
             if (response.status === 201) {
                 // console.log("gets success status")
-                setOpenSuccess(true);
-                router.push('/login');
-            } else {
-                setOpenError(false);
+                router.push('/login?isSuccess=true');
+            } else if (response.status === 500){
+                setErrorMessage("Account already exists. Please sign in.");
+                setOpenError(true);
+                setOpenSuccess(false);
             }
 
         } catch(error) {
             console.error(error);
+            setErrorMessage('An error occurred. Please try again.');
             setOpenError(false);
+            setOpenSuccess(false);
         }
-
-        // TODO: need to check if account already exists
-        // setOpenSuccess(true);
-        // setOpenError(false);
-
-        //TODO: show error if account already exists
-        // setOpenSuccess(false);
-        // setOpenError(true);
-
     };
 
   return (
@@ -147,12 +143,12 @@ export default function SignUp() {
                 <LockOutlinedIcon />
             </Avatar>
             <StickyAlert
-              successMessage="Account signup successful! Please sign in."
-              errorMessage="Account already exists. Please sign in."
-              openSuccess={openSuccess}
-              setOpenSuccess={setOpenSuccess}
-              openError={openError}
-              setOpenError={setOpenError}
+                successMessage="Account signup successful! Please sign in."
+                errorMessage={errorMessage}
+                openSuccess={openSuccess}
+                setOpenSuccess={setOpenSuccess}
+                openError={openError}
+                setOpenError={setOpenError}
             />
             <Typography component="h1" variant="h5">
             SwooperMarket Sign Up
