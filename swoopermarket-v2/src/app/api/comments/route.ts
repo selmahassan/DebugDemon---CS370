@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 // fetch comments of specific listing
 export const GET = async (req: Request) => {
     try {
-        const url_id = req.url.split("api/listing/")[1];
+        const url_id = req.url.split("api/comment/")[1];
         let listing_id = parseInt(url_id);
 
-        const messages =  await sql`SELECT * FROM comments WHERE Listing_id = ${listing_id} ORDER BY created_at ASC;`; 
+        const messages =  await sql`SELECT * FROM comments_table WHERE Listing_id = ${listing_id} ORDER BY created_at ASC;`; 
         const comments = messages.rows;
 
         if(comments.length == 0){
@@ -24,17 +24,18 @@ export const GET = async (req: Request) => {
 
 // post a new comment into DB
 export const POST = async (req: Request, res: Response) => {
-    const {commentText, userId, listingId} = await req.json();
-    
-    let comment = String(commentText)
+    const {comment_text, user_id, listing_id} = await req.json();
+
+    console.log(comment_text)
+    console.log(user_id)
+    console.log(listing_id)
+    let comment = String(comment_text)
+    let userID = Number(user_id)
+    let listingID = Number(listing_id)
 
     try {
-
-        const url_id = req.url.split("api/listing/")[1];
-        let listing_id = parseInt(url_id);
-
-        const messages = await sql`INSERT INTO comments (Comment_text, Product_listing_id, User_id) 
-        VALUES (${comment}, ${listingId}, ${userId});`;
+        const messages = await sql`INSERT INTO comments_table (Comment_text, Listing_id, User_id) 
+        VALUES (${comment}, ${listingID}, ${userID});`;
                 
         return NextResponse.json({ messages }, { status: 200 });
     } catch (error) {
@@ -53,7 +54,7 @@ export const DELETE = async (req: Request, res: Response) => {
         const url_id = req.url.split("api/listing/")[1];
         const listing_id = parseInt(url_id);
 
-        const comment = await sql`DELETE FROM comments WHERE Listing_id = ${listingId} AND User_id = ${user_Id} AND Created_at = ${timestamp} RETURNING *;`; 
+        const comment = await sql`DELETE FROM comments_table WHERE Listing_id = ${listingId} AND User_id = ${user_Id} AND Created_at = ${timestamp} RETURNING *;`; 
         const comments = comment.rows;
 
         if(comments.length == 0){
