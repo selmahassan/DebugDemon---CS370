@@ -55,7 +55,7 @@ export default function StarredPage() {
 
     console.log(listing);
 
-    fetch('../api/listing', {
+    fetch('../newlisting', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ export default function StarredPage() {
     });
 
     if (selectedFile) {
-      const response = await fetch('../api/listing/' + selectedFile.name, {
+      const response = await fetch('../newlisting/' + selectedFile.name, {
         method: 'POSTBLOB',
         body: selectedFile,
       });
