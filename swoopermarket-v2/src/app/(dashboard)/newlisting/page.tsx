@@ -64,8 +64,8 @@ export default function StarredPage() {
     });
 
     if (selectedFile) {
-      const response = await fetch('/api/avatar/upload?filename=' + selectedFile.name, {
-        method: 'POST',
+      const response = await fetch('../api/listing/' + selectedFile.name, {
+        method: 'POSTBLOB',
         body: selectedFile,
       });
 
