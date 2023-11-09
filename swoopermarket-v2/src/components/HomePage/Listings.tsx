@@ -10,7 +10,7 @@ import { ItemType } from '@/types/itemType';
 import { Category } from '@/enums/category';
 
 
-export default function Listings({listings}: {listings:Array<any>}) {
+export default function Listings({listings}: {listings:Array<any> | null}) {
     const [searchQuery, setSearchQuery] = useState('');
     const [sortOption, setSortOption] = useState('recent');
     const [categoryOption, setCategoryOption] = useState('all');
@@ -18,7 +18,12 @@ export default function Listings({listings}: {listings:Array<any>}) {
     const [priceMaxOption, setPriceMaxOption] = useState('');
     const [conditionOption, setConditionOption] = useState('all');
 
-    const searchResults = listings
+    let searchResults
+
+    if(listings === null) {
+      searchResults = []
+    } else {
+      searchResults = listings
         .filter((item) => {
             if (searchQuery) {
               return item.product_name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -83,6 +88,7 @@ export default function Listings({listings}: {listings:Array<any>}) {
             }
             return 0;
         });
+    }
   
     const handleSearch = (query: string) => {
       setSearchQuery(query);
