@@ -31,16 +31,3 @@ export const POST = async (req: Request, res: Response) => {
         return NextResponse.json({message: "Error", error}, {status: 500});
     }
 };
-
-export async function POSTBLOB(request: Request): Promise<NextResponse> {
-    const { searchParams } = new URL(request.url);
-    const filename = searchParams.get('filename') || 'default-filename';
-
-    const requestBody = request.body || new ReadableStream();
-   
-    const blob = await put(filename, requestBody, {
-      access: 'public',
-    });
-   
-    return NextResponse.json(blob);
-  }

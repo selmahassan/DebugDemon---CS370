@@ -25,8 +25,6 @@ import type { PutBlobResult } from '@vercel/blob';
 export default function StarredPage() {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
-  const inputFileRef = useRef<HTMLInputElement>(null);
-  const [blob, setBlob] = useState<PutBlobResult | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,49 +33,57 @@ export default function StarredPage() {
     }
   };
 
+  const submitBlob = async(image: File) => {
+    const response = await fetch(
+      `'../api/upload_img'?filename=${image.name}`,
+      {
+        method: 'POST',
+        body: image,
+      },
+    );
+
+    const newBlob = (await response.json()) as PutBlobResult;
+    return newBlob.url
+  }
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    // TODO : categories mistmatch with database
-    let category_id: number = 4; // gotta initialize it bc const listing wants me to
-    if(data.get('category') == 'school_supplies') category_id = 1; // db says apparel = 1
-    else if (data.get('category') == 'furniture') category_id = 2;
-    else if (data.get('category') == 'electronics') category_id = 3;
-    else category_id = 4; // db says entertainment = 4
+    let image = data.get('image') as File 
+    const image_url = await submitBlob(image) // TODO: Change listing_img to string to submit url
+    console.log(image_url)
 
-    const listing : Listing = {
-      title: data.get('title') as string,
-      description: data.get('description') as string,
-      category: category_id,
-      condition: data.get('condition') as string,
-      price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
-      pickup: data.get('pickup') as string
-    };
+    // // TODO : categories mistmatch with database
+    // let category_id: number = 4; // gotta initialize it bc const listing wants me to
+    // if(data.get('category') == 'school_supplies') category_id = 1; // db says apparel = 1
+    // else if (data.get('category') == 'furniture') category_id = 2;
+    // else if (data.get('category') == 'electronics') category_id = 3;
+    // else category_id = 4; // db says entertainment = 4
 
-    console.log(listing);
+    // const listing : Listing = {
+    //   title: data.get('title') as string,
+    //   description: data.get('description') as string,
+    //   category: category_id,
+    //   condition: data.get('condition') as string,
+    //   price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
+    //   pickup: data.get('pickup') as string
+    // };
 
-    fetch('../api/listing', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(listing)
-    });
+    // let response = await fetch('../api/listing', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(listing)
+    // });
 
-    // if (selectedFile) {
-    //   const response = await fetch('../newlisting/' + selectedFile.name, {
-    //     method: 'POSTBLOB',
-    //     body: selectedFile,
-    //   });
-
-    //   const newBlob = (await response.json()) as PutBlobResult;
-    //   setBlob(newBlob);
+    // if(response.status == 200) {
+    //   setOpenError(true);
+    // } else {
+    //   setOpenSuccess(true);
     // }
-
-    setOpenSuccess(true);
-    setOpenError(false);
-    
   };
 
   const theme = createTheme({
@@ -206,6 +212,7 @@ export default function StarredPage() {
                 </Typography>
                 {/* TODO: option to add multiple images */}
                 <TextField
+                  required
                   type="file"
                   id="image"
                   name="image"
