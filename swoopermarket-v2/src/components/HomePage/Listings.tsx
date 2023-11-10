@@ -5,7 +5,6 @@ import Grid from '@mui/material/Unstable_Grid2';
 import ListingCard from '@/components/HomePage/ListingCard';
 import { Typography, FormControl, Select, MenuItem, TextField } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { SelectChangeEvent } from '@mui/material/Select';
 import SearchBar from '@/components/SearchBar';
 import { ItemType } from '@/types/itemType';
 import { Category } from '@/enums/category';

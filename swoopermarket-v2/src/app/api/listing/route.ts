@@ -17,14 +17,13 @@ export const GET = async (req: Request, res: Response) => {
 export const POST = async (req: Request, res: Response) => {
     const { searchParams } = new URL(req.url);
 
-    const {listingid, title, description, image, category, condition, price, pickup, img} = await req.json();
+    const {title, description, image, category, condition, price, pickup, img} = await req.json();
 
-    let listing_id = 19
-    let user_id = "selma" // TODO : how to fetch user id from newlisting page?
+    let user_id = 1 // TODO : how to fetch user id from newlisting page?
 
     try {// TODO: product_listing table doesnt have a condition or pickup column
-        const messages = await sql`INSERT INTO product_listing (Listing_id, Userid, Product_name, Descr, Category_id, Price, Created_at, Modified_at, listing_img) 
-        VALUES (${listing_id}, ${user_id}, ${title}, ${description}, ${category}, ${price}, NOW(), NOW(), ${img});`;
+        const messages = await sql`INSERT INTO product_listing (Userid, Product_name, Descr, Category_id, Price, Created_at, Modified_at) 
+        VALUES (${user_id}, ${title}, ${description}, ${category}, ${price}, NOW(), NOW());`;
                 
         return NextResponse.json({ messages }, { status: 200 });
     } catch (error) {

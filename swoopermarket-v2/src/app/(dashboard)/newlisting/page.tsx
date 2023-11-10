@@ -25,7 +25,7 @@ import type { PutBlobResult } from '@vercel/blob';
 export default function StarredPage() {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
-  const imputFileRef = useRef<HTMLInputElement>(null);
+  const inputFileRef = useRef<HTMLInputElement>(null);
   const [blob, setBlob] = useState<PutBlobResult | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -47,7 +47,6 @@ export default function StarredPage() {
     else category_id = 4; // db says entertainment = 4
 
     const listing : Listing = {
-      listingid: Number(Date.now), // TODO : how are we making the unique listing ids and user ids?
       title: data.get('title') as string,
       description: data.get('description') as string,
       category: category_id,
@@ -58,7 +57,7 @@ export default function StarredPage() {
 
     console.log(listing);
 
-    fetch('../newlisting', {
+    fetch('../api/listing', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -66,15 +65,15 @@ export default function StarredPage() {
       body: JSON.stringify(listing)
     });
 
-    if (selectedFile) {
-      const response = await fetch('../newlisting/' + selectedFile.name, {
-        method: 'POSTBLOB',
-        body: selectedFile,
-      });
+    // if (selectedFile) {
+    //   const response = await fetch('../newlisting/' + selectedFile.name, {
+    //     method: 'POSTBLOB',
+    //     body: selectedFile,
+    //   });
 
-      const newBlob = (await response.json()) as PutBlobResult;
-      setBlob(newBlob);
-    }
+    //   const newBlob = (await response.json()) as PutBlobResult;
+    //   setBlob(newBlob);
+    // }
 
     setOpenSuccess(true);
     setOpenError(false);
@@ -207,7 +206,6 @@ export default function StarredPage() {
                 </Typography>
                 {/* TODO: option to add multiple images */}
                 <TextField
-                  required
                   type="file"
                   id="image"
                   name="image"
