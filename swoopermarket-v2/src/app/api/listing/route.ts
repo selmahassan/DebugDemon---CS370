@@ -19,7 +19,7 @@ export const POST = async (req: Request, res: Response) => {
 
     const {title, description, image, category, condition, price, pickup, img} = await req.json();
 
-    let user_id = 1 // TODO : how to fetch user id from newlisting page?
+    let user_id = 1 // TODO : how to fetch user id from newlisting page? - Will use cookies
 
     try {// TODO: product_listing table doesnt have a condition or pickup column
         const messages = await sql`INSERT INTO product_listing (Userid, Product_name, Descr, Category_id, Price, Created_at, Modified_at) 
