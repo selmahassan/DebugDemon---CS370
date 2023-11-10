@@ -19,9 +19,12 @@ import createTheme from '@mui/material/styles/createTheme';
 import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
+import StickyAlert from '@/components/StickyAlert';
 import type { PutBlobResult } from '@vercel/blob';
 
 export default function StarredPage() {
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
   const imputFileRef = useRef<HTMLInputElement>(null);
   const [blob, setBlob] = useState<PutBlobResult | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -72,6 +75,9 @@ export default function StarredPage() {
       const newBlob = (await response.json()) as PutBlobResult;
       setBlob(newBlob);
     }
+
+    setOpenSuccess(true);
+    setOpenError(false);
     
   };
 
@@ -161,6 +167,14 @@ export default function StarredPage() {
           >
             Create New Listing
           </Typography>
+          <StickyAlert
+            successMessage="You've successfully listed your item on SwooperMarket!"
+            errorMessage="You cannot create a duplicate listing. Try Again."
+            openSuccess={openSuccess}
+            setOpenSuccess={setOpenSuccess}
+            openError={openError}
+            setOpenError={setOpenError}
+          />
           <Box component="form" onSubmit={handleSubmit}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
@@ -336,8 +350,8 @@ export default function StarredPage() {
                             price: formData.price,
                             condition: formData.condition,
                             pickup: formData.pickup,
-                            // email: "my_email",
-                            // phone: "my_phone",
+                            email: "my_email",
+                            phone: "my_phone",
                         }}/>
                       </Grid>
                     </Grid>

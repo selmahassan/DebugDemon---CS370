@@ -6,14 +6,15 @@ import IconButton from '@mui/material/IconButton';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import { CommentProps } from '@/types/commentProps';
+import AddComment from './AddComment';
 
-export default function UserComment({ key, username, comment, numOfLikes, time }: { key: string, username: string, comment: string, numOfLikes: number, time: string }) {
+const UserComment: React.FC<CommentProps> = ({ isReply, parentId, id, username, comment, numOfLikes, time, commentsList, setCommentsList, numOfComments, setNumOfComments }) => {
     const [isLiked, setIsLiked] = useState(false);
     const [emptyButtonVisable, setEmptyButtonVisible] = useState("");
     const [filledButtonVisable, setFilledButtonVisible] = useState("none");
-    const [countLikes, setCountLikes] = useState(numOfLikes);
-
-    const displayDeleteButton = username == "my_username" ? "" : "none";
+    const [countLikes, setCountLikes] = useState(numOfLikes ? numOfLikes : 0);
 
     const handleLike = () => {
         if(!isLiked) {
@@ -29,18 +30,58 @@ export default function UserComment({ key, username, comment, numOfLikes, time }
         }
     }
 
-    // TODO: write function
-    const handleDelete = () => {
+    const displayDeleteButton = username == "my_username" ? "" : "none";
 
+    const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+
+    const handleDeleteModal = () => {
+        setShowDeleteModal(!showDeleteModal);
+    };
+
+    // actually deleting comment
+    const handleDelete = () => {
+        if(isReply){
+            setNumOfComments(numOfComments - 1);
+
+            // find the parent comment from commentsList
+            const updatedCommentsList = commentsList.map((comment) => {
+                if (comment.id === parentId) {
+                    // update the replies array of the parent comment
+                    const updatedReplies = comment.replies?.filter((reply) => reply.id !== id) || [];
+                    return { ...comment, replies: updatedReplies };
+                }
+                return comment;
+            });
+
+            setCommentsList(updatedCommentsList);
+        } else {
+            let count = 0;
+            commentsList.forEach((comment) => {
+                if(comment.id == id){
+                    comment.replies?.forEach((reply) => {
+                        count++;
+                    })
+                }
+            });
+            setNumOfComments(numOfComments - count - 1);
+
+            // TODO: when updating to production code w/ database info, ensure that before you delete this parent comment, you must first iterate through all replies and delete each reply 
+            const updatedCommentsList = commentsList.filter((item) => {
+                return item.id != id
+            });
+    
+            setCommentsList(updatedCommentsList);
+        }
     }
 
-    // TODO: write function
-    const handleReply = () => {
+    const [showReplyField, setShowReplyField] = useState(false);
 
+    const handleReply = () => {
+        setShowReplyField(true);
     }
     
     return (
-        <Stack id={key} direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={2} sx={{ width: '100%' }}>
+        <Stack id={id} direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={2} sx={{ width: '100%' }} paddingLeft={isReply ? 5 : 0}>
             <Avatar src={'src'} sx={{ width: 28, height: 28 }}/>
             <Stack direction="column" sx={{ width: '50%' }}>
                 <Stack direction="row" spacing={1}>
@@ -60,7 +101,7 @@ export default function UserComment({ key, username, comment, numOfLikes, time }
                         <Button
                             variant="text"
                             sx={{borderRadius: 50, width: "fit-content", color: "gray", display: displayDeleteButton}}
-                            onClick={handleDelete}
+                            onClick={handleDeleteModal}
                         >
                             Delete
                         </Button>
@@ -73,7 +114,49 @@ export default function UserComment({ key, username, comment, numOfLikes, time }
                         <Typography variant="body1" color="initial">{countLikes}</Typography>
                     </Stack>
                 </Stack>
+                {showReplyField && 
+                    <AddComment
+                        parentId={parentId}
+                        repliedId={id}
+                        commentsList={commentsList}
+                        setCommentsList={setCommentsList}
+                        numOfComments={numOfComments}
+                        setNumOfComments={setNumOfComments}
+                        setShowReplyField={setShowReplyField}
+                        isReplyField={true}
+                        isReply={isReply}
+                    />
+                }
             </Stack>
+            {showDeleteModal && (
+              <div
+                style={{
+                  position: 'fixed',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'rgba(0, 0, 0, 0.3)', // Semi-transparent black background
+                  zIndex: 1000,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'flex-start', p: 3, backgroundColor: "white", borderRadius: 5 }}>
+                    <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" spacing={2}>
+                        <Typography variant="body1" color="black" sx={{ fontWeight: 'medium' }}>Delete comment</Typography>
+                        <Typography variant="body1" color="gray">Delete your comment permanently?</Typography>
+                        <Stack direction="row" spacing={3}>
+                            <Button onClick={handleDeleteModal} sx={{borderRadius: 50, width: "fit-content"}}>Cancel</Button>
+                            <Button onClick={handleDelete} sx={{borderRadius: 50, width: "fit-content"}}>Delete</Button>
+                        </Stack>
+                    </Stack>
+                </Box>
+            </div>
+          )}
         </Stack>
     );
 }
+
+export default UserComment;

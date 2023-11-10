@@ -1,18 +1,19 @@
 CREATE TABLE user_table (
-  userid text PRIMARY KEY,
+  userid SERIAL PRIMARY KEY,
   pass text,
   first_name varchar(255),
   last_name varchar(255),
-  email text,
+  email text UNIQUE, -- Assuming each email should be unique
   phone text,
-  profile_img BYTEA,
+  profile_img BYTEA
 );
 
-INSERT INTO user_table (userid, pass, first_name, last_name, email, phone) VALUES ('sahass5', 'hi', 'selma', 'hassan', 'selma@gmail.com', '4044512184');
 
+INSERT INTO user_table (pass, first_name, last_name, email, phone) VALUES ('selma', 'selma', 'hassan', 'selma@emory.edu', '4044512184');
+INSERT INTO user_table (pass, first_name, last_name, email, phone) VALUES ('ryan', 'ryan', 'zhao', 'ryan@emory.edu', '4044512184');
 CREATE TABLE user_payment (
     id int PRIMARY KEY,
-    userid text,
+    userid SERIAL,
     FOREIGN KEY (userid) REFERENCES user_table(userid),
     payment_type varchar(255),
     payment_provider varchar(255),
@@ -25,9 +26,11 @@ CREATE TABLE product_category(
   category_name varchar
 )
 
+INSERT INTO product_category (category_id, category_name) VALUES (1, "School Supplies"), (2, "Furniture"), (3, "Electronics"), (4, "Other"), (5, "Tickets"), (6, "Housing"), (7, "Books")
+
 CREATE TABLE product_listing (
-    listing_id int PRIMARY KEY,
-    userid text,
+    listing_id SERIAL PRIMARY KEY,
+    userid SERIAL,
     FOREIGN KEY (userid) REFERENCES user_table(userid),
     product_name varchar,
     descr text,
@@ -40,6 +43,8 @@ CREATE TABLE product_listing (
     sold_at timestamp,
     listing_img BYTEA
 )
+INSERT INTO product_listing (userid, product_name, descr, category_id, inventory_id, price) VALUES (1, 'Laptop', 'New macbook 2023', 3, 1, 1050);
+
 
 CREATE TABLE transaction_details (
   transaction_id int PRIMARY KEY,
@@ -50,7 +55,7 @@ CREATE TABLE transaction_details (
 
 CREATE TABLE order_details(
   order_id int,
-  userid text,
+  userid SERIAL,
   FOREIGN KEY (userid) REFERENCES user_table(userid),
   listing_id int,
   FOREIGN KEY (listing_id) REFERENCES product_listing(listing_id),
@@ -62,9 +67,18 @@ CREATE TABLE order_details(
 
 CREATE TABLE messages (
   message_id int,
-  userid text,
+  userid SERIAL,
   FOREIGN KEY (userid) REFERENCES user_table(userid),
   listing_id int,
   FOREIGN KEY (listing_id) REFERENCES product_listing(listing_id),
   text_msg text
 )
+
+
+DROP TABLE messages;
+DROP TABLE order_details;
+DROP TABLE transaction_details;
+DROP TABLE product_listing;
+DROP TABLE product_category;
+DROP TABLE user_payment;
+DROP TABLE user_table;

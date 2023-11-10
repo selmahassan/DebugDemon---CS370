@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -12,13 +12,15 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation'
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import StickyAlert from '@/components/StickyAlert';
 
 export default function Login() {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -29,15 +31,51 @@ export default function Login() {
     event.preventDefault();
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+  const searchParams = useSearchParams()
+  const search = searchParams.get('isSuccess')
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
+  const [errorMessage, setErrorMessage] = React.useState('');
+
+  useEffect(() => {
+    if (search === 'true') {
+      setOpenSuccess(true);
+    }
+  }, [search]);
+
+const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+  const data = new FormData(event.currentTarget);
+
+  const email = data.get('email') as string;
+  const password = data.get('password') as string;
+
+  try {
+    const response = await fetch('/api/userlogin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, pass: password }),
     });
-    router.push('/') //TODO: Redirect
-  };
+
+    const result = await response.json();
+
+    if (response.status === 200) {
+      router.push('/'); // Redirect to the main page or dashboard
+    } else {
+      setErrorMessage(result.message);
+      setOpenError(true);
+      setOpenSuccess(false);
+    }
+
+  } catch (error) {
+    console.error(error);
+    setErrorMessage('An error occurred. Please try again.');
+    setOpenError(true);
+    setOpenSuccess(false);
+  }
+};
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
@@ -65,6 +103,14 @@ export default function Login() {
             alignItems: 'center',
           }}
         >
+          <StickyAlert
+            successMessage="Account signup successful! Please sign in."
+            errorMessage={errorMessage}
+            openSuccess={openSuccess}
+            setOpenSuccess={setOpenSuccess}
+            openError={openError}
+            setOpenError={setOpenError}
+          />
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>

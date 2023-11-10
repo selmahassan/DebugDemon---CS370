@@ -28,6 +28,8 @@ export const PUT = async (req: Request, res: Response) => {
     let first = String(first_name)
     let last = String(last_name)
     let password = String(pass)
+
+    console.log("put reached");
     
     try {
         const url_id = req.url.split("api/user/")[1];

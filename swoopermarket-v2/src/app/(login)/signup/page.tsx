@@ -1,7 +1,7 @@
 'use client'
 
 import { User } from '@/types';
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,6 +19,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import FormHelperText from '@mui/material/FormHelperText';
+import StickyAlert from '@/components/StickyAlert';
+import { useRouter } from 'next/navigation'
 
 interface NewUserForm {
     email: string;
@@ -43,6 +45,7 @@ export default function SignUp() {
         email: "",
         rePassword: "",
     })
+    const router = useRouter()
 
     const onChangeEmail = (e: { target: { value: string; }; }) => {
         if (!e.target.value.match(".+@emory\.edu")) {
@@ -76,27 +79,47 @@ export default function SignUp() {
         }
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const [openSuccess, setOpenSuccess] = useState(false);
+    const [openError, setOpenError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        
+
         const user : User = {
-            userid: data.get('firstName') as string,
             firstName: data.get('firstName') as string,
             lastName: data.get('lastName') as string,
             email: data.get('email') as string,
             password: data.get('password') as string,
+            bio: data.get('bio') as string,
+            phone: data.get('phone') as string,
         };
 
-        console.log(user);
+        try {
+            const response = await fetch('../api/user', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            });
+    
+            if (response.status === 201) {
+                // console.log("gets success status")
+                router.push('/login?isSuccess=true');
+            } else if (response.status === 500){
+                setErrorMessage("Account already exists. Please sign in.");
+                setOpenError(true);
+                setOpenSuccess(false);
+            }
 
-        fetch('../api/user', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-          });
+        } catch(error) {
+            console.error(error);
+            setErrorMessage('An error occurred. Please try again.');
+            setOpenError(false);
+            setOpenSuccess(false);
+        }
     };
 
   return (
@@ -111,8 +134,16 @@ export default function SignUp() {
             }}
         >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+                <LockOutlinedIcon />
             </Avatar>
+            <StickyAlert
+                successMessage="Account signup successful! Please sign in."
+                errorMessage={errorMessage}
+                openSuccess={openSuccess}
+                setOpenSuccess={setOpenSuccess}
+                openError={openError}
+                setOpenError={setOpenError}
+            />
             <Typography component="h1" variant="h5">
             SwooperMarket Sign Up
             </Typography>
@@ -154,6 +185,16 @@ export default function SignUp() {
                 />
                 </Grid>
                 <Grid item xs={12}>
+                <TextField
+                    required
+                    fullWidth
+                    id="phone"
+                    label="Phone Number"
+                    name="phone"
+                    autoComplete="phone"
+                />
+                </Grid>
+                <Grid item xs={12}>
                 <FormControl required fullWidth variant="outlined">
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <OutlinedInput
@@ -180,7 +221,7 @@ export default function SignUp() {
                 </Grid>
                 <Grid item xs={12}>
                 <FormControl required fullWidth variant="outlined">
-                    <InputLabel htmlFor="re-password">Re-Enter Password</InputLabel>
+                    <InputLabel htmlFor="re-password">Confirm</InputLabel>
                     <OutlinedInput
                         id="rePassword"
                         name="rePassword"

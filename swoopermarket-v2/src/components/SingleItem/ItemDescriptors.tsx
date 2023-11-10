@@ -4,22 +4,18 @@ import Divider from '@mui/material/Divider';
 import ItemHeader from './Descriptors/ItemHeader';
 import ItemBody from './Descriptors/ItemBody';
 import ItemInterest from './Descriptors/ItemInterest';
+import { Descriptor } from '@/types/itemDescriptor';
 
-type Descriptor = {
-    listingTitle: string,
-    sellerId: string,
-    description: string,
-    price: number,
-    condition: string,
-    pickup: string
-}
-
-export default function ItemDescriptors({ descriptors } : { descriptors: Descriptor }) {
+export default function ItemDescriptors({ descriptors } : { descriptors: Descriptor | null }) {
     return (
+        descriptors === null ? <></> : 
         <Stack direction="column" spacing={2}>
             <ItemHeader 
                 title={descriptors.listingTitle}
                 seller={descriptors.sellerId}
+                email={descriptors.email}
+                phone={descriptors.phone}
+
             />
             <Divider light />
             <ItemBody 

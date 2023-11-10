@@ -1,6 +1,5 @@
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 
 export default function ItemBody({ description, price, condition, pickup } : { description: string; price: number; condition: string; pickup: string }) {
     return (
@@ -11,10 +10,10 @@ export default function ItemBody({ description, price, condition, pickup } : { d
             </Stack>
             <Typography variant="body1" color="initial">{`Price: $${price}`}</Typography>
             <Typography variant="body1" color="initial">{`Condition: ${condition}`}</Typography>
-            <Stack direction="row">
+            <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={1} >
                 {/* TODO: add space after "pickup" */}
-                <Typography variant="body1" color="initial">Pickup: </Typography>
-                <Link href={'href'} variant="body1">{pickup}</Link>
+                <Typography variant="body1" color="initial">Preferred Pickup: </Typography>
+                <Typography variant="body1" color="initial">{pickup}</Typography>
             </Stack>
         </Stack>
     );

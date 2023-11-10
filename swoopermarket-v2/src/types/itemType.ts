@@ -1,7 +1,8 @@
 export type ItemType = {
-    id: string;
-    src: string;
-    description: string;
-    condition: string;
+    listing_id: number;
+    product_name: string;
+    descr: string;
     price: number;
+    listing_img: any;
+    category_id: number;
 };

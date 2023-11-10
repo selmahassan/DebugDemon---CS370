@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { put } from '@vercel/blob';
 
 // get all listings in DB
+// get all listings in DB
 export const GET = async (req: Request, res: Response) => {
     try {
         const { rows } =  await sql`SELECT * FROM product_listing;`;

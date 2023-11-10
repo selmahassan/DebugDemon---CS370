@@ -9,9 +9,10 @@ export type Listing = {
 }
 
 export type User = {
-    userid: string,
     firstName: string,
     lastName: string,
     email: string,
-    password: string
+    password: string,
+    bio: string,
+    phone: string,
 }
