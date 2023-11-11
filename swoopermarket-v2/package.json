@@ -15,7 +15,7 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
-    "@vercel/blob": "^0.14.1",
+    "@vercel/blob": "^0.15.0",
     "@vercel/kv": "^0.2.3",
     "@vercel/postgres": "^0.5.0",
     "bcrypt": "^5.1.1",
@@ -39,4 +39,3 @@
     "typescript": "latest"
   }
 }
-
