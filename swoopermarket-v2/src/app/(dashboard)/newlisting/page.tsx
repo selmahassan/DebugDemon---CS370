@@ -15,7 +15,6 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
-import createTheme from '@mui/material/styles/createTheme';
 import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
@@ -25,7 +24,8 @@ export default function StarredPage() {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -37,7 +37,6 @@ export default function StarredPage() {
     else category_id = 4; // db says entertainment = 4
 
     const listing : Listing = {
-      listingid: Number(Date.now), // TODO : how are we making the unique listing ids and user ids?
       title: data.get('title') as string,
       description: data.get('description') as string,
       category: category_id,
@@ -46,9 +45,7 @@ export default function StarredPage() {
       pickup: data.get('pickup') as string
     };
 
-    console.log(listing);
-
-    fetch('../api/listing', {
+    let response = await fetch('../api/listing', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -56,27 +53,12 @@ export default function StarredPage() {
       body: JSON.stringify(listing)
     });
 
-    // TODO: check if listing can be posted
-    setOpenSuccess(true);
-    setOpenError(false);
-
-    // TODO: api responses before showing error alerts
-    // setOpenSuccess(true);
-    // setOpenError(false);
+    if(response.status == 200) {
+      setOpenError(true);
+    } else {
+      setOpenSuccess(true);
+    }
   };
-
-  const theme = createTheme({
-    components: {
-        MuiToolbar: {
-            styleOverrides: {
-                dense: {
-                    height: 75,
-                    minHeight: 50
-                }
-            }
-        }
-    },
-  })
 
   const [formData, setFormData] = useState({
     title: '',

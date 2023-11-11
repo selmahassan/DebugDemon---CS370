@@ -1,5 +1,4 @@
 export type Listing = {
-    listingid: number,
     title: string,
     description: string,
     category: number,
