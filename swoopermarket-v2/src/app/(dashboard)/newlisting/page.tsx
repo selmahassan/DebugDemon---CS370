@@ -15,7 +15,6 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
-import createTheme from '@mui/material/styles/createTheme';
 import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
@@ -78,19 +77,6 @@ export default function StarredPage() {
       setOpenSuccess(true);
     }
   };
-
-  const theme = createTheme({
-    components: {
-        MuiToolbar: {
-            styleOverrides: {
-                dense: {
-                    height: 75,
-                    minHeight: 50
-                }
-            }
-        }
-    },
-  })
 
   const [formData, setFormData] = useState({
     title: '',
