@@ -14,7 +14,7 @@ export const GET = async (req: Request, res: Response) => {
 
 // post a new listing into DB
 export const POST = async (req: Request, res: Response) => {
-    const {listingid, title, description, image, category, condition, price, pickup} = await req.json();
+    const {title, description, image, category, condition, price, pickup} = await req.json();
 
     let listing_id = 19
     let user_id = "selma" // TODO : how to fetch user id from newlisting page?
