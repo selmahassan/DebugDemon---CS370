@@ -1,7 +1,7 @@
 'use client'
 
 import { Listing } from '@/types';
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -25,13 +25,6 @@ import type { PutBlobResult } from '@vercel/blob';
 export default function StarredPage() {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      setSelectedFile(event.target.files[0]);
-    }
-  };
 
   const submitBlob = async(image: File) => {
     const response = await fetch(
@@ -217,7 +210,6 @@ export default function StarredPage() {
                   id="image"
                   name="image"
                   sx={{mb: 1}}
-                  onChange={handleFileSelect}
                 />
               </Grid>
               <Grid item xs={12}>
