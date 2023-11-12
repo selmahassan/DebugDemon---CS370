@@ -54,9 +54,11 @@ export default function NewListingPage() {
     });
 
     if(response.status == 200 || response.status == 201) {
+      setOpenSuccess(true);
       setOpenError(false);
       router.push('/?isSuccess=true');
     } else {
+      setOpenSuccess(false)
       setOpenError(true)
     }
   };
