@@ -15,10 +15,12 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import StickyAlert from '@/components/StickyAlert';
 import { Category_Num } from '@/enums/category';
+import { useRouter } from 'next/navigation'
 
-export default function StarredPage() {
+export default function NewListingPage() {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
+  const router = useRouter()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 
@@ -51,10 +53,11 @@ export default function StarredPage() {
       body: JSON.stringify(listing)
     });
 
-    if(response.status == 200) {
-      setOpenError(true);
+    if(response.status == 200 || response.status == 201) {
+      setOpenError(false);
+      router.push('/?isSuccess=true');
     } else {
-      setOpenSuccess(true);
+      setOpenError(true)
     }
   };
 
