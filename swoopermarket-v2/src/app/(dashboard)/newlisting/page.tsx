@@ -18,7 +18,7 @@ import { Category_Num } from '@/enums/category';
 import { useRouter } from 'next/navigation'
 
 export default function NewListingPage() {
-  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openSuccess, setOpenSuccess] = useState(true);
   const [openError, setOpenError] = useState(false);
   const router = useRouter()
 
