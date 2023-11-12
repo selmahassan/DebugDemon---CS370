@@ -19,6 +19,7 @@ import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
 import StickyAlert from '@/components/StickyAlert';
+import { Category_Num } from '@/enums/category';
 
 export default function StarredPage() {
   const [openSuccess, setOpenSuccess] = useState(false);
@@ -30,11 +31,11 @@ export default function StarredPage() {
     const data = new FormData(event.currentTarget);
 
     // TODO : categories mistmatch with database
-    let category_id: number = 4; // gotta initialize it bc const listing wants me to
-    if(data.get('category') == 'school_supplies') category_id = 1; // db says apparel = 1
-    else if (data.get('category') == 'furniture') category_id = 2;
-    else if (data.get('category') == 'electronics') category_id = 3;
-    else category_id = 4; // db says entertainment = 4
+    let category = data.get('category') as string
+    let category_id: number = Category_Num.indexOf(category)
+    if (category_id === -1) {
+      category_id = 4
+    }
 
     const listing : Listing = {
       title: data.get('title') as string,
@@ -44,6 +45,8 @@ export default function StarredPage() {
       price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
       pickup: data.get('pickup') as string
     };
+
+    console.log(listing)
 
     let response = await fetch('../api/listing', {
       method: 'POST',
@@ -97,7 +100,19 @@ export default function StarredPage() {
       text: 'Electronics',
     },
     {
-      key: 'misc',
+      key: 'tickets',
+      text: 'Tickets',
+    },
+    {
+      key: 'housing',
+      text: 'Housing',
+    },
+    {
+      key: 'books',
+      text: 'Books',
+    },
+    {
+      key: 'other',
       text: 'Other/Miscellaneous',
     },
   ];
