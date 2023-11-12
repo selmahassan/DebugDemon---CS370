@@ -5,8 +5,6 @@ import React, { useState} from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
-import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
@@ -15,9 +13,6 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
-import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
-import ItemPhotos from '@/components/SingleItem/ItemPhotos';
-import CloseIcon from '@mui/icons-material/Close';
 import StickyAlert from '@/components/StickyAlert';
 import { Category_Num } from '@/enums/category';
 
@@ -80,11 +75,11 @@ export default function StarredPage() {
     });
   };
 
-  const [showPreview, setShowPreview] = useState<boolean>(false);
+  // const [showPreview, setShowPreview] = useState<boolean>(false);
 
-  const handlePreviewClick = () => {
-    setShowPreview(!showPreview);
-  };
+  // const handlePreviewClick = () => {
+  //   setShowPreview(!showPreview);
+  // };
 
   const categories = [
     {
@@ -186,7 +181,6 @@ export default function StarredPage() {
                 <Typography variant="h6" gutterBottom>
                   Upload Image
                 </Typography>
-                {/* TODO: option to add multiple images */}
                 <TextField
                   required
                   type="file"
@@ -269,7 +263,7 @@ export default function StarredPage() {
                   onChange={handleFormChange}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <Button
                   fullWidth
                   variant="contained"
@@ -279,8 +273,8 @@ export default function StarredPage() {
                 >
                   Preview Listing
                 </Button>
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              </Grid> */}
+              <Grid item xs={12} sm={12}>
                 <Button
                   type="submit"
                   fullWidth
@@ -293,7 +287,7 @@ export default function StarredPage() {
               </Grid>
             </Grid>
           </Box>
-          {showPreview && (
+          {/* {showPreview && (
               <div
                 style={{
                   position: 'fixed',
@@ -339,7 +333,7 @@ export default function StarredPage() {
                 </Box>
               </Paper>
             </div>
-          )}
+          )} */}
         </Paper>
       </Container>
     </>
