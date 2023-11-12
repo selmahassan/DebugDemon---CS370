@@ -8,3 +8,14 @@ export enum Category {
     "Housing", 
     "Books"
 }
+
+export const Category_Num = [
+    "none",
+    "school_supplies", 
+    "furniture", 
+    "electronics",
+    "other", 
+    "tickets", 
+    "housing", 
+    "books"
+]
