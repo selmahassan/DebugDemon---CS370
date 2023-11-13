@@ -35,6 +35,9 @@ const ProfilePage = () => {
             setPhone(user.phone);
 
         }
+        else{
+            return <div>Please log in to view this page.</div>;
+        }
     }, []);
 
     return (
