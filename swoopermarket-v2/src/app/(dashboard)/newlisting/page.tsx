@@ -1,7 +1,7 @@
 'use client'
 
 import { Listing } from '@/types';
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -14,15 +14,43 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import StickyAlert from '@/components/StickyAlert';
+
 import { Category_Num } from '@/enums/category';
 import { useRouter } from 'next/navigation'
 
 export default function NewListingPage() {
+
+import { SpeakerPhone } from '@mui/icons-material';
+
+  
+
+export default function StarredPage() {
+
+  const [email, setEmail] = useState('');
+  const [userid, setUserid] = useState('');
+  const [first_name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+
+  useEffect(() => {
+      // Retrieve user info from local storage
+      const userInfo = localStorage.getItem('userInfo');
+      if (userInfo) {
+          const user = JSON.parse(userInfo);
+          setEmail(user.email); // Set the email in state
+          setUserid(user.userid);
+          setName(user.first_name);
+          setPhone(user.phone);
+
+      }
+  }, []);
+
+
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
   const router = useRouter()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+
 
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -34,32 +62,55 @@ export default function NewListingPage() {
       category_id = 4
     }
 
-    const listing : Listing = {
+    // ...existing category_id logic...
+
+    // Retrieve userId from local storage set during the login
+
+    if (!userid) {
+      console.error('No user id found, please log in again');
+      setOpenError(true);
+      return;
+    }
+
+    const listing: Listing = {
+      // Omit listingid, let the database handle ID creation
+
       title: data.get('title') as string,
       description: data.get('description') as string,
-      category: category_id,
+      category: category,
       condition: data.get('condition') as string,
-      price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
-      pickup: data.get('pickup') as string
+      price: Number(data.get('price')),
+      pickup: data.get('pickup') as string,
+      userid: userid
     };
 
     console.log(listing)
+    try {
+      const response = await fetch('/api/listing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(listing),
+      });
 
-    let response = await fetch('../api/listing', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(listing)
-    });
+      const result = await response.json();
 
-    if(response.status == 200 || response.status == 201) {
-      setOpenSuccess(true);
-      setOpenError(false);
-      router.push('/?isSuccess=true');
-    } else {
-      setOpenSuccess(false)
-      setOpenError(true)
+      if (response.ok) {
+        // Handle success
+        setOpenSuccess(true);
+        setOpenError(false);
+       // router.push('/path-to-your-listing-page'); // Redirect to the listing page
+      } else {
+        // Handle errors
+        console.error(result.message);
+        setOpenError(true);
+        setOpenSuccess(false);
+      }
+    } catch (error) {
+      console.error('Error posting listing:', error);
+      setOpenError(true);
+      setOpenSuccess(false);
     }
   };
 
@@ -324,13 +375,13 @@ export default function NewListingPage() {
                       <Grid item sm={8} md={5}>
                         <ItemDescriptors descriptors={{
                             listingTitle: formData.title,
-                            sellerId: "my_username",
+                            Name: first_name,
                             description: formData.description,
                             price: formData.price,
                             condition: formData.condition,
                             pickup: formData.pickup,
-                            email: "my_email",
-                            phone: "my_phone",
+                            email: email,
+                            phone: phone,
                         }}/>
                       </Grid>
                     </Grid>
