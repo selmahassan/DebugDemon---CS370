@@ -5,8 +5,6 @@ import React, { useState} from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
-import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
@@ -15,29 +13,28 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
-import createTheme from '@mui/material/styles/createTheme';
-import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
-import ItemPhotos from '@/components/SingleItem/ItemPhotos';
-import CloseIcon from '@mui/icons-material/Close';
 import StickyAlert from '@/components/StickyAlert';
+import { Category_Num } from '@/enums/category';
+import { useRouter } from 'next/navigation'
 
-export default function StarredPage() {
+export default function NewListingPage() {
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
+  const router = useRouter()
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
     // TODO : categories mistmatch with database
-    let category_id: number = 4; // gotta initialize it bc const listing wants me to
-    if(data.get('category') == 'school_supplies') category_id = 1; // db says apparel = 1
-    else if (data.get('category') == 'furniture') category_id = 2;
-    else if (data.get('category') == 'electronics') category_id = 3;
-    else category_id = 4; // db says entertainment = 4
+    let category = data.get('category') as string
+    let category_id: number = Category_Num.indexOf(category)
+    if (category_id === -1) {
+      category_id = 4
+    }
 
     const listing : Listing = {
-      listingid: Number(Date.now), // TODO : how are we making the unique listing ids and user ids?
       title: data.get('title') as string,
       description: data.get('description') as string,
       category: category_id,
@@ -46,9 +43,9 @@ export default function StarredPage() {
       pickup: data.get('pickup') as string
     };
 
-    console.log(listing);
+    console.log(listing)
 
-    fetch('../api/listing', {
+    let response = await fetch('../api/listing', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -56,27 +53,15 @@ export default function StarredPage() {
       body: JSON.stringify(listing)
     });
 
-    // TODO: check if listing can be posted
-    setOpenSuccess(true);
-    setOpenError(false);
-
-    // TODO: api responses before showing error alerts
-    // setOpenSuccess(true);
-    // setOpenError(false);
+    if(response.status == 200 || response.status == 201) {
+      setOpenSuccess(true);
+      setOpenError(false);
+      router.push('/?isSuccess=true');
+    } else {
+      setOpenSuccess(false)
+      setOpenError(true)
+    }
   };
-
-  const theme = createTheme({
-    components: {
-        MuiToolbar: {
-            styleOverrides: {
-                dense: {
-                    height: 75,
-                    minHeight: 50
-                }
-            }
-        }
-    },
-  })
 
   const [formData, setFormData] = useState({
     title: '',
@@ -95,11 +80,11 @@ export default function StarredPage() {
     });
   };
 
-  const [showPreview, setShowPreview] = useState<boolean>(false);
+  // const [showPreview, setShowPreview] = useState<boolean>(false);
 
-  const handlePreviewClick = () => {
-    setShowPreview(!showPreview);
-  };
+  // const handlePreviewClick = () => {
+  //   setShowPreview(!showPreview);
+  // };
 
   const categories = [
     {
@@ -115,7 +100,19 @@ export default function StarredPage() {
       text: 'Electronics',
     },
     {
-      key: 'misc',
+      key: 'tickets',
+      text: 'Tickets',
+    },
+    {
+      key: 'housing',
+      text: 'Housing',
+    },
+    {
+      key: 'books',
+      text: 'Books',
+    },
+    {
+      key: 'other',
       text: 'Other/Miscellaneous',
     },
   ];
@@ -189,7 +186,6 @@ export default function StarredPage() {
                 <Typography variant="h6" gutterBottom>
                   Upload Image
                 </Typography>
-                {/* TODO: option to add multiple images */}
                 <TextField
                   required
                   type="file"
@@ -272,7 +268,7 @@ export default function StarredPage() {
                   onChange={handleFormChange}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <Button
                   fullWidth
                   variant="contained"
@@ -282,8 +278,8 @@ export default function StarredPage() {
                 >
                   Preview Listing
                 </Button>
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              </Grid> */}
+              <Grid item xs={12} sm={12}>
                 <Button
                   type="submit"
                   fullWidth
@@ -296,7 +292,7 @@ export default function StarredPage() {
               </Grid>
             </Grid>
           </Box>
-          {showPreview && (
+          {/* {showPreview && (
               <div
                 style={{
                   position: 'fixed',
@@ -342,7 +338,7 @@ export default function StarredPage() {
                 </Box>
               </Paper>
             </div>
-          )}
+          )} */}
         </Paper>
       </Container>
     </>

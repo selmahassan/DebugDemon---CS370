@@ -1,5 +1,4 @@
 export type Listing = {
-    listingid: number,
     title: string,
     description: string,
     category: number,
@@ -9,7 +8,6 @@ export type Listing = {
 }
 
 export type User = {
-    userid: string,
     firstName: string,
     lastName: string,
     email: string,

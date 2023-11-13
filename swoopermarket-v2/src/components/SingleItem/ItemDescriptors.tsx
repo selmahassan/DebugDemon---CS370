@@ -6,8 +6,9 @@ import ItemBody from './Descriptors/ItemBody';
 import ItemInterest from './Descriptors/ItemInterest';
 import { Descriptor } from '@/types/itemDescriptor';
 
-export default function ItemDescriptors({ descriptors } : { descriptors: Descriptor }) {
+export default function ItemDescriptors({ descriptors } : { descriptors: Descriptor | null }) {
     return (
+        descriptors === null ? <></> : 
         <Stack direction="column" spacing={2}>
             <ItemHeader 
                 title={descriptors.listingTitle}
