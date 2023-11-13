@@ -49,7 +49,6 @@ const ProfilePage = () => {
                             <EditIcon />
                         </IconButton>
                     </Tooltip>
-                    <Rating name="read-only" defaultValue={1.5} precision={0.5} readOnly />
                     <Typography variant="h4" color="initial">
                     {first_name + " " + last_name || 'Name not available'} {/* Use actual name from local storage if needed */}
                     </Typography>
