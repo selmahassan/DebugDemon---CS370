@@ -1,10 +1,12 @@
 'use client'
 
 import { Listing } from '@/types';
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
@@ -13,55 +15,107 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
+import createTheme from '@mui/material/styles/createTheme';
+import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
+import ItemPhotos from '@/components/SingleItem/ItemPhotos';
+import CloseIcon from '@mui/icons-material/Close';
 import StickyAlert from '@/components/StickyAlert';
-import { Category_Num } from '@/enums/category';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router';
+import { SpeakerPhone } from '@mui/icons-material';
 
-export default function NewListingPage() {
+  
+
+export default function StarredPage() {
+
+  const [email, setEmail] = useState('');
+  const [userid, setUserid] = useState('');
+  const [first_name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+
+  useEffect(() => {
+      // Retrieve user info from local storage
+      const userInfo = localStorage.getItem('userInfo');
+      if (userInfo) {
+          const user = JSON.parse(userInfo);
+          setEmail(user.email); // Set the email in state
+          setUserid(user.userid);
+          setName(user.first_name);
+          setPhone(user.phone);
+
+      }
+  }, []);
+
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
-  const router = useRouter()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    // TODO : categories mistmatch with database
-    let category = data.get('category') as string
-    let category_id: number = Category_Num.indexOf(category)
-    if (category_id === -1) {
-      category_id = 4
+    // ...existing category_id logic...
+
+    // Retrieve userId from local storage set during the login
+
+    if (!userid) {
+      console.error('No user id found, please log in again');
+      setOpenError(true);
+      return;
     }
 
-    const listing : Listing = {
+    const listing: Listing = {
+      // Omit listingid, let the database handle ID creation
       title: data.get('title') as string,
       description: data.get('description') as string,
-      category: category_id,
+      category: Number(data.get('category')),
       condition: data.get('condition') as string,
-      price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
-      pickup: data.get('pickup') as string
+      price: Number(data.get('price')),
+      pickup: data.get('pickup') as string,
+      userid: userid
     };
 
-    console.log(listing)
+    console.log(listing);
 
-    let response = await fetch('../api/listing', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(listing)
-    });
+    try {
+      const response = await fetch('/api/listing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(listing),
+      });
 
-    if(response.status == 200 || response.status == 201) {
-      setOpenSuccess(true);
-      setOpenError(false);
-      router.push('/?isSuccess=true');
-    } else {
-      setOpenSuccess(false)
-      setOpenError(true)
+      const result = await response.json();
+
+      if (response.ok) {
+        // Handle success
+        setOpenSuccess(true);
+        setOpenError(false);
+       // router.push('/path-to-your-listing-page'); // Redirect to the listing page
+      } else {
+        // Handle errors
+        console.error(result.message);
+        setOpenError(true);
+        setOpenSuccess(false);
+      }
+    } catch (error) {
+      console.error('Error posting listing:', error);
+      setOpenError(true);
+      setOpenSuccess(false);
     }
   };
+
+  const theme = createTheme({
+    components: {
+        MuiToolbar: {
+            styleOverrides: {
+                dense: {
+                    height: 75,
+                    minHeight: 50
+                }
+            }
+        }
+    },
+  })
 
   const [formData, setFormData] = useState({
     title: '',
@@ -80,11 +134,11 @@ export default function NewListingPage() {
     });
   };
 
-  // const [showPreview, setShowPreview] = useState<boolean>(false);
+  const [showPreview, setShowPreview] = useState<boolean>(false);
 
-  // const handlePreviewClick = () => {
-  //   setShowPreview(!showPreview);
-  // };
+  const handlePreviewClick = () => {
+    setShowPreview(!showPreview);
+  };
 
   const categories = [
     {
@@ -100,19 +154,7 @@ export default function NewListingPage() {
       text: 'Electronics',
     },
     {
-      key: 'tickets',
-      text: 'Tickets',
-    },
-    {
-      key: 'housing',
-      text: 'Housing',
-    },
-    {
-      key: 'books',
-      text: 'Books',
-    },
-    {
-      key: 'other',
+      key: 'misc',
       text: 'Other/Miscellaneous',
     },
   ];
@@ -186,6 +228,7 @@ export default function NewListingPage() {
                 <Typography variant="h6" gutterBottom>
                   Upload Image
                 </Typography>
+                {/* TODO: option to add multiple images */}
                 <TextField
                   required
                   type="file"
@@ -268,7 +311,7 @@ export default function NewListingPage() {
                   onChange={handleFormChange}
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6}>
                 <Button
                   fullWidth
                   variant="contained"
@@ -278,8 +321,8 @@ export default function NewListingPage() {
                 >
                   Preview Listing
                 </Button>
-              </Grid> */}
-              <Grid item xs={12} sm={12}>
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <Button
                   type="submit"
                   fullWidth
@@ -292,7 +335,7 @@ export default function NewListingPage() {
               </Grid>
             </Grid>
           </Box>
-          {/* {showPreview && (
+          {showPreview && (
               <div
                 style={{
                   position: 'fixed',
@@ -324,13 +367,13 @@ export default function NewListingPage() {
                       <Grid item sm={8} md={5}>
                         <ItemDescriptors descriptors={{
                             listingTitle: formData.title,
-                            sellerId: "my_username",
+                            sellerId: "1",
                             description: formData.description,
                             price: formData.price,
                             condition: formData.condition,
                             pickup: formData.pickup,
-                            email: "my_email",
-                            phone: "my_phone",
+                            email: email,
+                            phone: phone,
                         }}/>
                       </Grid>
                     </Grid>
@@ -338,7 +381,7 @@ export default function NewListingPage() {
                 </Box>
               </Paper>
             </div>
-          )} */}
+          )}
         </Paper>
       </Container>
     </>
