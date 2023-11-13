@@ -1,6 +1,6 @@
 export type Descriptor = {
     listingTitle: string,
-    Name: string,
+    sellerId: string,
     email: string,
     phone: string,
     description: string,

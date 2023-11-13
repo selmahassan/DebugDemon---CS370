@@ -18,8 +18,7 @@ export const POST = async (req: Request, res: Response) => {
 
     try {// TODO: product_listing table doesnt have a condition or pickup column
         const messages = await sql`INSERT INTO product_listing (Userid, Product_name, Descr, Price, Created_at, Modified_at) 
-        VALUES (${userid}, ${title}, ${description}, ${price}, NOW(), NOW());`;
-                
+        VALUES (${userid}, ${title}, ${description}, ${price}, NOW(), NOW());`;      
         return NextResponse.json({ messages }, { status: 200 });
     } catch (error) {
         console.log("Caught error")

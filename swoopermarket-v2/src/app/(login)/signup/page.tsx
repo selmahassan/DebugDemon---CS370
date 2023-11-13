@@ -86,10 +86,8 @@ export default function SignUp() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        
-        // TODO : how are we generating user's unique user ids? are we making them choose one or will we make one based off of database
+
         const user : User = {
-            userid: data.get('firstName') as string,
             firstName: data.get('firstName') as string,
             lastName: data.get('lastName') as string,
             email: data.get('email') as string,
@@ -98,7 +96,6 @@ export default function SignUp() {
             phone: data.get('phone') as string,
         };
 
-        // console.log(user);
         try {
             const response = await fetch('../api/user', {
                 method: 'POST',
@@ -107,9 +104,6 @@ export default function SignUp() {
                 },
                 body: JSON.stringify(user)
             });
-
-            // console.log(response)
-            const result = await response.json();
     
             if (response.status === 201) {
                 // console.log("gets success status")
@@ -191,6 +185,16 @@ export default function SignUp() {
                 />
                 </Grid>
                 <Grid item xs={12}>
+                <TextField
+                    required
+                    fullWidth
+                    id="phone"
+                    label="Phone Number"
+                    name="phone"
+                    autoComplete="phone"
+                />
+                </Grid>
+                <Grid item xs={12}>
                 <FormControl required fullWidth variant="outlined">
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <OutlinedInput
@@ -217,7 +221,7 @@ export default function SignUp() {
                 </Grid>
                 <Grid item xs={12}>
                 <FormControl required fullWidth variant="outlined">
-                    <InputLabel htmlFor="re-password">Re-Enter Password</InputLabel>
+                    <InputLabel htmlFor="re-password">Confirm</InputLabel>
                     <OutlinedInput
                         id="rePassword"
                         name="rePassword"
