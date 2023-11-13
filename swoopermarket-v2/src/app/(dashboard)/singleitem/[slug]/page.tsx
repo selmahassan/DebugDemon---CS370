@@ -13,6 +13,11 @@ import { ItemType } from '@/types/itemType';
 import { Descriptor } from '@/types/itemDescriptor';
 import { Category } from '@/enums/category';
 
+type PhotoType = {
+  id: string;
+  src: string;
+};
+
 async function getSingleListing(id: string) {
   try {
     const res = await fetch(process.env.API_URL + 'api/listing/' + id, {
@@ -63,7 +68,16 @@ export default async function SingleItem({ params }: { params: { slug: string } 
       pickup: "Dobbs",
     }
   }
-    
+
+  const newPhoto: PhotoType[] = listings?.listing_img
+  ? [
+      {
+        id: "1",
+        src: listings.listing_img
+      }
+    ]
+  : [];
+   
   return (
     listings === null ? 
     <Box sx={{ display: 'flex', alignItems: 'flex-start'}}>
@@ -81,7 +95,7 @@ export default async function SingleItem({ params }: { params: { slug: string } 
         <Stack direction="column" padding={2}>
           <Grid container direction="row" spacing={3} columns={{sm: 8, md: 12}}>
             <Grid item sm={8} md={7}>
-              <ItemPhotos photos={[]}/>
+              <ItemPhotos photos={newPhoto}/>
             </Grid>
             <Grid item sm={8} md={5}>
               <ItemDescriptors

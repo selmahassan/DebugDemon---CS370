@@ -1,5 +1,6 @@
 'use client'
 
+
 import { Listing } from '@/types';
 import React, { useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
@@ -20,6 +21,9 @@ import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
 import StickyAlert from '@/components/StickyAlert';
+import type { PutBlobResult } from '@vercel/blob';
+import { useRouter } from 'next/router';
+import { SpeakerPhone } from '@mui/icons-material';
 import { Category_Num } from '@/enums/category';
 
 export default function StarredPage() {
@@ -46,10 +50,23 @@ export default function StarredPage() {
   const [openError, setOpenError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const submitBlob = async(image: File) => {
+    const response = await fetch(
+      `/api/images?filename=${image.name}`,
+      {
+        method: 'POST',
+        body: image,
+      },
+    );
+
+    const newBlob = (await response.json()) as PutBlobResult;
+    return newBlob.url
+  }
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
+        
     if (!userid) {
       setErrorMessage('No user id found, please log in again');
       setOpenError(true);
@@ -61,6 +78,12 @@ export default function StarredPage() {
     if (category_id === -1) {
       category_id = 4
     }
+    
+    let image = data.get('image') as File 
+    console.log(image)
+
+    const image_url = await submitBlob(image) // TODO: Change listing_img to string to submit url
+    console.log(image_url)
 
     const listing: Listing = {
       // Omit listingid, let the database handle ID creation
@@ -68,8 +91,9 @@ export default function StarredPage() {
       description: data.get('description') as string,
       category: category_id,
       condition: data.get('condition') as string,
-      price: Number(data.get('price')),
+      price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
       pickup: data.get('pickup') as string,
+      image: image_url as string,
       userid: userid
     };
 

@@ -9,7 +9,7 @@ const profileItems = [
         product_name: "Pet Alligator",
         descr: "Generic Description",
         price: 48,
-        listing_img: "/images/profileListings/alligator.jpg",
+        listing_img: "/images/profileListings/alligator.jpg", // TODO: Change these links
         category_id: 4,
     },
     {

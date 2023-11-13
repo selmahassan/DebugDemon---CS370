@@ -13,14 +13,14 @@ export const GET = async (req: Request, res: Response) => {
 
 // post a new listing into DB
 export const POST = async (req: Request, res: Response) => {
-    const {listingid, title, description, image, category, condition, price, pickup} = await req.json();
+    const { searchParams } = new URL(req.url);
 
-    let user_id = 1 // TODO : how to fetch user id from newlisting page?
+    const {userid, title, description, category, condition, price, pickup, image} = await req.json();
 
     try {// TODO: product_listing table doesnt have a condition or pickup column
-        const messages = await sql`INSERT INTO product_listing (Userid, Product_name, Descr, Category_id, Price, Modified_at, Pickup, Condition, Created_at) 
-        VALUES (${user_id}, ${title}, ${description}, ${category}, ${price}, NOW(), ${pickup}, ${condition}, NOW());`;
-         
+        const messages = await sql`INSERT INTO product_listing (Userid, Product_name, Descr, Category_id, Price, Created_at, Modified_at, Listing_img, Pickup, Condition)
+        VALUES (${userid}, ${title}, ${description}, ${category}, ${price}, NOW(), NOW(), ${image}, ${pickup}, ${condition});`;
+                
         return NextResponse.json({ messages }, { status: 200 });
     } catch (error) {
         console.log("Caught error")
