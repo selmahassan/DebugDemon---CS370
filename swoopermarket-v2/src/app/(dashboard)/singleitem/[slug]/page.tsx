@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Header from '@/components/Header';
 import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
@@ -14,18 +14,24 @@ import { Descriptor } from '@/types/itemDescriptor';
 import { Category } from '@/enums/category';
 
 async function getSingleListing(id: string) {
-  const res = await fetch(process.env.API_URL + 'api/listing/' + id, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    cache: 'no-store'
-  });
-  
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
+  try {
+    const res = await fetch(process.env.API_URL + 'api/listing/' + id, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      cache: 'no-store'
+    });
+    
+    if (!res.ok) {
+      console.log('Failed to fetch single item data')
+      return null
+    }
+    return res.json()
+  } catch(error) {
+    console.log('Failed to fetch single item data')
+    return null
   }
-  return res.json()
 }
 
 export default async function SingleItem({ params }: { params: { slug: string } }) {
@@ -33,21 +39,36 @@ export default async function SingleItem({ params }: { params: { slug: string } 
   
   // fetch listing
   const res = await getSingleListing(slug);
-  let listings: ItemType = res.product[0];
+  let listings: ItemType | null
+  if(res === null) {
+    listings = null
+  } else {
+    listings = res.product[0]
+  }
 
   // Hard coded some variables
-  let descriptions: Descriptor = {
-    listingTitle: listings.product_name,
-    sellerId: "1",
-    email: "email@emory.edu",
-    phone: "111-1111",
-    description: listings.descr,
-    price: listings.price,
-    condition: "New",
-    pickup: "Dobbs",
+  let descriptions: Descriptor | null
+
+  if (listings === null) {
+    descriptions = null
+  } else {
+    descriptions = {
+      listingTitle: listings.product_name,
+      sellerId: "1",
+      email: "email@emory.edu",
+      phone: "111-1111",
+      description: listings.descr,
+      price: listings.price,
+      condition: "New",
+      pickup: "Dobbs",
+    }
   }
     
   return (
+    listings === null ? 
+    <Box sx={{ display: 'flex', alignItems: 'flex-start'}}>
+      <Typography variant="h3" color="initial" sx={{mt: 5}}>ITEM NOT FOUND</Typography>
+    </Box> : 
     <Box sx={{ display: 'flex', alignItems: 'flex-start'}}>
       <div>
         <Header/>
@@ -63,12 +84,15 @@ export default async function SingleItem({ params }: { params: { slug: string } 
               <ItemPhotos photos={[]}/>
             </Grid>
             <Grid item sm={8} md={5}>
-              <ItemDescriptors descriptors={descriptions}/>
+              <ItemDescriptors
+                descriptors={descriptions}
+                listingId={slug}
+              />
             </Grid>
           </Grid>
           <CommentSection/>
         </Stack>
       </div>
     </Box>
-  );
+  )
 }

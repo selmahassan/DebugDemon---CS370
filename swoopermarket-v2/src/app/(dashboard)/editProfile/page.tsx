@@ -40,11 +40,10 @@ export default function EditProfilePage() {
         // TODO : there's two different User types, one uses name (first and last concatenated) and the other one (from signup) uses firstname lastname. 
         // it's bc the pages ask for diff fields. this one doesn't let you change email, but there is a user bio
         const user : User = {
-            userid: data.get('name') as string,
             firstName: data.get('name') as string,
             lastName: data.get('name') as string,
             bio: data.get('bio') as string,
-            phoneNumber: data.get('phone') as string,
+            phone: data.get('phone') as string,
             email: data.get('email') as string,
             password: data.get('password') as string,
         };

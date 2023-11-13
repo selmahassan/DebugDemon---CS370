@@ -6,8 +6,9 @@ import ItemBody from './Descriptors/ItemBody';
 import ItemInterest from './Descriptors/ItemInterest';
 import { Descriptor } from '@/types/itemDescriptor';
 
-export default function ItemDescriptors({ descriptors } : { descriptors: Descriptor }) {
+export default function ItemDescriptors({ descriptors, listingId } : { descriptors: Descriptor | null, listingId: string }) {
     return (
+        descriptors === null ? <></> : 
         <Stack direction="column" spacing={2}>
             <ItemHeader 
                 title={descriptors.listingTitle}
@@ -23,9 +24,7 @@ export default function ItemDescriptors({ descriptors } : { descriptors: Descrip
                 condition={descriptors.condition}
                 pickup={descriptors.pickup}
             />
-            <ItemInterest 
-                seller={descriptors.sellerId}
-            />
+            <ItemInterest listingId={listingId} />
         </Stack>
     );
 }

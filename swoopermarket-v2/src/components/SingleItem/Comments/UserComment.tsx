@@ -6,9 +6,9 @@ import IconButton from '@mui/material/IconButton';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import { CommentProps } from '@/types/commentProps';
 import AddComment from './AddComment';
+import DeleteModal from '@/components/DeleteModal';
 
 const UserComment: React.FC<CommentProps> = ({ isReply, parentId, id, username, comment, numOfLikes, time, commentsList, setCommentsList, numOfComments, setNumOfComments }) => {
     const [isLiked, setIsLiked] = useState(false);
@@ -129,33 +129,13 @@ const UserComment: React.FC<CommentProps> = ({ isReply, parentId, id, username, 
                     />
                 }
             </Stack>
-            {showDeleteModal && (
-              <div
-                style={{
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  backgroundColor: 'rgba(0, 0, 0, 0.3)', // Semi-transparent black background
-                  zIndex: 1000,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Box sx={{ display: 'flex', alignItems: 'flex-start', p: 3, backgroundColor: "white", borderRadius: 5 }}>
-                    <Stack direction="column" justifyContent="flex-start" alignItems="flex-start" spacing={2}>
-                        <Typography variant="body1" color="black" sx={{ fontWeight: 'medium' }}>Delete comment</Typography>
-                        <Typography variant="body1" color="gray">Delete your comment permanently?</Typography>
-                        <Stack direction="row" spacing={3}>
-                            <Button onClick={handleDeleteModal} sx={{borderRadius: 50, width: "fit-content"}}>Cancel</Button>
-                            <Button onClick={handleDelete} sx={{borderRadius: 50, width: "fit-content"}}>Delete</Button>
-                        </Stack>
-                    </Stack>
-                </Box>
-            </div>
-          )}
+            {showDeleteModal &&
+                <DeleteModal
+                    handleDeleteModal={handleDeleteModal}
+                    handleDelete={handleDelete}
+                    deleteType="comment"
+                />
+            }
         </Stack>
     );
 }
