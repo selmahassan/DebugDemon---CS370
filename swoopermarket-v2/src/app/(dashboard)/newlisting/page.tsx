@@ -20,10 +20,7 @@ import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
 import StickyAlert from '@/components/StickyAlert';
-import { useRouter } from 'next/router';
-import { SpeakerPhone } from '@mui/icons-material';
-
-  
+import { Category_Num } from '@/enums/category';
 
 export default function StarredPage() {
 
@@ -53,21 +50,23 @@ export default function StarredPage() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    // ...existing category_id logic...
-
-    // Retrieve userId from local storage set during the login
-
     if (!userid) {
       setErrorMessage('No user id found, please log in again');
       setOpenError(true);
       return;
     }
 
+    let category = data.get('category') as string
+    let category_id: number = Category_Num.indexOf(category)
+    if (category_id === -1) {
+      category_id = 4
+    }
+
     const listing: Listing = {
       // Omit listingid, let the database handle ID creation
       title: data.get('title') as string,
       description: data.get('description') as string,
-      category: Number(data.get('category')),
+      category: category_id,
       condition: data.get('condition') as string,
       price: Number(data.get('price')),
       pickup: data.get('pickup') as string,
@@ -155,7 +154,19 @@ export default function StarredPage() {
       text: 'Electronics',
     },
     {
-      key: 'misc',
+      key: 'tickers',
+      text: 'Tickets',
+    },
+    {
+      key: 'housing',
+      text: 'Housing',
+    },
+    {
+      key: 'books',
+      text: 'Books',
+    },
+    {
+      key: 'other',
       text: 'Other/Miscellaneous',
     },
   ];
