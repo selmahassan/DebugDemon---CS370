@@ -84,7 +84,10 @@ export default async function SingleItem({ params }: { params: { slug: string } 
               <ItemPhotos photos={[]}/>
             </Grid>
             <Grid item sm={8} md={5}>
-              <ItemDescriptors descriptors={descriptions}/>
+              <ItemDescriptors
+                descriptors={descriptions}
+                listingId={slug}
+              />
             </Grid>
           </Grid>
           <CommentSection/>
