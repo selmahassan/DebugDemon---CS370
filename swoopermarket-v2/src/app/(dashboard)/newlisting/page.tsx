@@ -77,11 +77,11 @@ export default function StarredPage() {
     if (category_id === -1) {
       category_id = 4
     }
-    
+
     let image = data.get('image') as File 
     console.log(image)
 
-    const image_url = await submitBlob(image) // TODO: Change listing_img to string to submit url
+    const image_url = await submitBlob(image)
     console.log(image_url)
 
     const listing: Listing = {
@@ -89,7 +89,7 @@ export default function StarredPage() {
       description: data.get('description') as string,
       category: category_id,
       condition: data.get('condition') as string,
-      price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
+      price: Number(data.get('price')),
       pickup: data.get('pickup') as string,
       image: image_url as string,
       userid: userid
