@@ -1,12 +1,10 @@
 'use client'
 
 import { Listing } from '@/types';
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
-import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
@@ -15,40 +13,112 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
-import createTheme from '@mui/material/styles/createTheme';
-import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
-import ItemPhotos from '@/components/SingleItem/ItemPhotos';
-import CloseIcon from '@mui/icons-material/Close';
 import StickyAlert from '@/components/StickyAlert';
+import { Category_Num } from '@/enums/category';
+import { useRouter } from 'next/navigation';
+import { ItemType } from '@/types/itemType';
+import { Descriptor } from '@/types/itemDescriptor';
+import { Category } from '@/enums/category';
 
-export default function StarredPage() {
+export default function EditListingPage({ params }: { params: { slug: string } }) {
+  const [email, setEmail] = useState('');
+  const [userid, setUserid] = useState('');
+  const [first_name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+
+  useEffect(() => {
+      // Retrieve user info from local storage
+      const userInfo = localStorage.getItem('userInfo');
+      if (userInfo) {
+          const user = JSON.parse(userInfo);
+          setEmail(user.email); // Set the email in state
+          setUserid(user.userid);
+          setName(user.first_name);
+          setPhone(user.phone);
+
+      }
+  }, []);
+
+  const { slug } = params
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    const getSingleListing = async() => {
+      try {
+        const res = await fetch(process.env.API_URL + 'api/listing/' + slug, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          cache: 'no-store'
+        });
+
+        console.log('Response status:', res.status);
+        
+        if (!res.ok) {
+          console.log('Failed to fetch single item data 1')
+        }
+
+        setData(res.json())
+      } catch(error) {
+        console.log('Failed to fetch single item data 2')
+      }
+    }
+
+    getSingleListing();
+  }, [slug]);
+  console.log("data", data)
+
+  // fetch listing
+  let listings: ItemType | null = data && data.product ? data.product[0] : null;
+  console.log("listings", listings)
+
+    // Hard coded some variables
+  let descriptions: Descriptor | null
+  if (listings === null) {
+    descriptions = null
+  } else {
+    descriptions = {
+      listingTitle: listings.product_name,
+      sellerId: "1",
+      email: "email@emory.edu",
+      phone: "111-1111",
+      description: listings.descr,
+      price: listings.price,
+      condition: "New",
+      pickup: "Dobbs",
+    }
+  }
+
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
+  const router = useRouter()
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  // TODO: replace API stuff with edit
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
     // TODO : categories mistmatch with database
-    let category_id: number = 4; // gotta initialize it bc const listing wants me to
-    if(data.get('category') == 'school_supplies') category_id = 1; // db says apparel = 1
-    else if (data.get('category') == 'furniture') category_id = 2;
-    else if (data.get('category') == 'electronics') category_id = 3;
-    else category_id = 4; // db says entertainment = 4
+    let category = data.get('category') as string
+    let category_id: number = Category_Num.indexOf(category)
+    if (category_id === -1) {
+      category_id = 4
+    }
 
     const listing : Listing = {
-      listingid: Number(Date.now), // TODO : how are we making the unique listing ids and user ids?
       title: data.get('title') as string,
       description: data.get('description') as string,
       category: category_id,
       condition: data.get('condition') as string,
       price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
-      pickup: data.get('pickup') as string
+      pickup: data.get('pickup') as string,
+      userid: userid
     };
 
-    console.log(listing);
+    console.log(listing)
 
-    fetch('../api/listing', {
+    let response = await fetch('../api/listing', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -56,35 +126,23 @@ export default function StarredPage() {
       body: JSON.stringify(listing)
     });
 
-    // TODO: check if listing can be posted
-    setOpenSuccess(true);
-    setOpenError(false);
-
-    // TODO: api responses before showing error alerts
-    // setOpenSuccess(true);
-    // setOpenError(false);
+    if(response.status == 200 || response.status == 201) {
+      setOpenSuccess(true);
+      setOpenError(false);
+      router.push('/?isSuccess=true');
+    } else {
+      setOpenSuccess(false)
+      setOpenError(true)
+    }
   };
 
-  const theme = createTheme({
-    components: {
-        MuiToolbar: {
-            styleOverrides: {
-                dense: {
-                    height: 75,
-                    minHeight: 50
-                }
-            }
-        }
-    },
-  })
-
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    category: '',
-    condition: '',
-    price: 0,
-    pickup: '',
+    title: descriptions?.listingTitle,
+    description: descriptions?.description,
+    category: Category[listings ? listings.category_id : 0],
+    condition: descriptions?.condition,
+    price: descriptions?.price,
+    pickup: descriptions?.pickup,
   });
 
   const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,11 +153,15 @@ export default function StarredPage() {
     });
   };
 
-  const [showPreview, setShowPreview] = useState<boolean>(false);
+  const handleCancel = () => {
+    router.push(`/singleitem/${slug}`)
+  }
 
-  const handlePreviewClick = () => {
-    setShowPreview(!showPreview);
-  };
+  // const [showPreview, setShowPreview] = useState<boolean>(false);
+
+  // const handlePreviewClick = () => {
+  //   setShowPreview(!showPreview);
+  // };
 
   const categories = [
     {
@@ -115,7 +177,19 @@ export default function StarredPage() {
       text: 'Electronics',
     },
     {
-      key: 'misc',
+      key: 'tickets',
+      text: 'Tickets',
+    },
+    {
+      key: 'housing',
+      text: 'Housing',
+    },
+    {
+      key: 'books',
+      text: 'Books',
+    },
+    {
+      key: 'other',
       text: 'Other/Miscellaneous',
     },
   ];
@@ -149,7 +223,7 @@ export default function StarredPage() {
             // noWrap
             sx={{mb: 2}}
           >
-            Create New Listing
+            Edit Listing
           </Typography>
           <StickyAlert
             successMessage="You've successfully listed your item on SwooperMarket!"
@@ -189,7 +263,6 @@ export default function StarredPage() {
                 <Typography variant="h6" gutterBottom>
                   Upload Image
                 </Typography>
-                {/* TODO: option to add multiple images */}
                 <TextField
                   required
                   type="file"
@@ -272,7 +345,7 @@ export default function StarredPage() {
                   onChange={handleFormChange}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <Button
                   fullWidth
                   variant="contained"
@@ -281,6 +354,17 @@ export default function StarredPage() {
                   onClick={handlePreviewClick}
                 >
                   Preview Listing
+                </Button>
+              </Grid> */}
+              <Grid item xs={12} sm={6}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  disableElevation
+                  sx={{ mt: 2, mb: 2 }}
+                  onClick={handleCancel}
+                >
+                  Cancel
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -291,12 +375,12 @@ export default function StarredPage() {
                   disableElevation
                   sx={{ mt: 2, mb: 2 }}
                 >
-                  List Item
+                  Save Listing Changes
                 </Button>
               </Grid>
             </Grid>
           </Box>
-          {showPreview && (
+          {/* {showPreview && (
               <div
                 style={{
                   position: 'fixed',
@@ -342,7 +426,7 @@ export default function StarredPage() {
                 </Box>
               </Paper>
             </div>
-          )}
+          )} */}
         </Paper>
       </Container>
     </>
