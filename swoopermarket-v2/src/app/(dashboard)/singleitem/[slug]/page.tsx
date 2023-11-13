@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Header from '@/components/Header';
 import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
@@ -84,7 +84,10 @@ export default async function SingleItem({ params }: { params: { slug: string } 
               <ItemPhotos photos={[]}/>
             </Grid>
             <Grid item sm={8} md={5}>
-              <ItemDescriptors descriptors={descriptions}/>
+              <ItemDescriptors
+                descriptors={descriptions}
+                listingId={slug}
+              />
             </Grid>
           </Grid>
           <CommentSection/>
