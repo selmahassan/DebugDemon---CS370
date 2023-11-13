@@ -23,9 +23,7 @@ export default function ItemDescriptors({ descriptors } : { descriptors: Descrip
                 condition={descriptors.condition}
                 pickup={descriptors.pickup}
             />
-            <ItemInterest 
-                seller={descriptors.sellerId}
-            />
+            <ItemInterest/>
         </Stack>
     );
 }
