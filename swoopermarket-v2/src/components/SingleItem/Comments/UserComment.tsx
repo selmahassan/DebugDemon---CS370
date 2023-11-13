@@ -40,6 +40,7 @@ const UserComment: React.FC<CommentProps> = ({ isReply, parentId, id, username, 
 
     // actually deleting comment
     const handleDelete = () => {
+
         if(isReply){
             setNumOfComments(numOfComments - 1);
 

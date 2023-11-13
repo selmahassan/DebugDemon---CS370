@@ -55,11 +55,28 @@ const AddComment: React.FC<CommentProps> = ({ isReplyField, isReply, parentId, r
     }
 
     const handleCommentClick = () => {
+
+        const newComment = {
+            comment_text : comment,
+            user_id : 1, // get from cookie
+            listing_id : 8 // get from cookie
+        }
+
+        console.log(newComment);
+        
+        fetch('../api/comments', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newComment)
+          });
+
         if(isReplyField){ // add reply comment
             const newReplyComment = {
                 id: "" + Math.random(),
                 username: "my_username",
-                comment: `@${replyToUsername} ${comment}`,
+                comment: `@${replyToUsername} ${newComment}`,
                 numOfLikes: 0,
                 time: "Just now",
             }
