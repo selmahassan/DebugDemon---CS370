@@ -22,7 +22,7 @@ import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
 import StickyAlert from '@/components/StickyAlert';
 import type { PutBlobResult } from '@vercel/blob';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { SpeakerPhone } from '@mui/icons-material';
 import { Category_Num } from '@/enums/category';
 
@@ -32,6 +32,7 @@ export default function StarredPage() {
   const [userid, setUserid] = useState('');
   const [first_name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const router = useRouter()
 
   useEffect(() => {
       // Retrieve user info from local storage
@@ -110,11 +111,11 @@ export default function StarredPage() {
 
       const result = await response.json();
 
-      if (response.ok) {
+      if (response.status === 200 || response.status === 201) {
         // Handle success
         setOpenSuccess(true);
         setOpenError(false);
-       // router.push('/path-to-your-listing-page'); // Redirect to the listing page
+        router.push('/?isSuccessNewListing=true'); // Redirect to the listing page
       } else {
         // Handle errors
         setErrorMessage(result.message);
