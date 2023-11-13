@@ -20,17 +20,16 @@ import IconButton from '@mui/material/IconButton';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import FormHelperText from '@mui/material/FormHelperText';
 import StickyAlert from '@/components/StickyAlert';
+import { useRouter } from 'next/navigation'
 
 interface NewUserForm {
     email: string;
-    phoneNumber: string;
     password: string;
     rePassword: string;
 }
 
 interface errors {
     email: string;
-    phoneNumber: string;
     rePassword: string;
 }
 
@@ -39,32 +38,22 @@ export default function SignUp() {
     const [showRePassword, setShowRePassword] = React.useState(false); // 
     const [newUserForm, setNewUserForm] = React.useState<NewUserForm>({
         email: "",
-        phoneNumber: "",
         password: "",
         rePassword: "",
     })
     const [errors, setErrors] = React.useState<errors>({
         email: "",
-        phoneNumber: "",
         rePassword: "",
     })
+    const router = useRouter()
 
     const onChangeEmail = (e: { target: { value: string; }; }) => {
         if (!e.target.value.match(".+@emory\.edu")) {
-            setErrors({...errors, email: 'Email must end in "@emory.edu"'})
+            setErrors({...errors, email: 'email must end in "@emory.edu"'})
         } else {
             setErrors({...errors, email: ''})
         }
         setNewUserForm({...newUserForm, email: e.target.value});
-    };
-
-    const onChangePhoneNumber = (e: { target: { value: string; }; }) => {
-        if (!e.target.value.match(/^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})$/)) {
-            setErrors({...errors, phoneNumber: 'Phone number must be valid'})
-        } else {
-            setErrors({...errors, phoneNumber: ''})
-        }
-        setNewUserForm({...newUserForm, phoneNumber: e.target.value});
     };
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -92,53 +81,48 @@ export default function SignUp() {
 
     const [openSuccess, setOpenSuccess] = useState(false);
     const [openError, setOpenError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        
-        // TODO : how are we generating user's unique user ids? are we making them choose one or will we make one based off of database
+
         const user : User = {
-            userid: data.get('firstName') as string,
             firstName: data.get('firstName') as string,
             lastName: data.get('lastName') as string,
             email: data.get('email') as string,
-            phoneNumber: data.get('phoneNumber') as string,
             password: data.get('password') as string,
             bio: data.get('bio') as string,
+            phone: data.get('phone') as string,
         };
 
-        console.log(user);
-        fetch('../api/user', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        });
+        try {
+            const response = await fetch('../api/user', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            });
+    
+            if (response.status === 201) {
+                // console.log("gets success status")
+                router.push('/login?isSuccess=true');
+            } else if (response.status === 500){
+                setErrorMessage("Account already exists. Please sign in.");
+                setOpenError(true);
+                setOpenSuccess(false);
+            }
 
-        // TODO: need to check if account already exists
-        setOpenSuccess(true);
-        setOpenError(false);
-
-        //TODO: show error if account already exists
-        // setOpenSuccess(false);
-        // setOpenError(true);
-
+        } catch(error) {
+            console.error(error);
+            setErrorMessage('An error occurred. Please try again.');
+            setOpenError(false);
+            setOpenSuccess(false);
+        }
     };
 
-    // Check if all fields are filled
-    const areAllFieldsFilled = () => {
-        return (
-            newUserForm.email &&
-            newUserForm.phoneNumber &&
-            newUserForm.password &&
-            newUserForm.rePassword
-        );
-    };
-
-  // @ts-ignore
-    return (
+  return (
     <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -153,12 +137,12 @@ export default function SignUp() {
                 <LockOutlinedIcon />
             </Avatar>
             <StickyAlert
-              successMessage="Account signup successful! Please sign in."
-              errorMessage="Account already exists. Please sign in."
-              openSuccess={openSuccess}
-              setOpenSuccess={setOpenSuccess}
-              openError={openError}
-              setOpenError={setOpenError}
+                successMessage="Account signup successful! Please sign in."
+                errorMessage={errorMessage}
+                openSuccess={openSuccess}
+                setOpenSuccess={setOpenSuccess}
+                openError={openError}
+                setOpenError={setOpenError}
             />
             <Typography component="h1" variant="h5">
             SwooperMarket Sign Up
@@ -204,21 +188,16 @@ export default function SignUp() {
                 <TextField
                     required
                     fullWidth
-                    id="phoneNumber"
+                    id="phone"
                     label="Phone Number"
-                    name="phoneNumber"
-                    autoComplete="tel"
-                    error={errors.phoneNumber !== ""}
-                    helperText={errors.phoneNumber}
-                    value={newUserForm.phoneNumber || ''}
-                    onChange={onChangePhoneNumber}
+                    name="phone"
+                    autoComplete="phone"
                 />
                 </Grid>
                 <Grid item xs={12}>
                 <FormControl required fullWidth variant="outlined">
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <OutlinedInput
-                        required
                         id="password"
                         name="password"
                         type={showPassword ? 'text' : 'password'}
@@ -242,7 +221,7 @@ export default function SignUp() {
                 </Grid>
                 <Grid item xs={12}>
                 <FormControl required fullWidth variant="outlined">
-                    <InputLabel htmlFor="re-password">Re-Enter Password</InputLabel>
+                    <InputLabel htmlFor="re-password">Confirm</InputLabel>
                     <OutlinedInput
                         id="rePassword"
                         name="rePassword"
@@ -272,15 +251,25 @@ export default function SignUp() {
                 </FormControl>
                 </Grid>
             </Grid>
+            {(errors.rePassword || errors.email) ? 
+                <Button
+                    // type="submit"
+                    disabled
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                >
+                    Sign Up
+                </Button> : 
                 <Button
                     type="submit"
-                    disabled={!!errors.rePassword || !!errors.email || !areAllFieldsFilled()}
                     fullWidth
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                 >
                     Sign Up
                 </Button>
+            }
             <Grid container justifyContent="flex-end">
                 <Grid item>
                 <Link href="/login" style={{ textDecoration:"none" }}>

@@ -42,6 +42,8 @@ CREATE TABLE product_listing (
     modified_at timestamp,
     sold_at timestamp,
     listing_img BYTEA
+    pickup varchar,
+    condition varchar
 )
 INSERT INTO product_listing (userid, product_name, descr, category_id, inventory_id, price) VALUES (1, 'Laptop', 'New macbook 2023', 3, 1, 1050);
 

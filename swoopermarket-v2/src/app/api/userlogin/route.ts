@@ -3,6 +3,8 @@ import { serialize } from 'cookie';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { NextApiRequest, NextApiResponse } from "next";
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY!; // Ensure this is set in your .env.local file
 
@@ -11,7 +13,7 @@ if (!JWT_SECRET_KEY) {
 }
 
 export const POST = async (req: Request, res: Response) => {
-    const { userid, email, pass } = await req.json();
+    const { userid, email, pass, first_name, last_name, phone, bio } = await req.json();
 
     try {
 
@@ -25,6 +27,7 @@ export const POST = async (req: Request, res: Response) => {
 
         const user = result.rows[0];
 
+
         // Compare the hashed password
         const passwordMatch = await bcrypt.compare(pass, user.pass);
         if (!passwordMatch) {
@@ -33,7 +36,7 @@ export const POST = async (req: Request, res: Response) => {
         }
 
         // Passwords match, generate a JWT
-        const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET_KEY, {
+        const token = jwt.sign({ id: user.userid,}, JWT_SECRET_KEY, {
             expiresIn: '2h', // Token expires in 2 hours
         });
 
@@ -46,19 +49,43 @@ export const POST = async (req: Request, res: Response) => {
             path: '/',
         });
 
-        // Create a NextResponse object for a successful login
-        const response = new NextResponse(JSON.stringify({ message: "Logged in successfully" }), {
+            // After a successful password match
+        const userData = {
+            userid: user.userid,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            phone: user.phone
+        };
+        
+        // Include userData in the JSON response
+        const response = new NextResponse(JSON.stringify({
+            message: "Logged in successfully",
+            user: userData
+        }), {
             headers: {
-                'Set-Cookie': serializedCookie,
+            'Set-Cookie': serializedCookie,
             },
             status: 200,
         });
-
-        // Return the response
+        
         return response;
+  
 
     } catch (error) {
         console.log("Caught error:", error);
         return NextResponse.json({ message: "Please Try Again", error }, { status: 500 });
+    }
+};
+
+export const GET = async (req: Request, res: Response) => {
+    const { userid, first_name, last_name, email, phone } = await req.json();
+
+    try {
+        const result = await sql`SELECT * FROM user_table`;
+        return NextResponse.json({ result }, { status: 201 });
+    } catch (error) {
+        console.log("Caught error", error);
+        return NextResponse.json({ message: "Error", error }, { status: 500 });
     }
 };

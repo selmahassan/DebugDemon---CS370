@@ -10,13 +10,14 @@ import { Box } from '@mui/material';
 import { Category } from '@/enums/category';
 
 export default function ListingCard({ item }: { item: ItemType }) {
+  const truncatedDescr = item.descr.length > 75 ? item.descr.slice(0, 75) + '...' : item.descr;
 
   return (
     <Card>
       <CardActionArea href={`/singleitem/${item.listing_id}`}>
         <Image
           alt="Listing Image"
-          src={item.listing_img ? item.listing_img : "https://images.unsplash.com/photo-1674315411321-d65c2d07b850?auto=format&fit=crop&q=80&w=2832&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
+          src={item.listing_img ? item.listing_img : "https://ctexvctbvqjly2uj.public.blob.vercel-storage.com/default_image-4vJq5zaZQyLaL7BWbvvyTXmZCjXfzy.jpg"}
           width={640}
           height={480}
           style={{
@@ -30,7 +31,7 @@ export default function ListingCard({ item }: { item: ItemType }) {
             {item.product_name}
           </Typography>
           <Typography gutterBottom component="div">
-            {item.descr}
+            {truncatedDescr}
           </Typography>
           <Grid container direction="row" justifyContent="space-between" alignItems="center" padding="8px 0px">
             <Box sx={{ border: '1px solid grey', padding: '4px 6px', borderRadius: '5px'}}>
