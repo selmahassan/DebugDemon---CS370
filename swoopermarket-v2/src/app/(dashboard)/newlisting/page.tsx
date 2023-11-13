@@ -19,6 +19,7 @@ import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
 import StickyAlert from '@/components/StickyAlert';
 import type { PutBlobResult } from '@vercel/blob';
+import { Listing } from '@/types';
 
 export default function StarredPage() {
   const [openSuccess, setOpenSuccess] = useState(false);
@@ -44,38 +45,40 @@ export default function StarredPage() {
 
     let image = data.get('image') as File 
     console.log(image)
+
     const image_url = await submitBlob(image) // TODO: Change listing_img to string to submit url
     console.log(image_url)
 
-    // // TODO : categories mistmatch with database
-    // let category_id: number = 4; // gotta initialize it bc const listing wants me to
-    // if(data.get('category') == 'school_supplies') category_id = 1; // db says apparel = 1
-    // else if (data.get('category') == 'furniture') category_id = 2;
-    // else if (data.get('category') == 'electronics') category_id = 3;
-    // else category_id = 4; // db says entertainment = 4
+    // TODO : categories mistmatch with database
+    let category_id: number = 4; // gotta initialize it bc const listing wants me to
+    if(data.get('category') == 'school_supplies') category_id = 1; // db says apparel = 1
+    else if (data.get('category') == 'furniture') category_id = 2;
+    else if (data.get('category') == 'electronics') category_id = 3;
+    else category_id = 4; // db says entertainment = 4
 
-    // const listing : Listing = {
-    //   title: data.get('title') as string,
-    //   description: data.get('description') as string,
-    //   category: category_id,
-    //   condition: data.get('condition') as string,
-    //   price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
-    //   pickup: data.get('pickup') as string
-    // };
+    const listing : Listing = {
+      title: data.get('title') as string,
+      description: data.get('description') as string,
+      category: category_id,
+      condition: data.get('condition') as string,
+      price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
+      pickup: data.get('pickup') as string,
+      image: image_url as string
+    };
 
-    // let response = await fetch('../api/listing', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(listing)
-    // });
+    let response = await fetch('../api/listing', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(listing)
+    });
 
-    // if(response.status == 200) {
-    //   setOpenError(true);
-    // } else {
-    //   setOpenSuccess(true);
-    // }
+    if(response.status == 200) {
+      setOpenError(true);
+    } else {
+      setOpenSuccess(true);
+    }
   };
 
   const [formData, setFormData] = useState({
