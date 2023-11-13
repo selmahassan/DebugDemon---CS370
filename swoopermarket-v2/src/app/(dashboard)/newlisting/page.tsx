@@ -5,6 +5,8 @@ import React, { useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
@@ -13,13 +15,12 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
+import createTheme from '@mui/material/styles/createTheme';
+import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
+import ItemPhotos from '@/components/SingleItem/ItemPhotos';
+import CloseIcon from '@mui/icons-material/Close';
 import StickyAlert from '@/components/StickyAlert';
-
-import { Category_Num } from '@/enums/category';
-import { useRouter } from 'next/navigation'
-
-export default function NewListingPage() {
-
+import { useRouter } from 'next/router';
 import { SpeakerPhone } from '@mui/icons-material';
 
   
@@ -44,23 +45,12 @@ export default function StarredPage() {
       }
   }, []);
 
-
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
-  const router = useRouter()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-
-
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
-    // TODO : categories mistmatch with database
-    let category = data.get('category') as string
-    let category_id: number = Category_Num.indexOf(category)
-    if (category_id === -1) {
-      category_id = 4
-    }
 
     // ...existing category_id logic...
 
@@ -74,17 +64,17 @@ export default function StarredPage() {
 
     const listing: Listing = {
       // Omit listingid, let the database handle ID creation
-
       title: data.get('title') as string,
       description: data.get('description') as string,
-      category: category,
+      category: Number(data.get('category')),
       condition: data.get('condition') as string,
       price: Number(data.get('price')),
       pickup: data.get('pickup') as string,
       userid: userid
     };
 
-    console.log(listing)
+    console.log(listing);
+
     try {
       const response = await fetch('/api/listing', {
         method: 'POST',
@@ -114,6 +104,19 @@ export default function StarredPage() {
     }
   };
 
+  const theme = createTheme({
+    components: {
+        MuiToolbar: {
+            styleOverrides: {
+                dense: {
+                    height: 75,
+                    minHeight: 50
+                }
+            }
+        }
+    },
+  })
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -131,11 +134,11 @@ export default function StarredPage() {
     });
   };
 
-  // const [showPreview, setShowPreview] = useState<boolean>(false);
+  const [showPreview, setShowPreview] = useState<boolean>(false);
 
-  // const handlePreviewClick = () => {
-  //   setShowPreview(!showPreview);
-  // };
+  const handlePreviewClick = () => {
+    setShowPreview(!showPreview);
+  };
 
   const categories = [
     {
@@ -151,19 +154,7 @@ export default function StarredPage() {
       text: 'Electronics',
     },
     {
-      key: 'tickets',
-      text: 'Tickets',
-    },
-    {
-      key: 'housing',
-      text: 'Housing',
-    },
-    {
-      key: 'books',
-      text: 'Books',
-    },
-    {
-      key: 'other',
+      key: 'misc',
       text: 'Other/Miscellaneous',
     },
   ];
@@ -237,6 +228,7 @@ export default function StarredPage() {
                 <Typography variant="h6" gutterBottom>
                   Upload Image
                 </Typography>
+                {/* TODO: option to add multiple images */}
                 <TextField
                   required
                   type="file"
@@ -319,7 +311,7 @@ export default function StarredPage() {
                   onChange={handleFormChange}
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={6}>
                 <Button
                   fullWidth
                   variant="contained"
@@ -329,8 +321,8 @@ export default function StarredPage() {
                 >
                   Preview Listing
                 </Button>
-              </Grid> */}
-              <Grid item xs={12} sm={12}>
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <Button
                   type="submit"
                   fullWidth
@@ -343,7 +335,7 @@ export default function StarredPage() {
               </Grid>
             </Grid>
           </Box>
-          {/* {showPreview && (
+          {showPreview && (
               <div
                 style={{
                   position: 'fixed',
@@ -389,7 +381,7 @@ export default function StarredPage() {
                 </Box>
               </Paper>
             </div>
-          )} */}
+          )}
         </Paper>
       </Container>
     </>
