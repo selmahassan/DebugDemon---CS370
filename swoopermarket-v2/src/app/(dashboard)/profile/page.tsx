@@ -13,10 +13,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { userInfo } from 'os';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
 
-const avatarSize = 200;
+const avatarSize = 150;
 
-const ProfilePage = () => {
+export default function ProfilePage() {
     const [email, setEmail] = useState('');
     const [userid, setUserid] = useState('');
     const [first_name, setFirstName] = useState('');
@@ -38,34 +40,40 @@ const ProfilePage = () => {
     }, []);
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
-            <div>
-                <Stack direction="column" spacing={1} alignItems="center">
-                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+        <>
+            <Grid container alignItems="center" direction="column" spacing={1}>
+                <Grid item xs={12}>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', marginTop: '15px'}}>
                         <Avatar alt="Profile Picture" src="/images/avatar/gru.jpg" sx={{ width: avatarSize, height: avatarSize }} />
                     </div>
-                    <Tooltip title="Edit Profile">
-                        <IconButton href="/editProfile">
-                            <EditIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Typography variant="h4" color="initial">
-                    {first_name + " " + last_name || 'Name not available'} {/* Use actual name from local storage if needed */}
-                    </Typography>
-                    <Typography variant="body1" color="initial">
-                        Email: {email || 'Email not available'} {/* Display the email from state */}
-                    </Typography>
-                    <Typography variant="body1" color="initial">
-                        Phone: {phone || 'Phone not available'}
-                    </Typography>
-                </Stack>
-                <Button href="/newlisting" sx={{ borderRadius: 50, width: "fit-content" }} startIcon={<AddIcon />}>
-                    Create New Listing
-                </Button>
-                <ProfileListings />
-            </div>
-        </Box>
+                </Grid>
+                <Grid item xs={12}>
+                    <Stack direction="row" spacing={1}>
+                        <Typography variant="h4" color="initial">
+                            {first_name + " " + last_name || 'Name not available'}
+                        </Typography>
+                        <Tooltip title="Edit Profile">
+                            <IconButton href="/editProfile">
+                                <EditIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </Stack>
+                </Grid>
+                <Grid item xs={12}>
+                    <Stack direction="row" spacing={5}>
+                        <Typography variant="body1" color="initial">
+                            Email: {email || 'Email not available'}
+                        </Typography>
+                        <Typography variant="body1" color="initial">
+                            Phone: {phone || 'Phone not available'}
+                        </Typography>
+                    </Stack>            
+                </Grid>
+            </Grid>
+            <Button href="/newlisting" sx={{ borderRadius: 25, width: "fit-content" }} startIcon={<AddIcon />}>
+                Create New Listing
+            </Button>
+            <ProfileListings />
+        </>
     );
 };
-
-export default ProfilePage;
