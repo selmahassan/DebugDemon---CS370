@@ -4,19 +4,15 @@ import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Rating from '@mui/material/Rating';
-import ProfileListings from "@/components/ProfilePage/ProfileListings"; // Ensure correct import path
-import Box from '@mui/material/Box';
-import AddIcon from '@mui/icons-material/Add';
+import ProfileListings from "@/components/ProfilePage/ProfileListings";
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { userInfo } from 'os';
+import Grid from '@mui/material/Grid';
 
-const avatarSize = 200;
+const avatarSize = 150;
 
-const ProfilePage = () => {
+export default function ProfilePage() {
     const [email, setEmail] = useState('');
     const [userid, setUserid] = useState('');
     const [first_name, setFirstName] = useState('');
@@ -28,7 +24,7 @@ const ProfilePage = () => {
         const userInfo = localStorage.getItem('userInfo');
         if (userInfo) {
             const user = JSON.parse(userInfo);
-            setEmail(user.email); // Set the email in state
+            setEmail(user.email);
             setUserid(user.userid);
             setFirstName(user.first_name);
             setLastName(user.last_name);
@@ -38,35 +34,42 @@ const ProfilePage = () => {
     }, []);
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
-            <div>
-                <Stack direction="column" spacing={1} alignItems="center">
-                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-                        <Avatar alt="Profile Picture" src="/images/avatar/gru.jpg" sx={{ width: avatarSize, height: avatarSize }} />
+        <>
+            <Grid container alignItems="center" direction="column" spacing={1}>
+                <Grid item xs={12}>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', marginTop: '15px'}}>
+                        <Avatar alt="Profile Picture" src="/images/avatar/dooley.jpeg" sx={{ width: avatarSize, height: avatarSize }} />
                     </div>
-                    <Tooltip title="Edit Profile">
-                        <IconButton href="/editProfile">
-                            <EditIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <Rating name="read-only" defaultValue={1.5} precision={0.5} readOnly />
-                    <Typography variant="h4" color="initial">
-                    {first_name + " " + last_name || 'Name not available'} {/* Use actual name from local storage if needed */}
+                </Grid>
+                <Grid item xs={12}>
+                    <Stack direction="row" spacing={1}>
+                        <Typography variant="h4" color="initial">
+                            {first_name + " " + last_name || 'Name not available'}
+                        </Typography>
+                        <Tooltip title="Edit Profile">
+                            <IconButton href="/editProfile">
+                                <EditIcon />
+                            </IconButton>
+                        </Tooltip>
+                    </Stack>
+                </Grid>
+                <Grid item xs={12}>
+                    <Stack direction="row" spacing={5}>
+                        <Typography variant="subtitle1" color="initial">
+                            Email: {email || 'Email not available'}
+                        </Typography>
+                        <Typography variant="subtitle1" color="initial">
+                            Phone: {phone || 'Phone not available'}
+                        </Typography>
+                    </Stack>            
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography variant="body2" color="initial">
+                        Hardcoded Biography
                     </Typography>
-                    <Typography variant="body1" color="initial">
-                        Email: {email || 'Email not available'} {/* Display the email from state */}
-                    </Typography>
-                    <Typography variant="body1" color="initial">
-                        Phone: {phone || 'Phone not available'}
-                    </Typography>
-                </Stack>
-                <Button href="/newlisting" sx={{ borderRadius: 50, width: "fit-content" }} startIcon={<AddIcon />}>
-                    Create New Listing
-                </Button>
-                <ProfileListings />
-            </div>
-        </Box>
+                </Grid>
+            </Grid>
+            <ProfileListings />
+        </>
     );
 };
-
-export default ProfilePage;
