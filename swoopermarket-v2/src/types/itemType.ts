@@ -3,6 +3,6 @@ export type ItemType = {
     product_name: string;
     descr: string;
     price: number;
-    listing_img: any;
+    listing_img: string;
     category_id: number;
 };

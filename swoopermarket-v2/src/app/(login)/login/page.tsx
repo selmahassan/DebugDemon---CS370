@@ -43,12 +43,12 @@ export default function Login() {
     }
   }, [search]);
 
-const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
 
-  const email = data.get('email') as string;
-  const password = data.get('password') as string;
+  const email = data.get('email');
+  const password = data.get('password');
 
   try {
     const response = await fetch('/api/userlogin', {
@@ -62,20 +62,31 @@ const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     const result = await response.json();
 
     if (response.status === 200) {
-      router.push('/'); // Redirect to the main page or dashboard
-    } else {
-      setErrorMessage(result.message);
-      setOpenError(true);
-      setOpenSuccess(false);
-    }
+      // Assuming the response will now include the user data
+      localStorage.setItem('userInfo', JSON.stringify({
+        userid: result.user.userid,
+        first_name: result.user.first_name,
+        last_name: result.user.last_name,
+        email: result.user.email,
+        phone: result.user.phone
 
+      }));
+      router.push('/'); // Redirect to the dashboard or appropriate route
+    } else {
+      // If login was not successful, handle accordingly
+      setErrorMessage(result.message || 'Login failed.');
+      setOpenError(true);
+    }
   } catch (error) {
-    console.error(error);
-    setErrorMessage('An error occurred. Please try again.');
+    console.error('Login error:', error);
+    setErrorMessage('An error occurred during login. Please try again.');
     setOpenError(true);
-    setOpenSuccess(false);
   }
 };
+
+// ...
+
+  
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>

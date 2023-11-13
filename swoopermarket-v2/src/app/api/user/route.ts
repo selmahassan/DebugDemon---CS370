@@ -1,6 +1,8 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 import bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid';
+import nodemailer from 'nodemailer';
 
 const SALT_ROUNDS = 10; // 
 
@@ -11,11 +13,43 @@ export const POST = async (req: Request, res: Response) => {
     // Hash the password before saving to the database
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
+    const verificationToken = uuidv4();
+
     try {
         const result = await sql`
-            INSERT INTO user_table (first_name, last_name, email, pass, phone)
-            VALUES (${firstName}, ${lastName}, ${email}, ${hashedPassword}, ${phone});
+            INSERT INTO user_table (first_name, last_name, email, pass, phone, verification_token)
+            VALUES (${firstName}, ${lastName}, ${email}, ${hashedPassword}, ${phone}, ${verificationToken});
         `;
+
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: process.env.EMAIL_USERNAME,
+                pass: process.env.EMAIL_PASSWORD,
+            },
+        });
+        // Email user a verification link
+        const verificationLink = `https://${req.headers.get('host')}/api/verify?token=${verificationToken}`;
+        const mailOptions = {
+            from: 'SwooperMarket@gmail.com',
+            to: email,
+            subject: 'Verify Your Email',
+            text: `Hello ${firstName}, 
+Your SwooperMarket Journey awaits!
+Please click on the following link to verify your email: ${verificationLink}`, // DO NOT EDIT FORMATING, IT IS THIS WAY FOR THE EMAIL
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error(error);
+                return NextResponse.json({ message: "Error sending email." }, { status: 500 });
+            } else {
+                console.log('Verification email sent:', info.response);
+                return NextResponse.json({ message: "User registered. Please check your email to verify your account." });
+            }
+        });
+
+
         return NextResponse.json({ result }, { status: 201 });
     } catch (error) {
         console.log("Caught error", error);
