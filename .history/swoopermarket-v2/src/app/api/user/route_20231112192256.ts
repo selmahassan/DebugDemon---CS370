@@ -36,7 +36,7 @@ export const POST = async (req: Request, res: Response) => {
             subject: 'Verify Your Email',
             text: `Hello ${firstName}, 
 Your SwooperMarket Journey awaits!
-Please click on the following link to verify your email: ${verificationLink}`, // DO NOT EDIT FORMATING, IT IS THIS WAY FOR THE EMAIL
+Please click on the following link to verify your email: ${verificationLink}`,
         };
 
         transporter.sendMail(mailOptions, (error, info) => {

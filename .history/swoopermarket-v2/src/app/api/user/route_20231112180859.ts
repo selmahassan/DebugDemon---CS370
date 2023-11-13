@@ -22,7 +22,7 @@ export const POST = async (req: Request, res: Response) => {
         `;
 
         const transporter = nodemailer.createTransport({
-            service: 'Gmail',
+            service: 'SendGrid', // Use your email service provider
             auth: {
                 user: process.env.EMAIL_USERNAME,
                 pass: process.env.EMAIL_PASSWORD,
@@ -31,12 +31,10 @@ export const POST = async (req: Request, res: Response) => {
         // Email user a verification link
         const verificationLink = `https://${req.headers.get('host')}/api/verify?token=${verificationToken}`;
         const mailOptions = {
-            from: 'SwooperMarket@gmail.com',
+            from: 'youremail@example.com', // Replace with your email address
             to: email,
             subject: 'Verify Your Email',
-            text: `Hello ${firstName}, 
-Your SwooperMarket Journey awaits!
-Please click on the following link to verify your email: ${verificationLink}`, // DO NOT EDIT FORMATING, IT IS THIS WAY FOR THE EMAIL
+            text: `Please click on the following link to verify your email: ${verificationLink}`,
         };
 
         transporter.sendMail(mailOptions, (error, info) => {

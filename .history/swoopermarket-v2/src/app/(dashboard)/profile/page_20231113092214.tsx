@@ -37,6 +37,10 @@ const ProfilePage = () => {
         }
     }, []);
 
+    if (!userInfo) {
+        return <div>Please log in to view this page.</div>;
+      }
+
     return (
         <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
             <div>
