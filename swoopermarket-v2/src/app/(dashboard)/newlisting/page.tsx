@@ -368,7 +368,6 @@ export default function StarredPage() {
                         <ItemDescriptors descriptors={{
                             listingTitle: formData.title,
                             sellerId: "1",
-                            Name: first_name,
                             description: formData.description,
                             price: formData.price,
                             condition: formData.condition,
