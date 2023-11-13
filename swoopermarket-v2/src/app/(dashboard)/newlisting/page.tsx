@@ -27,7 +27,6 @@ export default function NewListingPage() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    // TODO : categories mistmatch with database
     let category = data.get('category') as string
     let category_id: number = Category_Num.indexOf(category)
     if (category_id === -1) {
@@ -39,7 +38,7 @@ export default function NewListingPage() {
       description: data.get('description') as string,
       category: category_id,
       condition: data.get('condition') as string,
-      price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
+      price: Number(data.get('price')),
       pickup: data.get('pickup') as string
     };
 
