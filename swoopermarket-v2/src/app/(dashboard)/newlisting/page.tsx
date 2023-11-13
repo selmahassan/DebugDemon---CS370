@@ -5,8 +5,6 @@ import React, { useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
-import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
@@ -16,14 +14,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import createTheme from '@mui/material/styles/createTheme';
-import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
-import ItemPhotos from '@/components/SingleItem/ItemPhotos';
-import CloseIcon from '@mui/icons-material/Close';
 import StickyAlert from '@/components/StickyAlert';
-import { useRouter } from 'next/router';
-import { SpeakerPhone } from '@mui/icons-material';
-
-  
 
 export default function StarredPage() {
 
@@ -133,12 +124,6 @@ export default function StarredPage() {
       ...formData,
       [name]: value,
     });
-  };
-
-  const [showPreview, setShowPreview] = useState<boolean>(false);
-
-  const handlePreviewClick = () => {
-    setShowPreview(!showPreview);
   };
 
   const categories = [
@@ -312,18 +297,7 @@ export default function StarredPage() {
                   onChange={handleFormChange}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  disableElevation
-                  sx={{ mt: 2, mb: 2 }}
-                  onClick={handlePreviewClick}
-                >
-                  Preview Listing
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <Button
                   type="submit"
                   fullWidth
@@ -336,56 +310,6 @@ export default function StarredPage() {
               </Grid>
             </Grid>
           </Box>
-          {showPreview && (
-              <div
-                style={{
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  backgroundColor: 'rgba(0, 0, 0, 0.3)', // Semi-transparent black background
-                  zIndex: 1000,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-              <Paper>
-                <Box sx={{ display: 'flex', alignItems: 'flex-start', p: 3}}>
-                  <div>
-                    <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
-                      <Button onClick={handlePreviewClick} sx={{borderRadius: 50, width: "fit-content"}} startIcon={<CloseIcon/>}>Close Preview</Button>
-                      <Stack direction="row">
-                        <Typography variant="body1" color="initial">Listed in category: </Typography>
-                        <Link href={'href'} variant="body1">{formData.category}</Link>
-                      </Stack>
-                    </Stack>
-                    <Grid container direction="row" spacing={2} padding={2} columns={{sm: 8, md: 12}}>
-                      <Grid item sm={8} md={7}>
-                        <ItemPhotos photos={[{id: "", src:"https://lsco.scene7.com/is/image/lsco/A34940028-alt3-pdp-lse?fmt=avif&qlt=40&resMode=bisharp&fit=crop,0&op_usm=0.6,0.6,8&wid=660&hei=726"}, {id: "", src:"https://lsco.scene7.com/is/image/lsco/A34940028-detail1-pdp?fmt=avif&qlt=40&resMode=bisharp&fit=crop,0&op_usm=0.6,0.6,8&wid=660&hei=726"}]}/>
-                      </Grid>
-                      <Grid item sm={8} md={5}>
-                        <ItemDescriptors
-                          descriptors={{
-                            listingTitle: formData.title,
-                            sellerId: "1",
-                            description: formData.description,
-                            price: formData.price,
-                            condition: formData.condition,
-                            pickup: formData.pickup,
-                            email: email,
-                            phone: phone,
-                          }}
-                          listingId=""
-                        />
-                      </Grid>
-                    </Grid>
-                  </div>
-                </Box>
-              </Paper>
-            </div>
-          )}
         </Paper>
       </Container>
     </>
