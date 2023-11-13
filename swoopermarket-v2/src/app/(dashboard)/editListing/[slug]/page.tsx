@@ -21,6 +21,24 @@ import { Descriptor } from '@/types/itemDescriptor';
 import { Category } from '@/enums/category';
 
 export default function EditListingPage({ params }: { params: { slug: string } }) {
+  const [email, setEmail] = useState('');
+  const [userid, setUserid] = useState('');
+  const [first_name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+
+  useEffect(() => {
+      // Retrieve user info from local storage
+      const userInfo = localStorage.getItem('userInfo');
+      if (userInfo) {
+          const user = JSON.parse(userInfo);
+          setEmail(user.email); // Set the email in state
+          setUserid(user.userid);
+          setName(user.first_name);
+          setPhone(user.phone);
+
+      }
+  }, []);
+
   const { slug } = params
   const [data, setData] = useState<any>(null);
 
@@ -94,7 +112,8 @@ export default function EditListingPage({ params }: { params: { slug: string } }
       category: category_id,
       condition: data.get('condition') as string,
       price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
-      pickup: data.get('pickup') as string
+      pickup: data.get('pickup') as string,
+      userid: userid
     };
 
     console.log(listing)

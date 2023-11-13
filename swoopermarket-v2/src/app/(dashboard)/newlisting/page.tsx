@@ -47,6 +47,7 @@ export default function StarredPage() {
 
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -57,7 +58,7 @@ export default function StarredPage() {
     // Retrieve userId from local storage set during the login
 
     if (!userid) {
-      console.error('No user id found, please log in again');
+      setErrorMessage('No user id found, please log in again');
       setOpenError(true);
       return;
     }
@@ -93,12 +94,12 @@ export default function StarredPage() {
        // router.push('/path-to-your-listing-page'); // Redirect to the listing page
       } else {
         // Handle errors
-        console.error(result.message);
+        setErrorMessage(result.message);
         setOpenError(true);
         setOpenSuccess(false);
       }
     } catch (error) {
-      console.error('Error posting listing:', error);
+      setErrorMessage('Error posting listing: ' + error);
       setOpenError(true);
       setOpenSuccess(false);
     }
@@ -192,7 +193,7 @@ export default function StarredPage() {
           </Typography>
           <StickyAlert
             successMessage="You've successfully listed your item on SwooperMarket!"
-            errorMessage="You cannot create a duplicate listing. Try Again."
+            errorMessage={errorMessage}
             openSuccess={openSuccess}
             setOpenSuccess={setOpenSuccess}
             openError={openError}
@@ -365,7 +366,8 @@ export default function StarredPage() {
                         <ItemPhotos photos={[{id: "", src:"https://lsco.scene7.com/is/image/lsco/A34940028-alt3-pdp-lse?fmt=avif&qlt=40&resMode=bisharp&fit=crop,0&op_usm=0.6,0.6,8&wid=660&hei=726"}, {id: "", src:"https://lsco.scene7.com/is/image/lsco/A34940028-detail1-pdp?fmt=avif&qlt=40&resMode=bisharp&fit=crop,0&op_usm=0.6,0.6,8&wid=660&hei=726"}]}/>
                       </Grid>
                       <Grid item sm={8} md={5}>
-                        <ItemDescriptors descriptors={{
+                        <ItemDescriptors
+                          descriptors={{
                             listingTitle: formData.title,
                             sellerId: "1",
                             description: formData.description,
@@ -374,7 +376,9 @@ export default function StarredPage() {
                             pickup: formData.pickup,
                             email: email,
                             phone: phone,
-                        }}/>
+                          }}
+                          listingId=""
+                        />
                       </Grid>
                     </Grid>
                   </div>
