@@ -4,17 +4,11 @@ import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Rating from '@mui/material/Rating';
-import ProfileListings from "@/components/ProfilePage/ProfileListings"; // Ensure correct import path
-import Box from '@mui/material/Box';
-import AddIcon from '@mui/icons-material/Add';
+import ProfileListings from "@/components/ProfilePage/ProfileListings";
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { userInfo } from 'os';
 import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
 
 const avatarSize = 150;
 
@@ -30,7 +24,7 @@ export default function ProfilePage() {
         const userInfo = localStorage.getItem('userInfo');
         if (userInfo) {
             const user = JSON.parse(userInfo);
-            setEmail(user.email); // Set the email in state
+            setEmail(user.email);
             setUserid(user.userid);
             setFirstName(user.first_name);
             setLastName(user.last_name);
@@ -61,18 +55,20 @@ export default function ProfilePage() {
                 </Grid>
                 <Grid item xs={12}>
                     <Stack direction="row" spacing={5}>
-                        <Typography variant="body1" color="initial">
+                        <Typography variant="subtitle1" color="initial">
                             Email: {email || 'Email not available'}
                         </Typography>
-                        <Typography variant="body1" color="initial">
+                        <Typography variant="subtitle1" color="initial">
                             Phone: {phone || 'Phone not available'}
                         </Typography>
                     </Stack>            
                 </Grid>
+                <Grid item xs={12}>
+                    <Typography variant="body2" color="initial">
+                        Hardcoded Biography
+                    </Typography>
+                </Grid>
             </Grid>
-            <Button href="/newlisting" sx={{ borderRadius: 25, width: "fit-content" }} startIcon={<AddIcon />}>
-                Create New Listing
-            </Button>
             <ProfileListings />
         </>
     );
