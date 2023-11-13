@@ -17,7 +17,7 @@ export default function ListingCard({ item }: { item: ItemType }) {
       <CardActionArea href={`/singleitem/${item.listing_id}`}>
         <Image
           alt="Listing Image"
-          src={item.listing_img ? item.listing_img : "https://images.unsplash.com/photo-1674315411321-d65c2d07b850?auto=format&fit=crop&q=80&w=2832&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
+          src={item.listing_img ? item.listing_img : "https://ctexvctbvqjly2uj.public.blob.vercel-storage.com/default_image-4vJq5zaZQyLaL7BWbvvyTXmZCjXfzy.jpg"}
           width={640}
           height={480}
           style={{

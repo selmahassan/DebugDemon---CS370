@@ -16,7 +16,7 @@ export const GET = async (req: Request, res: Response) => {
 export const POST = async (req: Request, res: Response) => {
     const { searchParams } = new URL(req.url);
 
-    const {title, description, category, condition, price, pickup, image} = await req.json();
+    const {userid, title, description, category, condition, price, pickup, image} = await req.json();
 
     let user_id = 1 // TODO : how to fetch user id from newlisting page? - Will use cookies
 

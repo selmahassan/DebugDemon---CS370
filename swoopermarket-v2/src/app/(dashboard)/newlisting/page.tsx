@@ -1,6 +1,8 @@
 'use client'
 
-import React, { useState } from 'react';
+
+import { Listing } from '@/types';
+import React, { useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -14,14 +16,35 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
+import createTheme from '@mui/material/styles/createTheme';
 import ItemDescriptors from '@/components/SingleItem/ItemDescriptors';
 import ItemPhotos from '@/components/SingleItem/ItemPhotos';
 import CloseIcon from '@mui/icons-material/Close';
 import StickyAlert from '@/components/StickyAlert';
 import type { PutBlobResult } from '@vercel/blob';
-import { Listing } from '@/types';
+import { useRouter } from 'next/router';
+import { SpeakerPhone } from '@mui/icons-material';
 
 export default function StarredPage() {
+
+  const [email, setEmail] = useState('');
+  const [userid, setUserid] = useState('');
+  const [first_name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+
+  useEffect(() => {
+      // Retrieve user info from local storage
+      const userInfo = localStorage.getItem('userInfo');
+      if (userInfo) {
+          const user = JSON.parse(userInfo);
+          setEmail(user.email); // Set the email in state
+          setUserid(user.userid);
+          setName(user.first_name);
+          setPhone(user.phone);
+
+      }
+  }, []);
+
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
 
@@ -39,7 +62,6 @@ export default function StarredPage() {
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -55,31 +77,71 @@ export default function StarredPage() {
     else if (data.get('category') == 'furniture') category_id = 2;
     else if (data.get('category') == 'electronics') category_id = 3;
     else category_id = 4; // db says entertainment = 4
+    // ...existing category_id logic...
 
-    const listing : Listing = {
+    // Retrieve userId from local storage set during the login
+
+    if (!userid) {
+      console.error('No user id found, please log in again');
+      setOpenError(true);
+      return;
+    }
+
+    const listing: Listing = {
+      // Omit listingid, let the database handle ID creation
       title: data.get('title') as string,
       description: data.get('description') as string,
-      category: category_id,
+      category: Number(data.get('category')),
       condition: data.get('condition') as string,
       price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
       pickup: data.get('pickup') as string,
-      image: image_url as string
+      image: image_url as string,
+      userid: userid
     };
 
-    let response = await fetch('../api/listing', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(listing)
-    });
+    console.log(listing);
 
-    if(response.status == 200) {
+    try {
+      const response = await fetch('/api/listing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(listing),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // Handle success
+        setOpenSuccess(true);
+        setOpenError(false);
+       // router.push('/path-to-your-listing-page'); // Redirect to the listing page
+      } else {
+        // Handle errors
+        console.error(result.message);
+        setOpenError(true);
+        setOpenSuccess(false);
+      }
+    } catch (error) {
+      console.error('Error posting listing:', error);
       setOpenError(true);
-    } else {
-      setOpenSuccess(true);
+      setOpenSuccess(false);
     }
   };
+
+  const theme = createTheme({
+    components: {
+        MuiToolbar: {
+            styleOverrides: {
+                dense: {
+                    height: 75,
+                    minHeight: 50
+                }
+            }
+        }
+    },
+  })
 
   const [formData, setFormData] = useState({
     title: '',
@@ -331,13 +393,13 @@ export default function StarredPage() {
                       <Grid item sm={8} md={5}>
                         <ItemDescriptors descriptors={{
                             listingTitle: formData.title,
-                            sellerId: "my_username",
+                            sellerId: "1",
                             description: formData.description,
                             price: formData.price,
                             condition: formData.condition,
                             pickup: formData.pickup,
-                            email: "my_email",
-                            phone: "my_phone",
+                            email: email,
+                            phone: phone,
                         }}/>
                       </Grid>
                     </Grid>

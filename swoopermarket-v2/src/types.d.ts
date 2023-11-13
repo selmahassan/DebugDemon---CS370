@@ -6,6 +6,7 @@ export type Listing = {
     price: number,
     pickup: string,
     image: string
+    userid: string
 }
 
 export type User = {
