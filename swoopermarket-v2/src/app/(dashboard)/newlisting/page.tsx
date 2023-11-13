@@ -367,7 +367,7 @@ export default function StarredPage() {
                       <Grid item sm={8} md={5}>
                         <ItemDescriptors descriptors={{
                             listingTitle: formData.title,
-                            SellerId: "1",
+                            sellerId: "1",
                             Name: first_name,
                             description: formData.description,
                             price: formData.price,
