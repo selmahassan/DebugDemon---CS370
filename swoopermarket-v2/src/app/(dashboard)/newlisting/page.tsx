@@ -24,6 +24,7 @@ import StickyAlert from '@/components/StickyAlert';
 import type { PutBlobResult } from '@vercel/blob';
 import { useRouter } from 'next/router';
 import { SpeakerPhone } from '@mui/icons-material';
+import { Category_Num } from '@/enums/category';
 
 export default function StarredPage() {
 
@@ -65,34 +66,30 @@ export default function StarredPage() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
-    let image = data.get('image') as File 
-    console.log(image)
-
-    const image_url = await submitBlob(image) // TODO: Change listing_img to string to submit url
-    console.log(image_url)
-
-    // TODO : categories mistmatch with database
-    let category_id: number = 4; // gotta initialize it bc const listing wants me to
-    if(data.get('category') == 'school_supplies') category_id = 1; // db says apparel = 1
-    else if (data.get('category') == 'furniture') category_id = 2;
-    else if (data.get('category') == 'electronics') category_id = 3;
-    else category_id = 4; // db says entertainment = 4
-    // ...existing category_id logic...
-
-    // Retrieve userId from local storage set during the login
-
+        
     if (!userid) {
       setErrorMessage('No user id found, please log in again');
       setOpenError(true);
       return;
     }
 
+    let category = data.get('category') as string
+    let category_id: number = Category_Num.indexOf(category)
+    if (category_id === -1) {
+      category_id = 4
+    }
+    
+    let image = data.get('image') as File 
+    console.log(image)
+
+    const image_url = await submitBlob(image) // TODO: Change listing_img to string to submit url
+    console.log(image_url)
+
     const listing: Listing = {
       // Omit listingid, let the database handle ID creation
       title: data.get('title') as string,
       description: data.get('description') as string,
-      category: Number(data.get('category')),
+      category: category_id,
       condition: data.get('condition') as string,
       price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
       pickup: data.get('pickup') as string,
@@ -181,7 +178,19 @@ export default function StarredPage() {
       text: 'Electronics',
     },
     {
-      key: 'misc',
+      key: 'tickers',
+      text: 'Tickets',
+    },
+    {
+      key: 'housing',
+      text: 'Housing',
+    },
+    {
+      key: 'books',
+      text: 'Books',
+    },
+    {
+      key: 'other',
       text: 'Other/Miscellaneous',
     },
   ];

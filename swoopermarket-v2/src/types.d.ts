@@ -17,3 +17,9 @@ export type User = {
     bio: string,
     phone: string,
 }
+
+export type Comment = {
+    comment_text : string;
+    listing_id : number;
+    user_id : number;
+}
