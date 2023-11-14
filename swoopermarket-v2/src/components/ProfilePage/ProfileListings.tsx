@@ -22,11 +22,13 @@ export default function ProfileListings({listings, user_info} : {listings: Array
             user = "0"
         }
 
-        if (user === user_info.userid) {
+        if (user === String(user_info.userid)) {
             setLoggedIn(true)
         } else {
             setLoggedIn(false)
         }
+        console.log("user: " + user)
+        console.log(String(user_info.userid))
     }, []);
     
     return (
