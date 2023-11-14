@@ -13,7 +13,6 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
-import createTheme from '@mui/material/styles/createTheme';
 import StickyAlert from '@/components/StickyAlert';
 import type { PutBlobResult } from '@vercel/blob';
 import { useRouter } from 'next/navigation';
@@ -25,7 +24,22 @@ export default function StarredPage() {
   const [userid, setUserid] = useState('');
   const [first_name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [image, setImage] = useState('')
+  const [errorImage, setErrorImage] = useState('')
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter()
+
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    category: '',
+    condition: '',
+    price: 0,
+    pickup: '',
+    image: '',
+  });
 
   useEffect(() => {
       // Retrieve user info from local storage
@@ -39,10 +53,6 @@ export default function StarredPage() {
 
       }
   }, []);
-
-  const [openSuccess, setOpenSuccess] = useState(false);
-  const [openError, setOpenError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const submitBlob = async(image: File) => {
     const response = await fetch(
@@ -74,10 +84,8 @@ export default function StarredPage() {
     }
 
     let image = data.get('image') as File 
-    console.log(image)
 
     const image_url = await submitBlob(image)
-    console.log(image_url)
 
     const listing: Listing = {
       title: data.get('title') as string,
@@ -89,8 +97,6 @@ export default function StarredPage() {
       image: image_url as string,
       userid: userid
     };
-
-    console.log(listing);
 
     try {
       const response = await fetch('/api/listing', {
@@ -121,34 +127,27 @@ export default function StarredPage() {
     }
   };
 
-  const theme = createTheme({
-    components: {
-        MuiToolbar: {
-            styleOverrides: {
-                dense: {
-                    height: 75,
-                    minHeight: 50
-                }
-            }
-        }
-    },
-  })
-
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    category: '',
-    condition: '',
-    price: 0,
-    pickup: '',
-  });
-
   const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({
       ...formData,
       [name]: value,
     });
+    
+  };
+
+  const onChangeImage = (event: { target: { files?: any; name?: any; value?: any; }; }) => {
+    setImage('')
+    const file_values = event.target.files[0]
+    if(file_values.type.split("/")[0] !== "image") {
+      setErrorImage("Invalid File: File must be an image (e.g., jpeg, png, avif)")
+    } else if(file_values.size > 4.5e6) {
+      setErrorImage("Invalid File: File must be < 4.5 MB")
+    } else {
+      setErrorImage('')
+      const {value} = event.target;
+      setImage(value)
+    }
   };
 
   const categories = [
@@ -258,6 +257,10 @@ export default function StarredPage() {
                   id="image"
                   name="image"
                   sx={{mb: 1}}
+                  value={image}
+                  onChange={onChangeImage}
+                  error={errorImage !== ''}
+                  helperText={errorImage}
                 />
               </Grid>
               <Grid item xs={12}>
