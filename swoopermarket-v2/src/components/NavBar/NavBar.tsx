@@ -18,19 +18,26 @@ import { useState } from 'react';
 
 const DRAWER_WIDTH = 240;
 
-const LINKS = [
-    { text: 'Home', href: '/', icon: HomeIcon, id:1 },
-    { text: 'New Listing', href: '/newlisting', icon: AddIcon, id:2 },
-  ];
-  
-  const PLACEHOLDER_LINKS = [
-    { text: 'Profile', href: '/profile', icon: ManageAccountsIcon, id:4 },
-    { text: 'Logout', href: '/login', icon: LogoutIcon, id:5 },
-  ];
-
 export default function NavBar() {
     const [selectedIndex, setSelectedIndex] = useState(1);
     const [mobileOpen, setMobileOpen] = useState(false);
+
+    const userInfo = localStorage.getItem('userInfo');
+    let userid = 0;
+    if (userInfo) {
+        const user = JSON.parse(userInfo);
+        userid = user.userid
+    }
+
+    const LINKS = [
+        { text: 'Home', href: '/', icon: HomeIcon, id:1 },
+        { text: 'New Listing', href: '/newlisting', icon: AddIcon, id:2 },
+      ];
+      
+      const PLACEHOLDER_LINKS = [
+        { text: 'Profile', href: `/profile/${userid}`, icon: ManageAccountsIcon, id:4 },
+        { text: 'Logout', href: '/login', icon: LogoutIcon, id:5 },
+      ];
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);

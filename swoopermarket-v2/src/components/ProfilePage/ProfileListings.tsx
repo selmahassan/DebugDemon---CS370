@@ -34,7 +34,7 @@ const profileItems = [
     },
 ];
 
-export default function ProfileListings() {
+export default function ProfileListings({listings} : {listings: Array<any>}) {
     return (
         <>
             <Stack direction="row" spacing={2}>
