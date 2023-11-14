@@ -6,7 +6,7 @@ export const GET = async (req: Request) => {
     try {
         const url_id = req.url.split("api/user/")[1];
         
-        const messages =  await sql`SELECT first_name, last_name, email, phone, profile_img, bio FROM user_table WHERE userid = ${url_id};`; 
+        const messages =  await sql`SELECT userid, first_name, last_name, email, phone, profile_img, bio FROM user_table WHERE userid = ${url_id};`; 
         const user = messages.rows;
 
         if(user.length == 0){
