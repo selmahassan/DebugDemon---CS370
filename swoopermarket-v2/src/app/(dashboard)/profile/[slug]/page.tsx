@@ -1,5 +1,6 @@
 import ProfileListings from "@/components/ProfilePage/ProfileListings";
 import ProfileHeader from '@/components/ProfilePage/ProfileHeader';
+import RequireLogin from "@/components/ProfilePage/RequireLogin";
 
 async function getUserListings(id: string) {
     try {
@@ -24,6 +25,11 @@ async function getUserListings(id: string) {
 
 export default async function ProfilePage({ params }: { params: { slug: string } }) {
   const { slug } = params
+  if(slug === "0") {
+    return (
+      <RequireLogin />
+    )
+  }
   
   // fetch user listings
   const res = await getUserListings(slug);
