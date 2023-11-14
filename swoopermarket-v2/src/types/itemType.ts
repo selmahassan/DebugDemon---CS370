@@ -5,4 +5,5 @@ export type ItemType = {
     price: number;
     listing_img: string;
     category_id: number;
+    userid: string;
 };

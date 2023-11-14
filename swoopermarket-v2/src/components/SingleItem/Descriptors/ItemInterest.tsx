@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Stack from "@mui/material/Stack";
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
@@ -9,14 +9,23 @@ import DeleteModal from '@/components/DeleteModal';
 import StickyAlert from '@/components/StickyAlert';
 import { useRouter } from 'next/navigation';
 
-export default function ItemInterest({ listingId } : { listingId: string}) {
+export default function ItemInterest({ listingId, userid } : { listingId: string, userid: string}) {
     const router = useRouter();
+    const [user_id, setUserid] = useState('');
+
+    useEffect(() => {
+        // Retrieve user info from local storage
+        const userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            const user = JSON.parse(userInfo);
+            setUserid(user.userid);
+        }
+    }, []);
 
     const handleEdit = () => {
         router.push(`/editListing/${listingId}`)
     }
-
-    {/* TODO: check if user is allowed to edit/delete */}
+    
     const username = "my_username"
     const displayDeleteButton = username == "my_username" ? "" : "none";
 
@@ -48,23 +57,26 @@ export default function ItemInterest({ listingId } : { listingId: string}) {
     const [openError, setOpenError] = useState(false);
 
     const handleShare = () => {
-        // TODO: replace URL w/ final production URL
-        navigator.clipboard.writeText(`https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/singleitem/${listingId}`);
+        navigator.clipboard.writeText(window.location.href);
         setOpenSuccess(true);
     };
 
     return (
         <Stack direction="row" spacing={1.5}>
-            <Button variant="outlined" sx={{display: displayDeleteButton, borderRadius: 50, width: "fit-content"}} startIcon={<EditIcon/>} onClick={handleEdit}>Edit</Button>
-            <Button variant="outlined" sx={{display: displayDeleteButton, borderRadius: 50, width: "fit-content"}} startIcon={<DeleteIcon/>} onClick={handleDeleteModal}>Delete</Button>
+            {user_id === userid ? 
+            <>
+                <Button variant="outlined" sx={{display: displayDeleteButton, borderRadius: 50, width: "fit-content"}} startIcon={<EditIcon/>} onClick={handleEdit}>Edit</Button>
+                <Button variant="outlined" sx={{display: displayDeleteButton, borderRadius: 50, width: "fit-content"}} startIcon={<DeleteIcon/>} onClick={handleDeleteModal}>Delete</Button>
+                {showDeleteModal &&
+                    <DeleteModal
+                        handleDeleteModal={handleDeleteModal}
+                        handleDelete={handleDelete}
+                        deleteType="listing"
+                    />
+                }
+            </>
+            : <></>}
             <Button variant="contained" sx={{borderRadius: 50, width: "fit-content"}} startIcon={<ShareIcon/>} onClick={handleShare}>Share</Button>
-            {showDeleteModal &&
-                <DeleteModal
-                    handleDeleteModal={handleDeleteModal}
-                    handleDelete={handleDelete}
-                    deleteType="listing"
-                />
-            }
             <StickyAlert
                 successMessage="Link copied to clipboard!"
                 errorMessage="Listing could not be deleted"
