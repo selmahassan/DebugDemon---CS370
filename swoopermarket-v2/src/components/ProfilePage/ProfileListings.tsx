@@ -22,7 +22,7 @@ export default function ProfileListings({listings, user_info} : {listings: Array
             user = "0"
         }
 
-        if (user === String(user_info.userid)) {
+        if (user === user_info.userid) {
             setLoggedIn(true)
         } else {
             setLoggedIn(false)
