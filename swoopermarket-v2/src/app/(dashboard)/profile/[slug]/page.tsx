@@ -4,7 +4,7 @@ import RequireLogin from "@/components/ProfilePage/RequireLogin";
 
 async function getUserListings(id: string) {
     try {
-      const res = await fetch(process.env.API_URL + 'api/user/' + id, {
+      const res = await fetch(process.env.API_URL + 'api/userlistings/' + id, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
