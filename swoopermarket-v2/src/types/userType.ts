@@ -5,4 +5,5 @@ export type User = {
     phone: string;
     profile_img: string;
     bio: string;
+    userid: number;
 };
