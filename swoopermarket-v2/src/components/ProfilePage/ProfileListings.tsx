@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 const profileItems = [
     {
         listing_id: 7,
+        userid: "1",
         product_name: "Pet Alligator",
         descr: "Generic Description",
         price: 48,
@@ -15,6 +16,7 @@ const profileItems = [
     },
     {
         listing_id: 8,
+        userid: "1",
         product_name: "Shrink Ray Gun",
         descr: "Generic Description",
         price: 126,
@@ -23,6 +25,7 @@ const profileItems = [
     },
     {
         listing_id: 9,
+        userid: "1",
         product_name: "Missile",
         descr: "Generic Description",
         price: 516,
