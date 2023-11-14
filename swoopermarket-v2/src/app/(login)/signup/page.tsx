@@ -109,7 +109,7 @@ export default function SignUp() {
                 // console.log("gets success status")
                 router.push('/login?isSuccess=true');
             } else if (response.status === 500){
-                setErrorMessage("Account already exists. Please sign in.");
+                setErrorMessage("Account already exists. Please sign in or use another email address.");
                 setOpenError(true);
                 setOpenSuccess(false);
             }
