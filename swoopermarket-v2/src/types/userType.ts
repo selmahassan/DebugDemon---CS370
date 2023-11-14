@@ -1,6 +1,8 @@
-type User = {
-    name: string;
+export type User = {
+    first_name: string;
+    last_name: string;
     email: string;
-    avatar: string;
+    phone: string;
+    profile_img: string;
     bio: string;
 };
