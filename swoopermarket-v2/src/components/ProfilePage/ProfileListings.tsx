@@ -9,7 +9,7 @@ import { User } from '@/types/userType';
 import { useState, useEffect } from "react";
 
 export default function ProfileListings({listings, user_info} : {listings: Array<any>, user_info: User}) {
-    const [loggedIn, setLoggedIn] = useState(true)
+    const [loggedIn, setLoggedIn] = useState(false)
 
     useEffect(() => {
         // Retrieve user info from local storage
@@ -27,8 +27,6 @@ export default function ProfileListings({listings, user_info} : {listings: Array
         } else {
             setLoggedIn(false)
         }
-        console.log("user: " + user)
-        console.log(user_info)
     }, []);
     
     return (

@@ -12,7 +12,7 @@ import { User } from '@/types/userType';
 
 export default function ProfileHeader({user_info} : {user_info: User}) {
     const avatarSize = 150;
-    const [loggedIn, setLoggedIn] = useState(true)
+    const [loggedIn, setLoggedIn] = useState(false)
 
     useEffect(() => {
         // Retrieve user info from local storage
