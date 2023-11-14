@@ -14,23 +14,32 @@ import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const DRAWER_WIDTH = 240;
-
-const LINKS = [
-    { text: 'Home', href: '/', icon: HomeIcon, id:1 },
-    { text: 'New Listing', href: '/newlisting', icon: AddIcon, id:2 },
-  ];
-  
-  const PLACEHOLDER_LINKS = [
-    { text: 'Profile', href: '/profile', icon: ManageAccountsIcon, id:4 },
-    { text: 'Logout', href: '/login', icon: LogoutIcon, id:5 },
-  ];
 
 export default function NavBar() {
     const [selectedIndex, setSelectedIndex] = useState(1);
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [userId, setUserId] = useState(0);
+
+    useEffect(() => {
+        const userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            const user = JSON.parse(userInfo);
+            setUserId(user.userid);
+        }
+    })
+
+    const LINKS = [
+        { text: 'Home', href: '/', icon: HomeIcon, id:1 },
+        { text: 'New Listing', href: '/newlisting', icon: AddIcon, id:2 },
+      ];
+      
+      const PLACEHOLDER_LINKS = [
+        { text: 'Profile', href: `/profile/${userId}`, icon: ManageAccountsIcon, id:4 },
+        { text: 'Logout', href: '/login', icon: LogoutIcon, id:5 },
+      ];
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);

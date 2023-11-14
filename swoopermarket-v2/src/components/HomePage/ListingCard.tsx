@@ -18,7 +18,7 @@ export default function ListingCard({ item }: { item: ItemType }) {
         <Image
           alt="Listing Image"
           src={item.listing_img ? item.listing_img : "https://ctexvctbvqjly2uj.public.blob.vercel-storage.com/default_image-4vJq5zaZQyLaL7BWbvvyTXmZCjXfzy.jpg"}
-          width={640}
+          width={480}
           height={480}
           style={{
             maxWidth: '100%',

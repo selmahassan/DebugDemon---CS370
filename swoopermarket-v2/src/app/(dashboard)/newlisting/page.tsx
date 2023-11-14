@@ -113,7 +113,7 @@ export default function StarredPage() {
         // Handle success
         setOpenSuccess(true);
         setOpenError(false);
-        router.push('/?isSuccessNewListing=true'); // Redirect to the listing page
+        router.push('/profile/' + userid + '?isSuccessNewListing=true'); // Redirect to the listing page
       } else {
         // Handle errors
         setErrorMessage(result.message);
