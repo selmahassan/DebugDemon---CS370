@@ -115,7 +115,7 @@ export default function Login() {
           }}
         >
           <StickyAlert
-            successMessage="Account signup successful! Please sign in."
+            successMessage="Account signup successful! Please check your email to sign in."
             errorMessage={errorMessage}
             openSuccess={openSuccess}
             setOpenSuccess={setOpenSuccess}
