@@ -1,12 +1,12 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
-// get a specific user profile in DB
+// get listings for a specific user
 export const GET = async (req: Request) => {
     try {
         const url_id = req.url.split("api/user/")[1];
         
-        const messages =  await sql`SELECT * FROM user_table WHERE userid = ${url_id};`; 
+        const messages =  await sql`SELECT * FROM product_listing WHERE userid = ${url_id};`; 
         const user = messages.rows;
 
         if(user.length == 0){
