@@ -34,7 +34,7 @@ export default function ProfileHeader() {
         <Grid container alignItems="center" direction="column" spacing={1}>
             <Grid item xs={12}>
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', marginTop: '15px'}}>
-                    <Avatar alt="Profile Picture" src="/images/avatar/dooley.jpeg" sx={{ width: avatarSize, height: avatarSize }} />
+                    <Avatar alt="Profile Picture" src="/images/avatar/dooley.jpg" sx={{ width: avatarSize, height: avatarSize }} />
                 </div>
             </Grid>
             <Grid item xs={12}>
