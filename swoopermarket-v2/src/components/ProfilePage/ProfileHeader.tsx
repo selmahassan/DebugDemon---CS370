@@ -12,16 +12,27 @@ import { User } from '@/types/userType';
 
 export default function ProfileHeader({user_info} : {user_info: User}) {
     const avatarSize = 150;
-    const [userId, setUserId] = useState('');
+    const [loggedIn, setLoggedIn] = useState(false)
 
     useEffect(() => {
         // Retrieve user info from local storage
         const userInfo = localStorage.getItem('userInfo');
+        let user;
         if (userInfo) {
-            const user = JSON.parse(userInfo);
-            setUserId(user.userid);
+            const user_data = JSON.parse(userInfo);
+            user = user_data.userid
+        } else {
+            user = "0"
+        }
+
+        if (user === user_info.userid) {
+            setLoggedIn(true)
+        } else {
+            setLoggedIn(false)
         }
     }, []);
+
+    
 
     return (
         <Grid container alignItems="center" direction="column" spacing={1}>
@@ -35,11 +46,14 @@ export default function ProfileHeader({user_info} : {user_info: User}) {
                     <Typography variant="h4" color="initial">
                         {user_info.first_name + " " + user_info.last_name || 'Name not available'}
                     </Typography>
-                    <Tooltip title="Edit Profile">
-                        <IconButton href="/editProfile">
-                            <EditIcon />
-                        </IconButton>
-                    </Tooltip>
+                    {
+                        loggedIn ? 
+                        <Tooltip title="Edit Profile">
+                            <IconButton href="/editProfile">
+                                <EditIcon />
+                            </IconButton>
+                        </Tooltip> : <></>
+                    }
                 </Stack>
             </Grid>
             <Grid item xs={12}>

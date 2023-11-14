@@ -75,7 +75,7 @@ export default async function ProfilePage({ params }: { params: { slug: string }
     return (
         <>
             <ProfileHeader user_info={user_info}/>
-            <ProfileListings listings={user_listings}/>
+            <ProfileListings listings={user_listings} user_info={user_info}/>
         </>
     );
 };
