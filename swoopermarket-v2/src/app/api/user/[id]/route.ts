@@ -1,12 +1,12 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
-// get a specific user profile in DB
+// get listings for a specific user
 export const GET = async (req: Request) => {
     try {
         const url_id = req.url.split("api/user/")[1];
         
-        const messages =  await sql`SELECT * FROM user_table WHERE userid = ${url_id};`; 
+        const messages =  await sql`SELECT * FROM product_listing WHERE userid = ${url_id};`; 
         const user = messages.rows;
 
         if(user.length == 0){
@@ -21,25 +21,25 @@ export const GET = async (req: Request) => {
 
 };
 
-// get all user listings in DB
-export const GET_LISTINGS = async (req: Request) => {
-    try {
-        const url_id = req.url.split("api/user/")[1];
+// // get all user listings in DB
+// export const GET_LISTINGS = async (req: Request) => {
+//     try {
+//         const url_id = req.url.split("api/user/")[1];
         
-        const messages =  await sql`SELECT * FROM product_listing WHERE userid = ${url_id};`; 
-        const listings = messages.rows;
+//         const messages =  await sql`SELECT * FROM product_listing WHERE userid = ${url_id};`; 
+//         const listings = messages.rows;
 
-        if(listings.length == 0){
-            return NextResponse.json({message: "No listings ", listings}, {status: 200});
-        } else {
-            return NextResponse.json({message: "Messages: ", listings}, {status: 200});
-        }
+//         if(listings.length == 0){
+//             return NextResponse.json({message: "No listings ", listings}, {status: 200});
+//         } else {
+//             return NextResponse.json({message: "Messages: ", listings}, {status: 200});
+//         }
 
-    } catch (error) {
-        return NextResponse.json({message: "Error", error}, {status: 500});
-    }
+//     } catch (error) {
+//         return NextResponse.json({message: "Error", error}, {status: 500});
+//     }
 
-};
+// };
 
 // edit a user's info
 export const PUT = async (req: Request, res: Response) => {
