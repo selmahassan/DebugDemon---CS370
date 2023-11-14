@@ -14,20 +14,22 @@ import ListItemText from '@mui/material/ListItemText';
 import Box from '@mui/material/Box';
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const DRAWER_WIDTH = 240;
 
 export default function NavBar() {
     const [selectedIndex, setSelectedIndex] = useState(1);
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [userId, setUserId] = useState(0);
 
-    const userInfo = localStorage.getItem('userInfo');
-    let userid = 0;
-    if (userInfo) {
-        const user = JSON.parse(userInfo);
-        userid = user.userid
-    }
+    useEffect(() => {
+        const userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            const user = JSON.parse(userInfo);
+            setUserId(user.userid);
+        }
+    })
 
     const LINKS = [
         { text: 'Home', href: '/', icon: HomeIcon, id:1 },
@@ -35,7 +37,7 @@ export default function NavBar() {
       ];
       
       const PLACEHOLDER_LINKS = [
-        { text: 'Profile', href: `/profile/${userid}`, icon: ManageAccountsIcon, id:4 },
+        { text: 'Profile', href: `/profile/${userId}`, icon: ManageAccountsIcon, id:4 },
         { text: 'Logout', href: '/login', icon: LogoutIcon, id:5 },
       ];
 
