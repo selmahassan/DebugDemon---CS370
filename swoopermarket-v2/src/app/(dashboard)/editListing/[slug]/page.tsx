@@ -111,9 +111,10 @@ export default function EditListingPage({ params }: { params: { slug: string } }
       description: data.get('description') as string,
       category: category_id,
       condition: data.get('condition') as string,
-      price: Number(data.get('price')), // TODO : frontend: can you somehow make sure what the user enters as price is a number only?
+      price: Number(data.get('price')),
       pickup: data.get('pickup') as string,
-      userid: userid
+      userid: userid,
+      image: ''
     };
 
     console.log(listing)
@@ -156,13 +157,7 @@ export default function EditListingPage({ params }: { params: { slug: string } }
   const handleCancel = () => {
     router.push(`/singleitem/${slug}`)
   }
-
-  // const [showPreview, setShowPreview] = useState<boolean>(false);
-
-  // const handlePreviewClick = () => {
-  //   setShowPreview(!showPreview);
-  // };
-
+  
   const categories = [
     {
       key: 'school_supplies',
@@ -380,53 +375,6 @@ export default function EditListingPage({ params }: { params: { slug: string } }
               </Grid>
             </Grid>
           </Box>
-          {/* {showPreview && (
-              <div
-                style={{
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  backgroundColor: 'rgba(0, 0, 0, 0.3)', // Semi-transparent black background
-                  zIndex: 1000,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-              <Paper>
-                <Box sx={{ display: 'flex', alignItems: 'flex-start', p: 3}}>
-                  <div>
-                    <Stack direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
-                      <Button onClick={handlePreviewClick} sx={{borderRadius: 50, width: "fit-content"}} startIcon={<CloseIcon/>}>Close Preview</Button>
-                      <Stack direction="row">
-                        <Typography variant="body1" color="initial">Listed in category: </Typography>
-                        <Link href={'href'} variant="body1">{formData.category}</Link>
-                      </Stack>
-                    </Stack>
-                    <Grid container direction="row" spacing={2} padding={2} columns={{sm: 8, md: 12}}>
-                      <Grid item sm={8} md={7}>
-                        <ItemPhotos photos={[{id: "", src:"https://lsco.scene7.com/is/image/lsco/A34940028-alt3-pdp-lse?fmt=avif&qlt=40&resMode=bisharp&fit=crop,0&op_usm=0.6,0.6,8&wid=660&hei=726"}, {id: "", src:"https://lsco.scene7.com/is/image/lsco/A34940028-detail1-pdp?fmt=avif&qlt=40&resMode=bisharp&fit=crop,0&op_usm=0.6,0.6,8&wid=660&hei=726"}]}/>
-                      </Grid>
-                      <Grid item sm={8} md={5}>
-                        <ItemDescriptors descriptors={{
-                            listingTitle: formData.title,
-                            sellerId: "my_username",
-                            description: formData.description,
-                            price: formData.price,
-                            condition: formData.condition,
-                            pickup: formData.pickup,
-                            email: "my_email",
-                            phone: "my_phone",
-                        }}/>
-                      </Grid>
-                    </Grid>
-                  </div>
-                </Box>
-              </Paper>
-            </div>
-          )} */}
         </Paper>
       </Container>
     </>
