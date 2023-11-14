@@ -48,8 +48,7 @@ export default function ItemInterest({ listingId } : { listingId: string}) {
     const [openError, setOpenError] = useState(false);
 
     const handleShare = () => {
-        // TODO: replace URL w/ final production URL
-        navigator.clipboard.writeText(`https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/singleitem/${listingId}`);
+        navigator.clipboard.writeText(window.location.href);
         setOpenSuccess(true);
     };
 
