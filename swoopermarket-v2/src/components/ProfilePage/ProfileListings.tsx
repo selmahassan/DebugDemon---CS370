@@ -28,7 +28,7 @@ export default function ProfileListings({listings, user_info} : {listings: Array
             setLoggedIn(false)
         }
         console.log("user: " + user)
-        console.log(String(user_info.userid))
+        console.log("userid: " + String(user_info.userid))
     }, []);
     
     return (
