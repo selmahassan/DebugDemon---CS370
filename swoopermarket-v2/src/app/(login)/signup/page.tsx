@@ -1,6 +1,6 @@
 'use client'
 
-import { User } from '@/types/user';
+import { Signup_User } from '@/types/user';
 import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -87,12 +87,11 @@ export default function SignUp() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        const user : User = {
-            firstName: data.get('firstName') as string,
-            lastName: data.get('lastName') as string,
+        const user : Signup_User = {
+            first_name: data.get('firstName') as string,
+            last_name: data.get('lastName') as string,
             email: data.get('email') as string,
             password: data.get('password') as string,
-            bio: data.get('bio') as string,
             phone: data.get('phone') as string,
         };
 

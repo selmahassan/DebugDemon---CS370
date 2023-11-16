@@ -7,3 +7,11 @@ export type User = {
     profile_img: string,
     bio: string,
 }
+
+export type Signup_User = {
+    first_name: string,
+    last_name: string,
+    email: string,
+    phone: string,
+    password: string,
+}
