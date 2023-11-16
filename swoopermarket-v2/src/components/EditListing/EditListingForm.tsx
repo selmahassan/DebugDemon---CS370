@@ -14,8 +14,7 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import StickyAlert from '@/components/StickyAlert';
 import { Category_Num } from '@/enums/category';
-import { useRouter } from 'next/navigation';
-import { redirect } from 'next/navigation'
+import { useRouter, redirect } from 'next/navigation';
 import { ItemType } from '@/types/itemType';
 import { Listing } from '@/types/listing';
 import type { PutBlobResult } from '@vercel/blob';
@@ -26,7 +25,7 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
     const [openSuccess, setOpenSuccess] = useState(false);
     const [openError, setOpenError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [userid, setUserid] = useState('');
+    const [userid, setUserid] = useState('0');
     const router = useRouter();
 
     const [formData, setFormData] = useState({
@@ -46,6 +45,10 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
             const user = JSON.parse(userInfo);
             cookie_userid = user.userid;
             setUserid(user.userid);
+        }
+
+        if (cookie_userid === "0") {
+            redirect(`/login`)
         }
 
         if(listing.userid !== cookie_userid) {

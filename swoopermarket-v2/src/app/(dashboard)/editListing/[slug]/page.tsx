@@ -1,6 +1,6 @@
 import EditListingForm from '@/components/EditListing/EditListingForm';
 import { ItemType } from '@/types/itemType';
-import { redirect } from 'next/navigation'
+import { redirect } from 'next/navigation';
 
 async function getSingleListing(id: string) {
   try {

@@ -9,6 +9,7 @@ import SearchBar from '@/components/SearchBar';
 import { ItemType } from '@/types/itemType';
 import { Category } from '@/enums/category';
 import RequireLogin from '../ProfilePage/RequireLogin';
+import { redirect } from 'next/navigation'
 
 
 export default function Listings({listings}: {listings:Array<any> | null}) {
@@ -18,22 +19,19 @@ export default function Listings({listings}: {listings:Array<any> | null}) {
     const [priceMinOption, setPriceMinOption] = useState('');
     const [priceMaxOption, setPriceMaxOption] = useState('');
     const [conditionOption, setConditionOption] = useState('all');
-    const [userid, setUserid] = useState("0");
 
     useEffect(() => {
       // Retrieve user info from local storage
       const userInfo = localStorage.getItem('userInfo');
+      let cookie_userid = "0"
       if (userInfo) {
           const user = JSON.parse(userInfo);
-          setUserid(user.userid);
+          cookie_userid = user.userid;
+      }
+      if(cookie_userid === "0") {
+        redirect(`/login`)
       }
     }, []);
-
-    if(userid === "0") {
-      return (
-        <RequireLogin />
-      )
-    }
 
     let searchResults
 
