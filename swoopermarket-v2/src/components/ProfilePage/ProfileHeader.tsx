@@ -49,7 +49,7 @@ export default function ProfileHeader({user_info} : {user_info: User}) {
                     {
                         loggedIn ? 
                         <Tooltip title="Edit Profile">
-                            <IconButton href="/editProfile">
+                            <IconButton href={`/editProfile/${user_info.userid}`}>
                                 <EditIcon />
                             </IconButton>
                         </Tooltip> : <></>
