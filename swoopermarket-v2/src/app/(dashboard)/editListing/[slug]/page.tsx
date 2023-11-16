@@ -1,6 +1,5 @@
 'use client'
 
-import { Listing } from '@/types';
 import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -19,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import { ItemType } from '@/types/itemType';
 import { Descriptor } from '@/types/itemDescriptor';
 import { Category } from '@/enums/category';
+import { Listing } from '@/types/listing';
 
 export default function EditListingPage({ params }: { params: { slug: string } }) {
   const [email, setEmail] = useState('');

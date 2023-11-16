@@ -1,6 +1,6 @@
 'use client'
 
-import { Listing } from '@/types';
+import { Listing } from '@/types/listing';
 import React, { useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
