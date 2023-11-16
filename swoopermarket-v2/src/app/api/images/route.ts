@@ -1,5 +1,7 @@
-import { put } from '@vercel/blob';
+import { put, del } from '@vercel/blob';
 import { NextResponse } from 'next/server';
+
+export const runtime = 'edge';
 
 export async function POST(request: Request): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
@@ -11,4 +13,12 @@ export async function POST(request: Request): Promise<NextResponse> {
   });
 
   return NextResponse.json(blob);
+}
+
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const urlToDelete = searchParams.get('url') as string;
+  await del(urlToDelete);
+ 
+  return new Response();
 }

@@ -9,7 +9,7 @@ import DeleteModal from '@/components/DeleteModal';
 import StickyAlert from '@/components/StickyAlert';
 import { useRouter } from 'next/navigation';
 
-export default function ItemInterest({ listingId, userid } : { listingId: string, userid: string}) {
+export default function ItemInterest({ listingId, userid, image } : { listingId: string, userid: string, image: string}) {
     const router = useRouter();
     const [user_id, setUserid] = useState('');
 
@@ -35,7 +35,19 @@ export default function ItemInterest({ listingId, userid } : { listingId: string
         setShowDeleteModal(!showDeleteModal);
     };
 
+    const deleteBlob = async(image: string) => {
+        await fetch(
+          `/api/images?url=${image}`,
+          {
+            method: 'DELETE',
+            body: image,
+          },
+        );
+    }
+
     const handleDelete = async() => {
+        await deleteBlob(image);
+
         let response = await fetch('../api/listing/' + listingId, {
             method: 'DELETE',
             headers: {

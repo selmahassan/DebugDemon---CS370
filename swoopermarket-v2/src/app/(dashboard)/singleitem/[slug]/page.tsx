@@ -102,6 +102,7 @@ export default async function SingleItem({ params }: { params: { slug: string } 
                 descriptors={descriptions}
                 listingId={slug}
                 userid={listings.userid}
+                image={listings.listing_img}
               />
             </Grid>
           </Grid>
