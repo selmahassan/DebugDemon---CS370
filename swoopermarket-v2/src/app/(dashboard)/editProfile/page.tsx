@@ -1,6 +1,6 @@
 'use client'
 
-import { User } from '@/types';
+import { User } from '@/types/user';
 import React, { useState} from 'react';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
