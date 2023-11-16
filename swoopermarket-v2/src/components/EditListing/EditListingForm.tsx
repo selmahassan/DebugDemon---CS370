@@ -15,6 +15,7 @@ import TextField from '@mui/material/TextField';
 import StickyAlert from '@/components/StickyAlert';
 import { Category_Num } from '@/enums/category';
 import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation'
 import { ItemType } from '@/types/itemType';
 import { Listing } from '@/types/listing';
 import type { PutBlobResult } from '@vercel/blob';
@@ -49,7 +50,7 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
 
         if(listing.userid !== cookie_userid) {
             console.log("Cannot Edit Item")
-            router.push(`/singleitem/${listing.listing_id}`)
+            redirect(`/singleitem/${listing.listing_id}`)
         }
     }, []);
 
