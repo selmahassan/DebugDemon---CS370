@@ -75,8 +75,8 @@ export default function EditProfileForm({user}: {user: User}) {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        let image = data.get('image') as File
-        const image_url = await submitBlob(image as File)
+        let form_image = data.get('image') as File
+        const image_url = await submitBlob(form_image as File)
 
         const updated_user : User = {
             first_name: data.get('first_name') as string,
