@@ -9,7 +9,7 @@ import ItemInterest from './Descriptors/ItemInterest';
 import { Descriptor } from '@/types/itemDescriptor';
 import { redirect } from 'next/navigation'
 
-export default function ItemDescriptors({ descriptors, listingId, userid } : { descriptors: Descriptor | null, listingId: string, userid: string}) {
+export default function ItemDescriptors({ descriptors, listingId, userid, image } : { descriptors: Descriptor | null, listingId: string, userid: string, image: string}) {
     React.useEffect(() => {
         // Retrieve user info from local storage
         const userInfo = localStorage.getItem('userInfo');
@@ -40,7 +40,7 @@ export default function ItemDescriptors({ descriptors, listingId, userid } : { d
                 condition={descriptors.condition}
                 pickup={descriptors.pickup}
             />
-            <ItemInterest listingId={listingId} userid={userid}/>
+            <ItemInterest listingId={listingId} userid={userid} image={image}/>
         </Stack>
     );
 }
