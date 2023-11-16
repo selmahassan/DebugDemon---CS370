@@ -16,7 +16,6 @@ import StickyAlert from '@/components/StickyAlert';
 import { Category_Num } from '@/enums/category';
 import { useRouter } from 'next/navigation';
 import { ItemType } from '@/types/itemType';
-import { Category } from '@/enums/category';
 import { Listing } from '@/types/listing';
 import type { PutBlobResult } from '@vercel/blob';
 
@@ -32,7 +31,7 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
     const [formData, setFormData] = useState({
         title: listing?.product_name,
         description: listing?.descr,
-        category: Category[listing.category_id],
+        category: Category_Num[listing.category_id],
         condition: listing?.condition,
         price: listing?.price,
         pickup: listing?.pickup,
