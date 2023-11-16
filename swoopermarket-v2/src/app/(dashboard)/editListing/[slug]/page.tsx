@@ -1,5 +1,6 @@
 import EditListingForm from '@/components/EditListing/EditListingForm';
 import { ItemType } from '@/types/itemType';
+import { redirect } from 'next/navigation';
 
 async function getSingleListing(id: string) {
   try {
@@ -29,7 +30,7 @@ export default async function EditListingPage({ params }: { params: { slug: stri
   const res = await getSingleListing(slug);
   let listing: ItemType
   if(res === null) {
-    return(<></>)
+    redirect(`/singleitem/${slug}`)
   } else {
     listing = res.product[0]
   }

@@ -17,6 +17,7 @@ import StickyAlert from '@/components/StickyAlert';
 import type { PutBlobResult } from '@vercel/blob';
 import { useRouter } from 'next/navigation';
 import { Category_Num } from '@/enums/category';
+import { redirect } from 'next/navigation'
 
 export default function StarredPage() {
   const [userid, setUserid] = useState('');
@@ -39,9 +40,14 @@ export default function StarredPage() {
   useEffect(() => {
       // Retrieve user info from local storage
       const userInfo = localStorage.getItem('userInfo');
+      let cookie_userid = "0"
       if (userInfo) {
           const user = JSON.parse(userInfo);
+          cookie_userid = user.userid;
           setUserid(user.userid);
+      }
+      if (cookie_userid === "0") {
+        redirect(`/login`)
       }
   }, []);
 
