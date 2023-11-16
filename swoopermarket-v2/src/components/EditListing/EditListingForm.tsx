@@ -217,7 +217,6 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
             <Typography
                 component="h1"
                 variant="h4"
-                // noWrap
                 sx={{mb: 2}}
             >
                 Edit Listing

@@ -23,7 +23,7 @@ export const GET = async (req: Request) => {
 
 // edit a user's info
 export const PUT = async (req: Request, res: Response) => {
-    const {first_name, last_name, phone, image, bio} = await req.json();
+    const {first_name, last_name, phone, profile_img, bio} = await req.json();
     
     try {
         const url_id = req.url.split("api/user/")[1];
@@ -32,7 +32,7 @@ export const PUT = async (req: Request, res: Response) => {
             SET first_name = ${first_name}, 
                 last_name = ${last_name},
                 phone = ${phone},
-                profile_img = ${image},
+                profile_img = ${profile_img},
                 bio = ${bio}
             WHERE userid = ${url_id} 
             RETURNING *;`;
