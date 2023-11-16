@@ -19,11 +19,7 @@ import { useRouter } from 'next/navigation';
 import { Category_Num } from '@/enums/category';
 
 export default function StarredPage() {
-
-  const [email, setEmail] = useState('');
   const [userid, setUserid] = useState('');
-  const [first_name, setName] = useState('');
-  const [phone, setPhone] = useState('');
   const [image, setImage] = useState('')
   const [errorImage, setErrorImage] = useState('')
   const [openSuccess, setOpenSuccess] = useState(false);
@@ -38,7 +34,6 @@ export default function StarredPage() {
     condition: '',
     price: 0,
     pickup: '',
-    image: '',
   });
 
   useEffect(() => {
@@ -46,11 +41,7 @@ export default function StarredPage() {
       const userInfo = localStorage.getItem('userInfo');
       if (userInfo) {
           const user = JSON.parse(userInfo);
-          setEmail(user.email); // Set the email in state
           setUserid(user.userid);
-          setName(user.first_name);
-          setPhone(user.phone);
-
       }
   }, []);
 

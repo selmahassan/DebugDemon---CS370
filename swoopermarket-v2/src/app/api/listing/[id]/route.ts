@@ -35,7 +35,7 @@ export const PUT = async (req: Request, res: Response) => {
                 descr = ${description}, 
                 category_id = ${category}, 
                 price = ${price},
-                modified_at = ${Number(Date.now)},
+                modified_at = NOW(),
                 listing_img = ${image},
                 pickup = ${pickup},
                 condition = ${condition}
