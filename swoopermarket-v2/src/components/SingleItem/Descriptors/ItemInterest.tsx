@@ -35,18 +35,7 @@ export default function ItemInterest({ listingId, userid, image } : { listingId:
         setShowDeleteModal(!showDeleteModal);
     };
 
-    const deleteBlob = async(image: string) => {
-        await fetch(
-          `/api/images?url=${image}`,
-          {
-            method: 'DELETE',
-            body: image,
-          },
-        );
-    }
-
     const handleDelete = async() => {
-        await deleteBlob(image);
 
         let response = await fetch('../api/listing/' + listingId, {
             method: 'DELETE',
