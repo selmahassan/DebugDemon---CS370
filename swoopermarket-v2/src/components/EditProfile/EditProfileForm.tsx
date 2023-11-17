@@ -56,16 +56,20 @@ export default function EditProfileForm({user}: {user: User}) {
             curr_profile_img = ''
         }
         if (image.name !== '' && image.name !== curr_profile_img) {
+          try {
             const response = await fetch(
-                `/api/images?filename=${image.name}`,
-                {
-                method: 'POST',
-                body: image,
-                },
-            );
+              `/api/images?filename=${image.name}`,
+              {
+              method: 'POST',
+              body: image,
+              },
+          );
 
-            const newBlob = (await response.json()) as PutBlobResult;
-            return newBlob.url
+          const newBlob = (await response.json()) as PutBlobResult;
+          return newBlob.url
+          } catch (error) {
+            return user.profile_img
+          }
         } else {
             return user.profile_img
         }
