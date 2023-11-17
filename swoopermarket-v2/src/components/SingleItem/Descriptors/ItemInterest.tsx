@@ -25,9 +25,6 @@ export default function ItemInterest({ listingId, userid, image } : { listingId:
     const handleEdit = () => {
         router.push(`/editListing/${listingId}`)
     }
-    
-    const username = "my_username"
-    const displayDeleteButton = username == "my_username" ? "" : "none";
 
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
@@ -35,18 +32,7 @@ export default function ItemInterest({ listingId, userid, image } : { listingId:
         setShowDeleteModal(!showDeleteModal);
     };
 
-    const deleteBlob = async(image: string) => {
-        await fetch(
-          `/api/images?url=${image}`,
-          {
-            method: 'DELETE',
-            body: image,
-          },
-        );
-    }
-
     const handleDelete = async() => {
-        await deleteBlob(image);
 
         let response = await fetch('../api/listing/' + listingId, {
             method: 'DELETE',
@@ -77,8 +63,8 @@ export default function ItemInterest({ listingId, userid, image } : { listingId:
         <Stack direction="row" spacing={1.5}>
             {user_id === userid ? 
             <>
-                <Button variant="outlined" sx={{display: displayDeleteButton, borderRadius: 50, width: "fit-content"}} startIcon={<EditIcon/>} onClick={handleEdit}>Edit</Button>
-                <Button variant="outlined" sx={{display: displayDeleteButton, borderRadius: 50, width: "fit-content"}} startIcon={<DeleteIcon/>} onClick={handleDeleteModal}>Delete</Button>
+                <Button variant="outlined" sx={{borderRadius: 50, width: "fit-content"}} startIcon={<EditIcon/>} onClick={handleEdit}>Edit</Button>
+                <Button variant="outlined" sx={{borderRadius: 50, width: "fit-content"}} startIcon={<DeleteIcon/>} onClick={handleDeleteModal}>Delete</Button>
                 {showDeleteModal &&
                     <DeleteModal
                         handleDeleteModal={handleDeleteModal}

@@ -10,7 +10,9 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import StickyAlert from '@/components/StickyAlert';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useRouter, redirect } from 'next/navigation';
+import DeleteModal from '@/components/DeleteModal';
 import type { PutBlobResult } from '@vercel/blob';
 
 export default function EditProfileForm({user}: {user: User}) {
@@ -20,6 +22,7 @@ export default function EditProfileForm({user}: {user: User}) {
     const [openError, setOpenError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [userid, setUserid] = useState('0');
+    const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const router = useRouter();
 
     const [formData, setFormData] = useState({
@@ -143,6 +146,30 @@ export default function EditProfileForm({user}: {user: User}) {
         }
     };
 
+    const handleDeleteModal = () => {
+        setShowDeleteModal(!showDeleteModal);
+    };
+
+    const handleDelete = async() => {
+      //TODO: remove cookies from browser when profile is deleted
+
+      let response = await fetch('../api/user/' + userid, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+      });
+    
+      if(response.status == 200 || response.status == 201) {
+          setOpenSuccess(true);
+          setOpenError(false);
+          router.push('/login?isSuccessDelete=true');
+      } else {
+          setOpenSuccess(false)
+          setOpenError(true)
+      }
+  }
+
     return (
       <>
         <Container component="main" maxWidth="lg" sx={{ mt: 2, mb: 4 }}>
@@ -229,9 +256,28 @@ export default function EditProfileForm({user}: {user: User}) {
                     Save Profile
                   </Button>
                 </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    variant="outlined"
+                    color='error'
+                    sx={{borderRadius: 50, width: "fit-content"}} 
+                    startIcon={<DeleteIcon/>} 
+                    onClick={handleDeleteModal}
+                    fullWidth
+                  >
+                    Delete Profile
+                  </Button>
+                </Grid>
               </Grid>
             </form>
           </Paper>
+          {showDeleteModal &&
+              <DeleteModal
+                  handleDeleteModal={handleDeleteModal}
+                  handleDelete={handleDelete}
+                  deleteType="profile"
+              />
+          }
         </Container>
     </>
   );
