@@ -65,7 +65,7 @@ export default function ProfileHeader({user_info} : {user_info: User}) {
                     </Typography>
                 </Stack>            
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sx={{mb: 1}}>
                 {
                     user_info.bio === null ? <></> :
                     <Typography variant="body2" color="initial">
