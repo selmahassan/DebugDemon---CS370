@@ -4,7 +4,7 @@ export type User = {
     last_name: string,
     email: string,
     phone: string,
-    profile_img: string,
+    profile_img: string | null,
     bio: string,
 }
 

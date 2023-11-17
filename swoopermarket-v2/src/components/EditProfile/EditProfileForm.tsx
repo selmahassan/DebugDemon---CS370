@@ -16,8 +16,8 @@ import DeleteModal from '@/components/DeleteModal';
 import type { PutBlobResult } from '@vercel/blob';
 
 export default function EditProfileForm({user}: {user: User}) {
-    const [image, setImage] = useState('')
-    const [errorImage, setErrorImage] = useState('')
+    // const [image, setImage] = useState('')
+    // const [errorImage, setErrorImage] = useState('')
     const [openSuccess, setOpenSuccess] = useState(false);
     const [openError, setOpenError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -53,37 +53,37 @@ export default function EditProfileForm({user}: {user: User}) {
         }
     }, []);
 
-    const submitBlob = async(image: File) => {
-        let curr_profile_img = user.profile_img
-        if (user.profile_img === null) {
-            curr_profile_img = ''
-        }
-        if (image.name !== '' && image.name !== curr_profile_img) {
-          try {
-            const response = await fetch(
-              `/api/images?filename=${image.name}`,
-              {
-              method: 'POST',
-              body: image,
-              },
-          );
+    // const submitBlob = async(image: File) => {
+    //     let curr_profile_img = user.profile_img
+    //     if (user.profile_img === null) {
+    //         curr_profile_img = ''
+    //     }
+    //     if (image.name !== '' && image.name !== curr_profile_img) {
+    //       try {
+    //         const response = await fetch(
+    //           `/api/images?filename=${image.name}`,
+    //           {
+    //           method: 'POST',
+    //           body: image,
+    //           },
+    //       );
 
-          const newBlob = (await response.json()) as PutBlobResult;
-          return newBlob.url
-          } catch (error) {
-            return user.profile_img
-          }
-        } else {
-            return user.profile_img
-        }
-    }
+    //       const newBlob = (await response.json()) as PutBlobResult;
+    //       return newBlob.url
+    //       } catch (error) {
+    //         return user.profile_img
+    //       }
+    //     } else {
+    //         return user.profile_img
+    //     }
+    // }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        let form_image = data.get('image') as File
-        const image_url = await submitBlob(form_image as File)
+        // let form_image = data.get('image') as File
+        // const image_url = await submitBlob(form_image as File)
 
         const updated_user : User = {
             first_name: data.get('first_name') as string,
@@ -92,7 +92,7 @@ export default function EditProfileForm({user}: {user: User}) {
             phone: data.get('phone') as string,
             userid: userid,
             email: user.email,
-            profile_img: image_url,
+            profile_img: null,
         };
 
         try {
@@ -132,19 +132,20 @@ export default function EditProfileForm({user}: {user: User}) {
             [name]: value,
         });
     };
-    const onChangeImage = (event: { target: { files?: any; name?: any; value?: any; }; }) => {
-        setImage('')
-        const file_values = event.target.files[0]
-        if(file_values.type.split("/")[0] !== "image") {
-          setErrorImage("Invalid File: File must be an image (e.g., jpeg, png, avif)")
-        } else if(file_values.size > 4.5e6) {
-          setErrorImage("Invalid File: File must be < 4.5 MB")
-        } else {
-          setErrorImage('')
-          const {value} = event.target;
-          setImage(value)
-        }
-    };
+
+    // const onChangeImage = (event: { target: { files?: any; name?: any; value?: any; }; }) => {
+    //     setImage('')
+    //     const file_values = event.target.files[0]
+    //     if(file_values.type.split("/")[0] !== "image") {
+    //       setErrorImage("Invalid File: File must be an image (e.g., jpeg, png, avif)")
+    //     } else if(file_values.size > 4.5e6) {
+    //       setErrorImage("Invalid File: File must be < 4.5 MB")
+    //     } else {
+    //       setErrorImage('')
+    //       const {value} = event.target;
+    //       setImage(value)
+    //     }
+    // };
 
     const handleDeleteModal = () => {
         setShowDeleteModal(!showDeleteModal);
@@ -232,7 +233,7 @@ export default function EditProfileForm({user}: {user: User}) {
                     onChange={handleFormChange}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                     <Typography variant="h6" gutterBottom>
                         Upload New Profile Picture
                     </Typography>
@@ -245,7 +246,7 @@ export default function EditProfileForm({user}: {user: User}) {
                         error={errorImage !== ''}
                         helperText={errorImage}
                     />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                   <Button
                     type="submit"
