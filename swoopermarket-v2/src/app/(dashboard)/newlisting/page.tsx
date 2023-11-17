@@ -52,16 +52,20 @@ export default function StarredPage() {
   }, []);
 
   const submitBlob = async(image: File) => {
-    const response = await fetch(
-      `/api/images?filename=${image.name}`,
-      {
-        method: 'POST',
-        body: image,
-      },
-    );
-
-    const newBlob = (await response.json()) as PutBlobResult;
-    return newBlob.url
+    try {
+      const response = await fetch(
+        `/api/images?filename=${image.name}`,
+        {
+          method: 'POST',
+          body: image,
+        },
+      );
+  
+      const newBlob = (await response.json()) as PutBlobResult;
+      return newBlob.url
+    } catch (error) {
+      return null
+    }
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
