@@ -9,7 +9,7 @@ CREATE TABLE user_table (
 );
 
 CREATE TABLE password_reset_tokens (
-  email text UNIQUE,
+  email text,
   token VARCHAR(128) UNIQUE,
   token_expiry BIGINT,    
   PRIMARY KEY (email, token) -- An email can have more than one expiry token
