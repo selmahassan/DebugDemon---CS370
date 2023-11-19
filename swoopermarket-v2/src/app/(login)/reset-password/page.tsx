@@ -97,7 +97,7 @@ export default function ResetPassword() {
         const result = await response.json();
     
         if (response.status === 200) {
-          router.push('/login?isResetPasswordSuccess=true');
+          router.push('/login?isPasswordResetSuccess=true');
         } else {
           setErrorMessage(result.message);
           setOpenError(true);
