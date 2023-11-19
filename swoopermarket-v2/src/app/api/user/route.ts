@@ -31,6 +31,8 @@ export const POST = async (req: Request, res: Response) => {
                 pass: process.env.EMAIL_PASSWORD,
             },
         });
+
+        await transporter.verify();
         // Email user a verification link
         // Determine if the environment is production
         const isProduction = process.env.NODE_ENV === 'production';
@@ -39,23 +41,21 @@ export const POST = async (req: Request, res: Response) => {
         // Construct the verification link
         const verificationLink = `${protocol}://${req.headers.get('host')}/api/verify?token=${verificationToken}`;
         const mailOptions = {
-            from: 'SwooperMarket@gmail.com',
+            from: '"SwooperMarket" <SwooperMarket@gmail.com>',
             to: email,
             subject: 'Verify Your Email',
-            text: `Hello ${firstName}, 
-Your SwooperMarket Journey awaits!
-Please click on the following link to verify your email: ${verificationLink}`, // DO NOT EDIT FORMATING, IT IS THIS WAY FOR THE EMAIL
+            text: `Hello ${firstName},\nYour SwooperMarket Journey awaits!\nPlease click on the following link to verify your email: ${verificationLink}`,
         };
-
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.error(error);
-                return NextResponse.json({ message: "Error sending email." }, { status: 500 });
-            } else {
-                console.log('Verification email sent:', info.response);
-                return NextResponse.json({ message: "User registered. Please check your email to verify your account." });
-            }
-        });
+        await transporter.sendMail(mailOptions);
+        // transporter.sendMail(mailOptions, (error, info) => {
+        //     if (error) {
+        //         console.error(error);
+        //         return NextResponse.json({ message: "Error sending email." }, { status: 500 });
+        //     } else {
+        //         console.log('Verification email sent:', info.response);
+        //         return NextResponse.json({ message: "User registered. Please check your email to verify your account." });
+        //     }
+        // });
 
 
         return NextResponse.json({ result }, { status: 201 });
