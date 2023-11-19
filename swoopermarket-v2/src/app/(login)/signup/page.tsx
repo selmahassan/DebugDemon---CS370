@@ -30,6 +30,7 @@ interface NewUserForm {
 
 interface errors {
     email: string;
+    password: string;
     rePassword: string;
 }
 
@@ -43,6 +44,7 @@ export default function SignUp() {
     })
     const [errors, setErrors] = React.useState<errors>({
         email: "",
+        password: "",
         rePassword: "",
     })
     const router = useRouter()
@@ -63,6 +65,12 @@ export default function SignUp() {
 
     const onChangePassword = (e: { target: { value: string; }; }) => {
         setNewUserForm({...newUserForm, password: e.target.value});
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        if(!passwordRegex.test(e.target.value)){
+          setErrors({...errors, password: 'Passwords must have at least 8 characters, 1 lowercase, 1 uppercase, and 1 number.' })
+        } else {
+          setErrors({...errors, password: ''})
+        }
     };
 
     const handleClickShowRePassword = () => setShowRePassword((show) => !show);
@@ -73,7 +81,7 @@ export default function SignUp() {
     const onChangeRePassword = (e: { target: { value: string; }; }) => {
         setNewUserForm({...newUserForm, rePassword: e.target.value});
         if (e.target.value !== newUserForm.password) {
-            setErrors({...errors, rePassword: 'Passwords Do Not Match' })
+            setErrors({...errors, rePassword: 'Passwords do not match.' })
         } else {
             setErrors({...errors, rePassword: ''})
         }
@@ -108,7 +116,7 @@ export default function SignUp() {
                 // console.log("gets success status")
                 router.push('/login?isSuccess=true');
             } else if (response.status === 500){
-                setErrorMessage("Account already exists. Please sign in.");
+                setErrorMessage("Account already exists. Please sign in or use another email address.");
                 setOpenError(true);
                 setOpenSuccess(false);
             }
@@ -216,6 +224,11 @@ export default function SignUp() {
                         value={newUserForm.password || ''}
                         onChange={ onChangePassword }
                     />
+                    {errors.password !== "" && (
+                        <FormHelperText error id="password-error">
+                            {errors.password}
+                        </FormHelperText>
+                    )}
                 </FormControl>
                 </Grid>
                 <Grid item xs={12}>

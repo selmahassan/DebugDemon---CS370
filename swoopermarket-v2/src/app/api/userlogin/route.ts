@@ -16,23 +16,21 @@ export const POST = async (req: Request, res: Response) => {
     const { userid, email, pass, first_name, last_name, phone, bio } = await req.json();
 
     try {
-
         // Fetch the user from the database
         const result = await sql`SELECT * FROM user_table WHERE email = ${email};`;
 
         // If user is not found, return an error response
         if (result.rows.length === 0) {
-            return NextResponse.json({ message: "User Not Found, Please sign up" }, { status: 404 });
+            return NextResponse.json({ message: "User not found. Please sign up." }, { status: 404 });
         }
 
         const user = result.rows[0];
-
 
         // Compare the hashed password
         const passwordMatch = await bcrypt.compare(pass, user.pass);
         if (!passwordMatch) {
             // Passwords do not match, return an error message
-            return NextResponse.json({ message: "Incorrect password. Please Try Again" }, { status: 401 });
+            return NextResponse.json({ message: "Incorrect password. Please try again." }, { status: 401 });
         }
 
         // Passwords match, generate a JWT
@@ -49,7 +47,7 @@ export const POST = async (req: Request, res: Response) => {
             path: '/',
         });
 
-            // After a successful password match
+        // After a successful password match
         const userData = {
             userid: user.userid,
             first_name: user.first_name,
@@ -74,7 +72,7 @@ export const POST = async (req: Request, res: Response) => {
 
     } catch (error) {
         console.log("Caught error:", error);
-        return NextResponse.json({ message: "Please Try Again", error }, { status: 500 });
+        return NextResponse.json({ message: "Please try again.", error }, { status: 500 });
     }
 };
 

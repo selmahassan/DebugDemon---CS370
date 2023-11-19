@@ -8,6 +8,12 @@ CREATE TABLE user_table (
   profile_img BYTEA
 );
 
+CREATE TABLE password_reset_tokens (
+  email text,
+  token VARCHAR(128) UNIQUE,
+  token_expiry BIGINT,    
+  PRIMARY KEY (email, token) -- An email can have more than one expiry token
+);
 
 INSERT INTO user_table (pass, first_name, last_name, email, phone) VALUES ('selma', 'selma', 'hassan', 'selma@emory.edu', '4044512184');
 INSERT INTO user_table (pass, first_name, last_name, email, phone) VALUES ('ryan', 'ryan', 'zhao', 'ryan@emory.edu', '4044512184');

@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import nodemailer from 'nodemailer';
 
-const SALT_ROUNDS = 10; // 
+const SALT_ROUNDS = 10;
 
 // add a new user to the DB with hashed password
 export const POST = async (req: Request, res: Response) => {
@@ -29,7 +29,7 @@ export const POST = async (req: Request, res: Response) => {
             },
         });
         // Email user a verification link
-        const verificationLink = `https://${req.headers.get('host')}/api/verify?token=${verificationToken}`;
+        const verificationLink = `https://${req.headers.get('host')}/login?token=${verificationToken}`;
         const mailOptions = {
             from: 'SwooperMarket@gmail.com',
             to: email,
