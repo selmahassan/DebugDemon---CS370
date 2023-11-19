@@ -32,6 +32,19 @@ export const POST = async (req: Request, res: Response) => {
             },
         });
 
+        await new Promise((resolve, reject) => {
+            // verify connection configuration
+            transporter.verify(function (error, success) {
+                if (error) {
+                    console.log(error);
+                    reject(error);
+                } else {
+                    console.log("Server is ready to take our messages");
+                    resolve(success);
+                }
+            });
+        });
+
         await transporter.verify();
         // Email user a verification link
         // Determine if the environment is production
@@ -41,23 +54,25 @@ export const POST = async (req: Request, res: Response) => {
         // Construct the verification link
         const verificationLink = `${protocol}://${req.headers.get('host')}/api/verify?token=${verificationToken}`;
         const mailOptions = {
-            from: '"SwooperMarket" <SwooperMarket@gmail.com>',
+            from: '"SwooperMarket"',
             to: email,
             subject: 'Verify Your Email',
             text: `Hello ${firstName},\nYour SwooperMarket Journey awaits!\nPlease click on the following link to verify your email: ${verificationLink}`,
         };
-        await transporter.sendMail(mailOptions);
-        // transporter.sendMail(mailOptions, (error, info) => {
-        //     if (error) {
-        //         console.error(error);
-        //         return NextResponse.json({ message: "Error sending email." }, { status: 500 });
-        //     } else {
-        //         console.log('Verification email sent:', info.response);
-        //         return NextResponse.json({ message: "User registered. Please check your email to verify your account." });
-        //     }
-        // });
 
-
+    await new Promise((resolve, reject) => {
+    // send mail
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.error(err);
+            return NextResponse.json({ message: "Error sending email." }, { status: 500 });
+            } 
+        else {
+            console.log('Verification email sent:', info.response);
+            return NextResponse.json({ message: "User registered. Please check your email to verify your account." });
+            }
+    });
+});
         return NextResponse.json({ result }, { status: 201 });
     } catch (error) {
         console.log("Caught error", error);
