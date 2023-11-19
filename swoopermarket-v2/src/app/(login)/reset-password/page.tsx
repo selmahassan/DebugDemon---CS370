@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Link from 'next/link';
@@ -14,9 +14,11 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
+import StickyAlert from '@/components/StickyAlert';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import FormHelperText from '@mui/material/FormHelperText';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 interface NewUserForm {
     password: string;
@@ -30,6 +32,8 @@ interface errors {
 
 export default function ResetPassword() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const passwordResetToken = searchParams.get('token')
 
   const [showPassword, setShowPassword] = React.useState(false); // hide/display password
   const [showRePassword, setShowRePassword] = React.useState(false);
@@ -42,6 +46,10 @@ export default function ResetPassword() {
     password: "",
     rePassword: ""
   })
+
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
+  const [errorMessage, setErrorMessage] = React.useState('');
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -72,14 +80,34 @@ export default function ResetPassword() {
       }
   };
 
-  // TODO: handle submit to actually reset password
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    // });
-    // router.push('/login') // TODO: Redirect
+    const data = new FormData(event.currentTarget);
+    const newPassword = data.get('password');
+
+    if(passwordResetToken) {
+      try {
+        const response = await fetch(`/api/forgotpassword?token=${passwordResetToken}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ newPassword }),
+        });
+        const result = await response.json();
+    
+        if (response.status === 200) {
+          router.push('/login?isResetPasswordSuccess=true');
+        } else {
+          setErrorMessage(result.message);
+          setOpenError(true);
+        }
+      } catch (error) {
+        console.error('Password reset error:', error);
+        setErrorMessage('An error occurred while resetting your password. Please try again.');
+        setOpenError(true);
+      }
+    }
   };
 
   return (
@@ -108,6 +136,14 @@ export default function ResetPassword() {
             alignItems: 'center',
           }}
         >
+          <StickyAlert
+            successMessage="Password reset successful! Please log in."
+            errorMessage={errorMessage}
+            openSuccess={openSuccess}
+            setOpenSuccess={setOpenSuccess}
+            openError={openError}
+            setOpenError={setOpenError}
+          />
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -115,9 +151,9 @@ export default function ResetPassword() {
             Reset Password
           </Typography>
           <Typography component="h5" variant="body2" align='center'>
-            Enter a new password below to change your password. 
+            {passwordResetToken ? "Enter a new password below to change your password." : "Cannot access page without a valid password reset token."}
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          { passwordResetToken && <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <FormControl required fullWidth variant="outlined">
@@ -198,7 +234,7 @@ export default function ResetPassword() {
                 </Link>
               </Grid>
             </Grid>
-          </Box>
+          </Box>}
         </Box>
       </Grid>
     </Grid>

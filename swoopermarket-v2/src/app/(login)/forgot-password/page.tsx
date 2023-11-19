@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -10,18 +10,41 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { useRouter } from 'next/navigation'
+import StickyAlert from '@/components/StickyAlert';
 
 export default function ForgotPassword() {
-  const router = useRouter()
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
+  const [errorMessage, setErrorMessage] = React.useState('');
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-    });
-    router.push('/login') //TODO: Redirect
+    const email = data.get('email');
+    
+    try {
+      const response = await fetch('/api/forgotpassword', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+  
+      const result = await response.json();
+  
+      if (response.status === 200) {
+        console.log("Password reset email sent.");
+        setOpenSuccess(true);
+      } else {
+        setErrorMessage(result.message);
+        setOpenError(true);
+      }
+    } catch (error) {
+      console.error('Password reset error:', error);
+      setErrorMessage('An error occurred while resetting your password. Please try again.');
+      setOpenError(true);
+    }
   };
 
   return (
@@ -50,6 +73,14 @@ export default function ForgotPassword() {
             alignItems: 'center',
           }}
         >
+          <StickyAlert
+            successMessage="An email with password reset instructions has been sent to your email address."
+            errorMessage={errorMessage}
+            openSuccess={openSuccess}
+            setOpenSuccess={setOpenSuccess}
+            openError={openError}
+            setOpenError={setOpenError}
+          />
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
