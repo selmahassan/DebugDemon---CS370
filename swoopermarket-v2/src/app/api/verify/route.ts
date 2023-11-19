@@ -1,11 +1,17 @@
-// pages/api/verify.ts
-
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
 export const GET = async (req: Request, res: Response) => {
     const url = new URL(req.url);
     const token = url.searchParams.get('token');
+
+    // Construct the full absolute URL for redirection
+    const isProduction = process.env.NODE_ENV === 'production';
+    // Use HTTPS in production or HTTP in development
+    const protocol = isProduction ? 'https' : 'http';
+    const host = req.headers.get('host'); // Get the host from the request headers
+    const baseUrl = `${protocol}://${host}`;
+
 
     if (!token) {
         return NextResponse.json({ message: "Verification token is missing." } , { status: 400 });
@@ -16,11 +22,14 @@ export const GET = async (req: Request, res: Response) => {
         const result = await sql`
             UPDATE user_table
             SET verified = true
-            WHERE verification_token = ${token};
+            WHERE verification_token = ${token}
+            RETURNING *;
         `;
 
-        if (result.rows.length === 1) {
-            return NextResponse.json({ message: "Email verified successfully!" }, { status: 200 });
+        if (result.rows.length > 0) {
+            // Redirect to the login page using the full absolute URL
+            const loginUrl = `${baseUrl}/login`;
+            return NextResponse.redirect(loginUrl);
         } else {
             return NextResponse.json({ message: "Invalid or expired token." }, { status: 404 });
         }
