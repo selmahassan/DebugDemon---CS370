@@ -1,6 +1,6 @@
 'use client'
 
-import { Listing } from '@/types';
+import { Listing } from '@/types/listing';
 import React, { useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -17,13 +17,10 @@ import StickyAlert from '@/components/StickyAlert';
 import type { PutBlobResult } from '@vercel/blob';
 import { useRouter } from 'next/navigation';
 import { Category_Num } from '@/enums/category';
+import { redirect } from 'next/navigation'
 
 export default function StarredPage() {
-
-  const [email, setEmail] = useState('');
   const [userid, setUserid] = useState('');
-  const [first_name, setName] = useState('');
-  const [phone, setPhone] = useState('');
   const [image, setImage] = useState('')
   const [errorImage, setErrorImage] = useState('')
   const [openSuccess, setOpenSuccess] = useState(false);
@@ -38,33 +35,37 @@ export default function StarredPage() {
     condition: '',
     price: 0,
     pickup: '',
-    image: '',
   });
 
   useEffect(() => {
       // Retrieve user info from local storage
       const userInfo = localStorage.getItem('userInfo');
+      let cookie_userid = "0"
       if (userInfo) {
           const user = JSON.parse(userInfo);
-          setEmail(user.email); // Set the email in state
+          cookie_userid = user.userid;
           setUserid(user.userid);
-          setName(user.first_name);
-          setPhone(user.phone);
-
+      }
+      if (cookie_userid === "0") {
+        redirect(`/login`)
       }
   }, []);
 
   const submitBlob = async(image: File) => {
-    const response = await fetch(
-      `/api/images?filename=${image.name}`,
-      {
-        method: 'POST',
-        body: image,
-      },
-    );
-
-    const newBlob = (await response.json()) as PutBlobResult;
-    return newBlob.url
+    try {
+      const response = await fetch(
+        `/api/images?filename=${image.name}`,
+        {
+          method: 'POST',
+          body: image,
+        },
+      );
+  
+      const newBlob = (await response.json()) as PutBlobResult;
+      return newBlob.url
+    } catch (error) {
+      return null
+    }
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

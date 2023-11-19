@@ -21,7 +21,7 @@ const DRAWER_WIDTH = 240;
 export default function NavBar() {
     const [selectedIndex, setSelectedIndex] = useState(1);
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [userId, setUserId] = useState(0);
+    const [userId, setUserId] = useState("0");
 
     useEffect(() => {
         const userInfo = localStorage.getItem('userInfo');

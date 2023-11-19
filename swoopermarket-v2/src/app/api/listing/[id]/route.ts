@@ -24,23 +24,21 @@ export const GET = async (req: Request) => {
 
 // edit listing 
 export const PUT = async (req: Request, res: Response) => {
-    const {id, title, description, image, category, condition, price, pickup} = await req.json();
-
-    let product_name = String(title)
-    let hard_description = String(description)
-    let category_id = 1
-    let hard_price = Number(price) 
+    const {title, description, category, condition, price, pickup, image} = await req.json();
     
     try {
         const url_id = req.url.split("api/listing/")[1];
         let listing_id = parseInt(url_id);
 
         const messages =  await sql`UPDATE product_listing 
-            SET product_name = ${product_name}, 
-                descr = ${hard_description}, 
-                category_id = ${category_id}, 
-                price = ${hard_price},
-                modified_at = ${Number(Date.now)}
+            SET product_name = ${title}, 
+                descr = ${description}, 
+                category_id = ${category}, 
+                price = ${price},
+                modified_at = NOW(),
+                listing_img = ${image},
+                pickup = ${pickup},
+                condition = ${condition}
             WHERE listing_id = ${listing_id} 
             RETURNING *;`;
         const product = messages.rows;

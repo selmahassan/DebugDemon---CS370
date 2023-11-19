@@ -23,21 +23,17 @@ export const GET = async (req: Request) => {
 
 // edit a user's info
 export const PUT = async (req: Request, res: Response) => {
-    const {user_id, pass, first_name, last_name} = await req.json();
-
-    let first = String(first_name)
-    let last = String(last_name)
-    let password = String(pass)
-
-    console.log("put reached");
+    const {first_name, last_name, phone, profile_img, bio} = await req.json();
     
     try {
         const url_id = req.url.split("api/user/")[1];
 
         const messages =  await sql`UPDATE user_table 
-            SET pass = ${password}, 
-                first_name = ${first}, 
-                last_name = ${last}, 
+            SET first_name = ${first_name}, 
+                last_name = ${last_name},
+                phone = ${phone},
+                profile_img = ${profile_img},
+                bio = ${bio}
             WHERE userid = ${url_id} 
             RETURNING *;`;
         const product = messages.rows;

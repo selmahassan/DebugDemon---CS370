@@ -94,14 +94,15 @@ export default async function SingleItem({ params }: { params: { slug: string } 
         </Stack>
         <Stack direction="column" padding={2}>
           <Grid container direction="row" spacing={3} columns={{sm: 8, md: 12}}>
-            <Grid item sm={8} md={7}>
+            <Grid item sm={6} md={7}>
               <ItemPhotos photos={newPhoto}/>
             </Grid>
-            <Grid item sm={8} md={5}>
+            <Grid item sm={6} md={5}>
               <ItemDescriptors
                 descriptors={descriptions}
                 listingId={slug}
                 userid={listings.userid}
+                image={listings.listing_img}
               />
             </Grid>
           </Grid>

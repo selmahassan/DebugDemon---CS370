@@ -1,6 +1,6 @@
 import ProfileListings from "@/components/ProfilePage/ProfileListings";
 import ProfileHeader from '@/components/ProfilePage/ProfileHeader';
-import RequireLogin from "@/components/ProfilePage/RequireLogin";
+import { redirect } from 'next/navigation'
 
 async function getUserInfo(id: string) {
   try {
@@ -47,20 +47,20 @@ async function getUserListings(id: string) {
 export default async function ProfilePage({ params }: { params: { slug: string } }) {
   const { slug } = params
   if(slug === "0") {
-    return (
-      <RequireLogin />
-    )
+    redirect(`/login`);
   }
 
   // fetch user info
   const user_res = await getUserInfo(slug);
   let user_info;
   if (user_res === null) {
-    return (
-      <RequireLogin />
-    )
+    redirect(`/login`);
   } else {
     user_info = user_res.user[0]
+  }
+
+  if (user_info === undefined) {
+    redirect(`/login`);
   }
   
   // fetch user listings

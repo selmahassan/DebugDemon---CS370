@@ -31,14 +31,13 @@ export default function ProfileHeader({user_info} : {user_info: User}) {
             setLoggedIn(false)
         }
     }, []);
-
     
 
     return (
         <Grid container alignItems="center" direction="column" spacing={1}>
             <Grid item xs={12}>
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', marginTop: '15px'}}>
-                    <Avatar alt="Profile Picture" src="/images/avatar/dooley.jpg" sx={{ width: avatarSize, height: avatarSize }} />
+                    <Avatar alt="Profile Picture" src={"/images/avatar/dooley.jpg"} sx={{ width: avatarSize, height: avatarSize }} />
                 </div>
             </Grid>
             <Grid item xs={12}>
@@ -49,7 +48,7 @@ export default function ProfileHeader({user_info} : {user_info: User}) {
                     {
                         loggedIn ? 
                         <Tooltip title="Edit Profile">
-                            <IconButton href="/editProfile">
+                            <IconButton href={`/editProfile/${user_info.userid}`}>
                                 <EditIcon />
                             </IconButton>
                         </Tooltip> : <></>
@@ -66,11 +65,11 @@ export default function ProfileHeader({user_info} : {user_info: User}) {
                     </Typography>
                 </Stack>            
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sx={{mb: 1}}>
                 {
                     user_info.bio === null ? <></> :
                     <Typography variant="body2" color="initial">
-                        user_info.bio
+                        {user_info.bio}
                     </Typography>
                 }
             </Grid>

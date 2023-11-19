@@ -9,7 +9,7 @@ import DeleteModal from '@/components/DeleteModal';
 import StickyAlert from '@/components/StickyAlert';
 import { useRouter } from 'next/navigation';
 
-export default function ItemInterest({ listingId, userid } : { listingId: string, userid: string}) {
+export default function ItemInterest({ listingId, userid, image } : { listingId: string, userid: string, image: string}) {
     const router = useRouter();
     const [user_id, setUserid] = useState('');
 
@@ -25,9 +25,6 @@ export default function ItemInterest({ listingId, userid } : { listingId: string
     const handleEdit = () => {
         router.push(`/editListing/${listingId}`)
     }
-    
-    const username = "my_username"
-    const displayDeleteButton = username == "my_username" ? "" : "none";
 
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
@@ -36,6 +33,7 @@ export default function ItemInterest({ listingId, userid } : { listingId: string
     };
 
     const handleDelete = async() => {
+
         let response = await fetch('../api/listing/' + listingId, {
             method: 'DELETE',
             headers: {
@@ -65,8 +63,8 @@ export default function ItemInterest({ listingId, userid } : { listingId: string
         <Stack direction="row" spacing={1.5}>
             {user_id === userid ? 
             <>
-                <Button variant="outlined" sx={{display: displayDeleteButton, borderRadius: 50, width: "fit-content"}} startIcon={<EditIcon/>} onClick={handleEdit}>Edit</Button>
-                <Button variant="outlined" sx={{display: displayDeleteButton, borderRadius: 50, width: "fit-content"}} startIcon={<DeleteIcon/>} onClick={handleDeleteModal}>Delete</Button>
+                <Button variant="outlined" sx={{borderRadius: 50, width: "fit-content"}} startIcon={<EditIcon/>} onClick={handleEdit}>Edit</Button>
+                <Button variant="outlined" sx={{borderRadius: 50, width: "fit-content"}} startIcon={<DeleteIcon/>} onClick={handleDeleteModal}>Delete</Button>
                 {showDeleteModal &&
                     <DeleteModal
                         handleDeleteModal={handleDeleteModal}

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import ListingCard from '@/components/HomePage/ListingCard';
 import { Typography, FormControl, Select, MenuItem, TextField } from '@mui/material';
@@ -8,6 +8,8 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import SearchBar from '@/components/SearchBar';
 import { ItemType } from '@/types/itemType';
 import { Category } from '@/enums/category';
+import RequireLogin from '../ProfilePage/RequireLogin';
+import { redirect } from 'next/navigation'
 
 
 export default function Listings({listings}: {listings:Array<any> | null}) {
@@ -17,6 +19,19 @@ export default function Listings({listings}: {listings:Array<any> | null}) {
     const [priceMinOption, setPriceMinOption] = useState('');
     const [priceMaxOption, setPriceMaxOption] = useState('');
     const [conditionOption, setConditionOption] = useState('all');
+
+    useEffect(() => {
+      // Retrieve user info from local storage
+      const userInfo = localStorage.getItem('userInfo');
+      let cookie_userid = "0"
+      if (userInfo) {
+          const user = JSON.parse(userInfo);
+          cookie_userid = user.userid;
+      }
+      if(cookie_userid === "0") {
+        redirect(`/login`)
+      }
+    }, []);
 
     let searchResults
 
