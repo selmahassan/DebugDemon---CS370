@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import nodemailer from 'nodemailer';
 
-const SALT_ROUNDS = 10;
+const SALT_ROUNDS = 10; // 
 
 // add a new user to the DB with hashed password
 export const POST = async (req: Request, res: Response) => {
@@ -23,13 +23,21 @@ export const POST = async (req: Request, res: Response) => {
 
         const transporter = nodemailer.createTransport({
             service: 'Gmail',
+            host: 'smtp.gmail.com',
+            port: 587, // or 465 if you're using SSL
+            secure: false,
             auth: {
                 user: process.env.EMAIL_USERNAME,
                 pass: process.env.EMAIL_PASSWORD,
             },
         });
         // Email user a verification link
-        const verificationLink = `https://${req.headers.get('host')}/login?token=${verificationToken}`;
+        // Determine if the environment is production
+        const isProduction = process.env.NODE_ENV === 'production';
+        // Use HTTPS in production or HTTP in development
+        const protocol = isProduction ? 'https' : 'http';
+        // Construct the verification link
+        const verificationLink = `${protocol}://${req.headers.get('host')}/api/verify?token=${verificationToken}`;
         const mailOptions = {
             from: 'SwooperMarket@gmail.com',
             to: email,
