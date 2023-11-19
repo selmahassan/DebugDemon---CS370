@@ -21,13 +21,16 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import StickyAlert from '@/components/StickyAlert';
 
 export default function Login() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const isSuccess = searchParams.get('isSuccess')
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const isSuccess = searchParams.get('isSuccess');
+  const isVerifySuccess = searchParams.get('isVerifySuccess');
+  const isPasswordResetSuccess = searchParams.get('isPasswordResetSuccess');
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
+  const [successMessage, setSuccessMessage] = React.useState('');
   const [errorMessage, setErrorMessage] = React.useState('');
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -38,6 +41,15 @@ export default function Login() {
   useEffect(() => {
     if (isSuccess === 'true') {
       setOpenSuccess(true);
+      setSuccessMessage("Account signup successful! Please check your email to sign in.");
+    }
+    if(isVerifySuccess === 'true'){
+      setOpenSuccess(true);
+      setSuccessMessage("Account verification successful! Please sign in.");
+    }
+    if(isPasswordResetSuccess == 'true'){
+      setOpenSuccess(true);
+      setSuccessMessage("Password reset successful! Please sign in with your new password.");
     }
   }, [isSuccess]);
 
@@ -136,7 +148,7 @@ export default function Login() {
           }}
         >
           <StickyAlert
-            successMessage="Account signup successful! Please check your email to sign in."
+            successMessage={successMessage}
             errorMessage={errorMessage}
             openSuccess={openSuccess}
             setOpenSuccess={setOpenSuccess}

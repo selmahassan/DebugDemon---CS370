@@ -28,7 +28,7 @@ export const GET = async (req: Request, res: Response) => {
 
         if (result.rows.length > 0) {
             // Redirect to the login page using the full absolute URL
-            const loginUrl = `${baseUrl}/login`;
+            const loginUrl = `${baseUrl}/login?isVerifySuccess=true`;
             return NextResponse.redirect(loginUrl);
         } else {
             return NextResponse.json({ message: "Invalid or expired token." }, { status: 404 });

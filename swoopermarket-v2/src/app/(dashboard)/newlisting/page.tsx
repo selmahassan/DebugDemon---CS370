@@ -112,7 +112,6 @@ export default function StarredPage() {
 
       if (response.status === 200 || response.status === 201) {
         // Handle success
-        setOpenSuccess(true);
         setOpenError(false);
         router.push('/profile/' + userid + '?isSuccessNewListing=true'); // Redirect to the listing page
       } else {
