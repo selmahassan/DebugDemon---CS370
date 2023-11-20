@@ -1,4 +1,4 @@
-export interface Comment {
+export type Comment = {
     parentId?: string, // comment only has this if reply comment
     id: string,
     username: string,
