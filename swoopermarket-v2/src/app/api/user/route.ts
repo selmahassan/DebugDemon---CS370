@@ -57,7 +57,7 @@ export const POST = async (req: Request, res: Response) => {
             from: '"SwooperMarket"',
             to: email,
             subject: 'Verify Your Email',
-            text: `Hello ${firstName},\nYour SwooperMarket Journey awaits!\nPlease click on the following link to verify your email: ${verificationLink}`,
+            text: `Hello ${first_name},\nYour SwooperMarket Journey awaits!\nPlease click on the following link to verify your email: ${verificationLink}`,
         };
 
         await new Promise((resolve, reject) => {
