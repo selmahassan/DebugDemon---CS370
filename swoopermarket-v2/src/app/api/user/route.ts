@@ -32,18 +32,18 @@ export const POST = async (req: Request, res: Response) => {
             },
         });
 
-        await new Promise((resolve, reject) => {
-            // verify connection configuration
-            transporter.verify(function (error, success) {
-                if (error) {
-                    console.log(error);
-                    reject(error);
-                } else {
-                    console.log("Server is ready to take our messages");
-                    resolve(success);
-                }
-            });
-        });
+        // await new Promise((resolve, reject) => {
+        //     // verify connection configuration
+        //     transporter.verify(function (error, success) {
+        //         if (error) {
+        //             console.log(error);
+        //             reject(error);
+        //         } else {
+        //             console.log("Server is ready to take our messages");
+        //             resolve(success);
+        //         }
+        //     });
+        // });
 
         await transporter.verify();
         // Email user a verification link
@@ -59,8 +59,6 @@ export const POST = async (req: Request, res: Response) => {
             subject: 'Verify Your Email',
             text: `Hello ${firstName},\nYour SwooperMarket Journey awaits!\nPlease click on the following link to verify your email: ${verificationLink}`,
         };
-
-    await new Promise((resolve, reject) => {
     // send mail
     transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
@@ -72,7 +70,6 @@ export const POST = async (req: Request, res: Response) => {
             return NextResponse.json({ message: "User registered. Please check your email to verify your account." });
             }
     });
-});
         return NextResponse.json({ result }, { status: 201 });
     } catch (error) {
         console.log("Caught error", error);
