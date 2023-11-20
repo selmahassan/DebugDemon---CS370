@@ -72,16 +72,14 @@ async function getComments(id: string) {
       cache: 'no-store'
     });
 
-    const result = await res.json();
-    console.log("reached after res");
     if (!res.ok) {
-      console.log('Failed to fetch comments1')
+      console.log('Failed to fetch comments')
       return null
     }
-
+    
     return res.json()
   } catch(error) {
-    console.log('Failed to fetch comments2')
+    console.log('Failed to fetch comments')
     return null
   }
 }
@@ -109,12 +107,12 @@ export default async function SingleItem({ params }: { params: { slug: string } 
 
   // fetch comments
   const resCom = await getComments(slug);
-  let comment: Comment | null
+  console.log(resCom)
+  let comment: Comment[] | null
   if(resCom === null){
     comment = null
   } else {
-    comment = resCom.comments[0];
-    // console.log(resCom);
+    comment = resCom.comments;
   }
 
   // Hard coded some variables
@@ -184,7 +182,7 @@ export default async function SingleItem({ params }: { params: { slug: string } 
             </Grid>
           </Grid>
           <CommentSection 
-            listingId={slug}
+            comments={comment}
           />
         </Stack>
       </div>

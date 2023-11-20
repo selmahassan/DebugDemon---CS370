@@ -5,9 +5,8 @@ import { NextResponse } from "next/server";
 // fetch comments of specific listing
 export const GET = async (req: Request) => {
     try {
-        const url_id = req.url.split("api/listing/")[1];
+        const url_id = req.url.split("api/comments/")[1];
         let listing_id = parseInt(url_id);
-        console.log("api [id] reached");
 
         const messages =  await sql`SELECT * FROM comments_table WHERE Listing_id = ${listing_id} ORDER BY created_at ASC;`; 
         const comments = messages.rows;

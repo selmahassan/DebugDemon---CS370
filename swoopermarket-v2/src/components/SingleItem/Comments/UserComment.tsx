@@ -10,25 +10,7 @@ import { CommentProps } from '@/types/commentProps';
 import AddComment from './AddComment';
 import DeleteModal from '@/components/DeleteModal';
 
-const UserComment: React.FC<CommentProps> = ({ isReply, parentId, id, username, comment, numOfLikes, time, commentsList, setCommentsList, numOfComments, setNumOfComments }) => {
-    const [isLiked, setIsLiked] = useState(false);
-    const [emptyButtonVisable, setEmptyButtonVisible] = useState("");
-    const [filledButtonVisable, setFilledButtonVisible] = useState("none");
-    const [countLikes, setCountLikes] = useState(numOfLikes ? numOfLikes : 0);
-
-    const handleLike = () => {
-        if(!isLiked) {
-            setCountLikes(countLikes + 1);
-            setIsLiked(true);
-            setEmptyButtonVisible("none");
-            setFilledButtonVisible("");
-        } else {
-            setCountLikes(countLikes - 1);
-            setIsLiked(false);
-            setEmptyButtonVisible("");
-            setFilledButtonVisible("none");
-        }
-    }
+const UserComment: React.FC<CommentProps> = ({ id, username, comment, time, commentsList, setCommentsList, numOfComments, setNumOfComments }) => {
 
     const displayDeleteButton = username == "my_username" ? "" : "none";
 
@@ -38,51 +20,28 @@ const UserComment: React.FC<CommentProps> = ({ isReply, parentId, id, username, 
         setShowDeleteModal(!showDeleteModal);
     };
 
-    // actually deleting comment
-    const handleDelete = () => {
+    // // actually deleting comment
+    // const handleDelete = () => {
+    //     let count = 0;
+    //     commentsList.forEach((comment) => {
+    //         if(comment.id == id){
+    //             comment.replies?.forEach((reply) => {
+    //                 count++;
+    //             })
+    //         }
+    //     });
+    //     setNumOfComments(numOfComments - count - 1);
 
-        if(isReply){
-            setNumOfComments(numOfComments - 1);
+    //     // TODO: when updating to production code w/ database info, ensure that before you delete this parent comment, you must first iterate through all replies and delete each reply 
+    //     const updatedCommentsList = commentsList.filter((item) => {
+    //         return item.id != id
+    //     });
 
-            // find the parent comment from commentsList
-            const updatedCommentsList = commentsList.map((comment) => {
-                if (comment.id === parentId) {
-                    // update the replies array of the parent comment
-                    const updatedReplies = comment.replies?.filter((reply) => reply.id !== id) || [];
-                    return { ...comment, replies: updatedReplies };
-                }
-                return comment;
-            });
-
-            setCommentsList(updatedCommentsList);
-        } else {
-            let count = 0;
-            commentsList.forEach((comment) => {
-                if(comment.id == id){
-                    comment.replies?.forEach((reply) => {
-                        count++;
-                    })
-                }
-            });
-            setNumOfComments(numOfComments - count - 1);
-
-            // TODO: when updating to production code w/ database info, ensure that before you delete this parent comment, you must first iterate through all replies and delete each reply 
-            const updatedCommentsList = commentsList.filter((item) => {
-                return item.id != id
-            });
-    
-            setCommentsList(updatedCommentsList);
-        }
-    }
-
-    const [showReplyField, setShowReplyField] = useState(false);
-
-    const handleReply = () => {
-        setShowReplyField(true);
-    }
+    //     setCommentsList(updatedCommentsList);
+    // }
     
     return (
-        <Stack id={id} direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={2} sx={{ width: '100%' }} paddingLeft={isReply ? 5 : 0}>
+        <Stack id={id} direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={2} sx={{ width: '100%' }}>
             <Avatar src={'src'} sx={{ width: 28, height: 28 }}/>
             <Stack direction="column" sx={{ width: '50%' }}>
                 <Stack direction="row" spacing={1}>
@@ -90,15 +49,8 @@ const UserComment: React.FC<CommentProps> = ({ isReply, parentId, id, username, 
                     <Typography variant="body1" color="initial" sx={{ fontWeight: 'light', color: 'gray' }}>{time}</Typography>
                 </Stack>
                 <Typography variant="body1" color="initial">{comment}</Typography>
-                <Stack direction="row" justifyContent="space-between" alignContent="center">
+                {/* <Stack direction="row" justifyContent="space-between" alignContent="center">
                     <Stack direction="row" alignItems="center">
-                        <Button 
-                            variant="text" 
-                            sx={{borderRadius: 50, width: "fit-content"}}
-                            onClick={handleReply}
-                        >
-                            Reply
-                        </Button>
                         <Button
                             variant="text"
                             sx={{borderRadius: 50, width: "fit-content", color: "gray", display: displayDeleteButton}}
@@ -107,35 +59,15 @@ const UserComment: React.FC<CommentProps> = ({ isReply, parentId, id, username, 
                             Delete
                         </Button>
                     </Stack>
-                    <Stack direction="row" justifyContent="flex-end" alignItems="center">
-                        <IconButton aria-label="empty-like" onClick={handleLike}>
-                            <FavoriteBorderIcon sx={{ display: emptyButtonVisable}} />
-                            <FavoriteIcon sx={{ display: filledButtonVisable, color:"red" }} />
-                        </IconButton>
-                        <Typography variant="body1" color="initial">{countLikes}</Typography>
-                    </Stack>
-                </Stack>
-                {showReplyField && 
-                    <AddComment
-                        parentId={parentId}
-                        repliedId={id}
-                        commentsList={commentsList}
-                        setCommentsList={setCommentsList}
-                        numOfComments={numOfComments}
-                        setNumOfComments={setNumOfComments}
-                        setShowReplyField={setShowReplyField}
-                        isReplyField={true}
-                        isReply={isReply}
-                    />
-                }
+                </Stack> */}
             </Stack>
-            {showDeleteModal &&
+            {/* {showDeleteModal &&
                 <DeleteModal
                     handleDeleteModal={handleDeleteModal}
                     handleDelete={handleDelete}
                     deleteType="comment"
                 />
-            }
+            } */}
         </Stack>
     );
 }
