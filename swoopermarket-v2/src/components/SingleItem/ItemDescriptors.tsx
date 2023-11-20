@@ -31,6 +31,7 @@ export default function ItemDescriptors({ descriptors, listingId, userid, image 
                 seller={descriptors.sellerId}
                 email={descriptors.email}
                 phone={descriptors.phone}
+                userid={descriptors.sellerId}
 
             />
             <Divider light />
