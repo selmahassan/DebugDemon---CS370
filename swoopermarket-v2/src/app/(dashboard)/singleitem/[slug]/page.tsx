@@ -183,6 +183,7 @@ export default async function SingleItem({ params }: { params: { slug: string } 
           </Grid>
           <CommentSection 
             comments={comment}
+            listingid = {slug}
           />
         </Stack>
       </div>

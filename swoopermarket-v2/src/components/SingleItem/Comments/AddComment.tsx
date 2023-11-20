@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import { CommentProps } from '@/types/commentProps';
 
-export default function AddComment ({ commentsList, setCommentsList, numOfComments, setNumOfComments }) {
+export default function AddComment ({ commentsList, setCommentsList, numOfComments, setNumOfComments, listingid}) {
     const [comment, setComment] = useState('');
     const [buttonsVisable, setButtonsVisible] = useState("none");
     const [disabled, setDisabled] = useState(true);
@@ -48,7 +48,7 @@ export default function AddComment ({ commentsList, setCommentsList, numOfCommen
         const newComment = {
             comment_text : comment,
             user_id : userid,
-            listing_id : 66 // TODO: get from cookie
+            listing_id : listingid
         }
         
         fetch('../../api/comments', {
@@ -74,14 +74,13 @@ export default function AddComment ({ commentsList, setCommentsList, numOfCommen
             console.error('There was a problem with the fetch operation:', error);
         });
 
-        // const newComment = {
-        //     id: "" + Math.random(),
-        //     username: "my_username",
-        //     comment: comment,
-        //     time: "Just now",
-        //     replies: [],
-        // }
-        // setCommentsList([newComment, ...commentsList]);
+        let addNewComment = {
+            comment_id: "" + Math.random(),
+            user_id: userid,
+            comment_text: comment,
+            created_at: "Just Now",
+        }
+        setCommentsList([addNewComment, ...commentsList]);
 
         setNumOfComments(numOfComments + 1);
         setComment('');

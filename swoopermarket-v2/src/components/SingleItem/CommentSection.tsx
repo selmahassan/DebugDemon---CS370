@@ -7,7 +7,7 @@ import AddComment from './Comments/AddComment';
 import UserComment from './Comments/UserComment';
 import { Comment } from '@/types/comment';
 
-export default function CommentSection({ comments }: {comments: Comment[] | null}) {   
+export default function CommentSection({ comments, listingid }: {comments: Comment[] | null, listingid: string}) {   
     if (comments === null) {
         return <>Error in Generating Comments</>
     }
@@ -23,6 +23,7 @@ export default function CommentSection({ comments }: {comments: Comment[] | null
                 setCommentsList={setCommentsList}
                 numOfComments={numOfComments}
                 setNumOfComments={setNumOfComments}
+                listingid={listingid}
             />
             {commentsList.map((item) => (
                 <div key={item.comment_id}>
