@@ -118,7 +118,6 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
         
               if (response.status === 200 || response.status === 201) {
                 // Handle success
-                setOpenSuccess(true);
                 setOpenError(false);
                 router.push(`/singleitem/${listing.listing_id}`)
               } else {

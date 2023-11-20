@@ -108,7 +108,6 @@ export default function EditProfileForm({user}: {user: User}) {
 
             if (response.status === 200 || response.status === 201) {
                 // Handle success
-                setOpenSuccess(true);
                 setOpenError(false);
                 router.push(`/profile/${user.userid}`)
               } else {

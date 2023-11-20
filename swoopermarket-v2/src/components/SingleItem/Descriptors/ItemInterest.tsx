@@ -42,7 +42,6 @@ export default function ItemInterest({ listingId, userid, image } : { listingId:
         });
       
         if(response.status == 200 || response.status == 201) {
-            setOpenSuccess(true);
             setOpenError(false);
             router.push('/?isSuccessDelete=true');
         } else {

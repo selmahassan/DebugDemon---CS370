@@ -4,8 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from 'next/link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -23,25 +21,60 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import StickyAlert from '@/components/StickyAlert';
 
 export default function Login() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const isSuccess = searchParams.get('isSuccess');
+  const isVerifySuccess = searchParams.get('isVerifySuccess');
+  const isPasswordResetSuccess = searchParams.get('isPasswordResetSuccess');
+
   const [showPassword, setShowPassword] = React.useState(false);
-  const router = useRouter()
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openError, setOpenError] = useState(false);
+  const [successMessage, setSuccessMessage] = React.useState('');
+  const [errorMessage, setErrorMessage] = React.useState('');
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
 
-  const searchParams = useSearchParams()
-  const search = searchParams.get('isSuccess')
-  const [openSuccess, setOpenSuccess] = useState(false);
-  const [openError, setOpenError] = useState(false);
-  const [errorMessage, setErrorMessage] = React.useState('');
-
   useEffect(() => {
-    if (search === 'true') {
+    if (isSuccess === 'true') {
       setOpenSuccess(true);
+      setSuccessMessage("Account signup successful! Please check your email to sign in.");
     }
-  }, [search]);
+    if(isVerifySuccess === 'true'){
+      setOpenSuccess(true);
+      setSuccessMessage("Account verification successful! Please sign in.");
+    }
+    if(isPasswordResetSuccess == 'true'){
+      setOpenSuccess(true);
+      setSuccessMessage("Password reset successful! Please sign in with your new password.");
+    }
+  }, [isSuccess]);
+
+  const verificationToken = searchParams.get('token')
+  useEffect(() => {
+    const verifyToken = async () => {
+      if (verificationToken) {
+        try {
+          const response = await fetch(`/api/verify?token=${verificationToken}`);
+          if (response.ok) {
+            const data = await response.json();
+            console.log(data.message); // Do something with the response message
+          } else {
+            console.error('Failed to verify token');
+            // Handle unsuccessful verification here
+          }
+        } catch (error) {
+          console.error('Error during token verification:', error);
+          // Handle error cases here
+        }
+      }
+    };
+
+    verifyToken();
+  }, [[verificationToken]])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
@@ -115,7 +148,7 @@ export default function Login() {
           }}
         >
           <StickyAlert
-            successMessage="Account signup successful! Please sign in."
+            successMessage={successMessage}
             errorMessage={errorMessage}
             openSuccess={openSuccess}
             setOpenSuccess={setOpenSuccess}
