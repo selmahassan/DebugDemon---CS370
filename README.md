@@ -26,7 +26,7 @@ This project used the Next.js App Router example project from MUI as a starter t
 2. nextjs-blog: https://nextjs.org/learn/basics/create-nextjs-app
 
 ### database
-**Description:** This directoru contains the ER diagram and SQL commands used to create tables in Vercel Postgres.
+**Description:** This directory contains the ER diagram and SQL commands used to create tables in Vercel Postgres.
 
 ## Presentations
 * 09/18 - Project Proposal: https://docs.google.com/presentation/d/1CN1L5qzbfZ36iasnEfbnyM1ggaoaDLPaq4VrSelETxM/edit?usp=sharing
