@@ -15,7 +15,6 @@ import Box from '@mui/material/Box';
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router'; 
 
 const DRAWER_WIDTH = 240;
 
@@ -23,7 +22,7 @@ export default function NavBar() {
     const [selectedIndex, setSelectedIndex] = useState(1);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [userId, setUserId] = useState("0");
-    
+
     useEffect(() => {
         const userInfo = localStorage.getItem('userInfo');
         if (userInfo) {
@@ -46,22 +45,10 @@ export default function NavBar() {
         setMobileOpen(!mobileOpen);
     };
 
-    const handleLogout = async () => {
-        try {
-          await fetch('/api/logout', { method: 'POST' }); // Call the logout API
-          localStorage.removeItem('userInfo'); // Clear user info from local storage
-        } catch (error) {
-          console.error('Logout failed:', error);
-          // Handle logout failure here (e.g., show an error message)
-        }
-      };
-
-      const handleListItemClick = (index: number) => {
-        if (index === 5) { // Assuming 5 is the id for Logout
-          handleLogout();
-        } else {
-          setSelectedIndex(index);
-        }
+    const handleListItemClick = (
+        index: number,
+      ) => {
+        setSelectedIndex(index);
       };
     
     const drawer = (
