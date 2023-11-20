@@ -7,7 +7,8 @@ import AddComment from './Comments/AddComment';
 import UserComment from './Comments/UserComment';
 import { Comment } from '@/types/comment';
 
-const comments: Comment[] = [
+const comments: Comment[] = 
+[
     {
         id: "1",
         username: "Gru",
@@ -46,7 +47,20 @@ const countComments = () => {
     return count;
 }
 
-export default function CommentSection() {
+export default async function CommentSection({ listingId }: {listingId: string}) {
+
+    // fetch comment section
+    // const res = await getComments(listingId);
+    // let comment: Comment | null
+    // if(res === null) {
+    //     comment = null
+    // } else {
+    //     comment = res.product[0]
+    // }
+
+    // console.log("getcomments: ");
+    // console.log(comment);
+
     const [commentsList, setCommentsList] = useState(comments);
     const [numOfComments, setNumOfComments] = useState(countComments);
 

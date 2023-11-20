@@ -12,6 +12,8 @@ import CommentSection from '@/components/SingleItem/CommentSection';
 import { ItemType } from '@/types/itemType';
 import { Descriptor } from '@/types/itemDescriptor';
 import { Category } from '@/enums/category';
+import { User } from '@/types/user';
+import { Comment } from '@/types/comment'
 
 type PhotoType = {
   id: string;
@@ -39,6 +41,51 @@ async function getSingleListing(id: string) {
   }
 }
 
+async function getUser(id: string) {
+  try {
+    const res = await fetch(process.env.API_URL + 'api/user/' + id, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      cache: 'no-store'
+    });
+    
+    if (!res.ok) {
+      console.log('Failed to fetch user info')
+      return null
+    }
+    return res.json()
+  } catch(error) {
+    console.log('Failed to fetch user info')
+    return null
+  }
+}
+
+async function getComments(id: string) {
+  try {
+    const res = await fetch(process.env.API_URL + 'api/comments/' + id, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      cache: 'no-store'
+    });
+
+    const result = await res.json();
+    console.log("reached after res");
+    if (!res.ok) {
+      console.log('Failed to fetch comments1')
+      return null
+    }
+
+    return res.json()
+  } catch(error) {
+    console.log('Failed to fetch comments2')
+    return null
+  }
+}
+
 export default async function SingleItem({ params }: { params: { slug: string } }) {
   const { slug } = params
   
@@ -50,22 +97,52 @@ export default async function SingleItem({ params }: { params: { slug: string } 
   } else {
     listings = res.product[0]
   }
+  
+  // fetch user
+  let user: User | null
+  if(listings === null){
+    user = null
+  } else {
+    const resUser = await getUser(listings.userid)
+    user = resUser.user[0]
+  }
+
+  // fetch comments
+  const resCom = await getComments(slug);
+  let comment: Comment | null
+  if(resCom === null){
+    comment = null
+  } else {
+    comment = resCom.comments[0];
+    // console.log(resCom);
+  }
 
   // Hard coded some variables
   let descriptions: Descriptor | null
 
   if (listings === null) {
     descriptions = null
-  } else {
+  } else if (user === null) {
     descriptions = {
       listingTitle: listings.product_name,
-      sellerId: "1",
-      email: "email@emory.edu",
+      sellerId: listings.userid,
+      email: "emory@emory.edu",
       phone: "111-1111",
       description: listings.descr,
       price: listings.price,
-      condition: "New",
-      pickup: "Dobbs",
+      condition: listings.condition,
+      pickup: listings.pickup,
+    }
+  } else {
+    descriptions = {
+      listingTitle: listings.product_name,
+      sellerId: user.first_name,
+      email: user.email,
+      phone: user.phone,
+      description: listings.descr,
+      price: listings.price,
+      condition: listings.condition,
+      pickup: listings.pickup
     }
   }
 
@@ -106,7 +183,9 @@ export default async function SingleItem({ params }: { params: { slug: string } 
               />
             </Grid>
           </Grid>
-          <CommentSection/>
+          <CommentSection 
+            listingId={slug}
+          />
         </Stack>
       </div>
     </Box>

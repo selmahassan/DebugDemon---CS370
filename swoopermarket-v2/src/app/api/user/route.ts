@@ -8,7 +8,7 @@ const SALT_ROUNDS = 10; //
 
 // add a new user to the DB with hashed password
 export const POST = async (req: Request, res: Response) => {
-    const { firstName, lastName, email, password, phone } = await req.json();
+    const { first_name, last_name, email, password, phone } = await req.json();
 
     // Hash the password before saving to the database
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
@@ -18,7 +18,7 @@ export const POST = async (req: Request, res: Response) => {
     try {
         const result = await sql`
             INSERT INTO user_table (first_name, last_name, email, pass, phone, verification_token)
-            VALUES (${firstName}, ${lastName}, ${email}, ${hashedPassword}, ${phone}, ${verificationToken});
+            VALUES (${first_name}, ${last_name}, ${email}, ${hashedPassword}, ${phone}, ${verificationToken});
         `;
 
         const transporter = nodemailer.createTransport({
@@ -34,7 +34,7 @@ export const POST = async (req: Request, res: Response) => {
             from: 'SwooperMarket@gmail.com',
             to: email,
             subject: 'Verify Your Email',
-            text: `Hello ${firstName}, 
+            text: `Hello ${first_name}, 
 Your SwooperMarket Journey awaits!
 Please click on the following link to verify your email: ${verificationLink}`, // DO NOT EDIT FORMATING, IT IS THIS WAY FOR THE EMAIL
         };

@@ -1,10 +1,11 @@
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import { CommentProps } from '@/types/commentProps';
+import { redirect } from 'next/navigation';
 
 const AddComment: React.FC<CommentProps> = ({ isReplyField, isReply, parentId, repliedId, commentsList, setCommentsList, numOfComments, setNumOfComments, setShowReplyField }) => {
     const [comment, setComment] = useState('');
@@ -53,18 +54,38 @@ const AddComment: React.FC<CommentProps> = ({ isReplyField, isReply, parentId, r
     const handleReplyCancelClick = () => {
         if(setShowReplyField) setShowReplyField(false);
     }
+    
+    const [userid, setUserid] = useState('');
+
+    useEffect(() => {
+        // Retrieve user info from local storage
+        const userInfo = localStorage.getItem('userInfo');
+        let cookie_userid = "0"
+        if (userInfo) {
+            const user = JSON.parse(userInfo);
+            cookie_userid = user.userid;
+            setUserid(user.userid);
+        }
+        if (cookie_userid === "0") {
+          redirect(`/login`)
+        }
+    }, []);
 
     const handleCommentClick = () => {
 
-        const newComment = {
-            comment_text : comment,
-            user_id : 1, // get from cookie
-            listing_id : 8 // get from cookie
+        if (!userid) {
+            setErrorMessage('No user id found, please log in again');
+            setOpenError(true);
+            return;
         }
 
-        console.log(newComment);
+        const newComment = {
+            comment_text : comment,
+            user_id : userid,
+            listing_id : 71 // TODO: get from cookie
+        }
         
-        fetch('../api/comments', {
+        fetch('../../api/comments', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -159,3 +180,11 @@ const AddComment: React.FC<CommentProps> = ({ isReplyField, isReply, parentId, r
 }
 
 export default AddComment;
+
+function setErrorMessage(arg0: string) {
+    throw new Error('Function not implemented.');
+}
+function setOpenError(arg0: boolean) {
+    throw new Error('Function not implemented.');
+}
+
