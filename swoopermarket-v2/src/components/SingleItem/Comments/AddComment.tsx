@@ -55,43 +55,58 @@ const AddComment: React.FC<CommentProps> = ({ isReplyField, isReply, parentId, r
         if(setShowReplyField) setShowReplyField(false);
     }
     
-    const [userid, setUserid] = useState('');
+    // const [userid, setUserid] = useState('');
 
-    useEffect(() => {
-        // Retrieve user info from local storage
-        const userInfo = localStorage.getItem('userInfo');
-        let cookie_userid = "0"
-        if (userInfo) {
-            const user = JSON.parse(userInfo);
-            cookie_userid = user.userid;
-            setUserid(user.userid);
-        }
-        if (cookie_userid === "0") {
-          redirect(`/login`)
-        }
-    }, []);
+    // useEffect(() => {
+    //     // Retrieve user info from local storage
+    //     const userInfo = localStorage.getItem('userInfo');
+    //     let cookie_userid = "0"
+    //     if (userInfo) {
+    //         const user = JSON.parse(userInfo);
+    //         cookie_userid = user.userid;
+    //         setUserid(user.userid);
+    //     }
+    //     if (cookie_userid === "0") {
+    //       redirect(`/login`)
+    //     }
+    // }, []);
 
     const handleCommentClick = () => {
 
-        if (!userid) {
-            setErrorMessage('No user id found, please log in again');
-            setOpenError(true);
-            return;
-        }
+        // if (!userid) {
+        //     setErrorMessage('No user id found, please log in again');
+        //     setOpenError(true);
+        //     return;
+        // }
 
         const newComment = {
             comment_text : comment,
-            user_id : userid,
-            listing_id : 71 // TODO: get from cookie
+            user_id : 1,
+            listing_id : 66 // TODO: get from cookie
         }
         
         fetch('../../api/comments', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(newComment)
-          });
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Handle the response data
+            // Update the state with the new comment
+            // You can refactor the logic below to update your state based on the response
+        })
+        .catch(error => {
+            // Handle any errors here
+            console.error('There was a problem with the fetch operation:', error);
+        });
 
         if(isReplyField){ // add reply comment
             const newReplyComment = {
