@@ -13,7 +13,7 @@ if (!JWT_SECRET_KEY) {
 }
 
 export const POST = async (req: Request, res: Response) => {
-    const { userid, email, pass, first_name, last_name, phone, bio } = await req.json();
+    const { userid, email, pass, first_name, last_name, phone, bio, verified } = await req.json();
 
     try {
         // Fetch the user from the database
@@ -25,7 +25,11 @@ export const POST = async (req: Request, res: Response) => {
         }
 
         const user = result.rows[0];
-
+      
+        if (!user.verified) {
+            // User's email is not verified, return an error message
+            return NextResponse.json({ message: "Please verify email first. You may need to check spam folder" }, { status: 403 });
+        }
         // Compare the hashed password
         const passwordMatch = await bcrypt.compare(pass, user.pass);
         if (!passwordMatch) {
