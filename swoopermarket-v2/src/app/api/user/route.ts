@@ -59,17 +59,19 @@ export const POST = async (req: Request, res: Response) => {
             subject: 'Verify Your Email',
             text: `Hello ${firstName},\nYour SwooperMarket Journey awaits!\nPlease click on the following link to verify your email: ${verificationLink}`,
         };
-    // send mail
-    transporter.sendMail(mailOptions, (err, info) => {
-        if (err) {
-            console.error(err);
-            return NextResponse.json({ message: "Error sending email." }, { status: 500 });
-            } 
-        else {
-            console.log('Verification email sent:', info.response);
-            return NextResponse.json({ message: "User registered. Please check your email to verify your account." });
-            }
-    });
+
+        await new Promise((resolve, reject) => {
+            // send mail
+            transporter.sendMail(mailOptions, (err, info) => {
+                if (err) {
+                    console.error(err);
+                    reject(err);
+                } else {
+                    console.log(info);
+                    resolve(info);
+                }
+            });
+        });
         return NextResponse.json({ result }, { status: 201 });
     } catch (error) {
         console.log("Caught error", error);
