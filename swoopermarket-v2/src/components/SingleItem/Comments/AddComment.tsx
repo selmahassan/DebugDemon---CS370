@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState} from 'react';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
@@ -5,13 +7,11 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import { CommentProps } from '@/types/commentProps';
-import { redirect } from 'next/navigation';
 
-const AddComment: React.FC<CommentProps> = ({ isReplyField, isReply, parentId, repliedId, commentsList, setCommentsList, numOfComments, setNumOfComments, setShowReplyField }) => {
+export default function AddComment ({ commentsList, setCommentsList, numOfComments, setNumOfComments }) {
     const [comment, setComment] = useState('');
     const [buttonsVisable, setButtonsVisible] = useState("none");
     const [disabled, setDisabled] = useState(true);
-    const [replyToUsername, setReplyToUsername] = useState("");
     
     const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setComment(event.target.value);
@@ -25,63 +25,29 @@ const AddComment: React.FC<CommentProps> = ({ isReplyField, isReply, parentId, r
 
     const handleFormClick = () => {
         setButtonsVisible("");
-
-        let parentUsername = ""
-        if(isReply){ // if comment user is replying to is also a reply
-            const parentComment = commentsList.find((comment) => comment.id === parentId);
-            if (parentComment) {
-                const reply = parentComment.replies?.find((reply) => reply.id === repliedId);
-                if (reply) {
-                    parentUsername = reply.username;
-                }
-            }
-        } else { // if comment user is replying to is a parent comment, don't @ parent username
-            const parentComment = commentsList.find((comment) => comment.id === repliedId);
-            if (parentComment) {
-                parentUsername = parentComment.username;
-            }
-        }
-        
-        setReplyToUsername(parentUsername)
     }
 
     const handleCancelClick = () => {
         setButtonsVisible("none");
         setComment('');
-        if(setShowReplyField) setShowReplyField(false);
-    }
-
-    const handleReplyCancelClick = () => {
-        if(setShowReplyField) setShowReplyField(false);
     }
     
-    // const [userid, setUserid] = useState('');
+    const [userid, setUserid] = useState('');
 
-    // useEffect(() => {
-    //     // Retrieve user info from local storage
-    //     const userInfo = localStorage.getItem('userInfo');
-    //     let cookie_userid = "0"
-    //     if (userInfo) {
-    //         const user = JSON.parse(userInfo);
-    //         cookie_userid = user.userid;
-    //         setUserid(user.userid);
-    //     }
-    //     if (cookie_userid === "0") {
-    //       redirect(`/login`)
-    //     }
-    // }, []);
+    useEffect(() => {
+        // Retrieve user info from local storage
+        const userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            const user = JSON.parse(userInfo);
+            setUserid(user.userid);
+        }
+    }, []);
 
     const handleCommentClick = () => {
 
-        // if (!userid) {
-        //     setErrorMessage('No user id found, please log in again');
-        //     setOpenError(true);
-        //     return;
-        // }
-
         const newComment = {
             comment_text : comment,
-            user_id : 1,
+            user_id : userid,
             listing_id : 66 // TODO: get from cookie
         }
         
@@ -108,45 +74,15 @@ const AddComment: React.FC<CommentProps> = ({ isReplyField, isReply, parentId, r
             console.error('There was a problem with the fetch operation:', error);
         });
 
-        if(isReplyField){ // add reply comment
-            const newReplyComment = {
-                id: "" + Math.random(),
-                username: "my_username",
-                comment: `@${replyToUsername} ${newComment}`,
-                numOfLikes: 0,
-                time: "Just now",
-            }
+        // const newComment = {
+        //     id: "" + Math.random(),
+        //     username: "my_username",
+        //     comment: comment,
+        //     time: "Just now",
+        //     replies: [],
+        // }
+        // setCommentsList([newComment, ...commentsList]);
 
-            // find parent comment from commentsList to append reply to
-            let updatedCommentsList = commentsList.map((comment) => {
-                // if comment user is replying to is also a reply --> use parentId
-                if(isReply && comment.id === parentId) { 
-                    // update replies array of parent comment
-                    const updatedReplies = comment.replies ? [...comment.replies, newReplyComment] : [newReplyComment];
-                    return { ...comment, replies: updatedReplies };
-                // if comment user is replying to is a parent comment --> use repliedId
-                } else if (!isReply && comment.id === repliedId) {
-                    // update replies array of parent comment
-                    const updatedReplies = comment.replies ? [...comment.replies, newReplyComment] : [newReplyComment];
-                    return { ...comment, replies: updatedReplies };
-                }
-                return comment;
-            });
-
-            setCommentsList(updatedCommentsList);
-        } else { // add new parent comment
-            const newComment = {
-                id: "" + Math.random(),
-                username: "my_username",
-                comment: comment,
-                numOfLikes: 0,
-                time: "Just now",
-                replies: [],
-            }
-            setCommentsList([newComment, ...commentsList]);
-        }
-
-        if(setShowReplyField) setShowReplyField(false);
         setNumOfComments(numOfComments + 1);
         setComment('');
         setDisabled(true);
@@ -162,7 +98,7 @@ const AddComment: React.FC<CommentProps> = ({ isReplyField, isReply, parentId, r
                         id="add-comment"
                         name="comment"
                         label=""
-                        placeholder={isReplyField ? "Add reply..." : "Add comment..."}
+                        placeholder={"Add comment..."}
                         value={comment}
                         multiline
                         maxRows={4}
@@ -176,7 +112,7 @@ const AddComment: React.FC<CommentProps> = ({ isReplyField, isReply, parentId, r
                     <Button
                         variant="text"
                         sx={{borderRadius: 50, width: "fit-content"}}
-                        onClick={isReplyField ? handleReplyCancelClick : handleCancelClick}
+                        onClick={handleCancelClick}
                     >
                         Cancel
                     </Button>
@@ -186,15 +122,13 @@ const AddComment: React.FC<CommentProps> = ({ isReplyField, isReply, parentId, r
                         disabled={disabled}
                         onClick={handleCommentClick}
                     >
-                        {isReplyField ? "Reply" : "Comment"}
+                        Comment
                     </Button>
                 </Stack>
             </Stack>
         </Stack>
     );
 }
-
-export default AddComment;
 
 function setErrorMessage(arg0: string) {
     throw new Error('Function not implemented.');

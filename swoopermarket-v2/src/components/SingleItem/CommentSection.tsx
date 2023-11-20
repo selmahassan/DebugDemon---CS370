@@ -7,33 +7,22 @@ import AddComment from './Comments/AddComment';
 import UserComment from './Comments/UserComment';
 import { Comment } from '@/types/comment';
 
-export default async function CommentSection({ comments }: {comments: Comment[] | null}) {   
+export default function CommentSection({ comments }: {comments: Comment[] | null}) {   
     if (comments === null) {
-        return <>Comments Here</>
-    }
-
-    const countComments = () => {
-        let count = 0;
-        comments.map((parentComment) => {
-            count++;
-        })
-    
-        return count;
+        return <>Error in Generating Comments</>
     }
 
     const [commentsList, setCommentsList] = useState(comments);
-    const [numOfComments, setNumOfComments] = useState(countComments);
+    const [numOfComments, setNumOfComments] = useState(comments.length);
 
     return (
         <Stack direction="column" spacing={2} pt={3}>
             <Typography variant="h6" color="initial">{numOfComments} Comments</Typography>
             <AddComment
-                parentId={""}
                 commentsList={commentsList}
                 setCommentsList={setCommentsList}
                 numOfComments={numOfComments}
                 setNumOfComments={setNumOfComments}
-                isReply={false}
             />
             {commentsList.map((item) => (
                 <div key={item.comment_id}>
@@ -46,7 +35,6 @@ export default async function CommentSection({ comments }: {comments: Comment[] 
                         setCommentsList={setCommentsList}
                         numOfComments={numOfComments}
                         setNumOfComments={setNumOfComments}
-                        isReply={false}
                     />
                 </div>
             ))}

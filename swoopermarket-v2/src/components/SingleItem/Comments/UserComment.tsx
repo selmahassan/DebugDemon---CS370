@@ -10,7 +10,7 @@ import { CommentProps } from '@/types/commentProps';
 import AddComment from './AddComment';
 import DeleteModal from '@/components/DeleteModal';
 
-const UserComment: React.FC<CommentProps> = ({ id, username, comment, time, commentsList, setCommentsList, numOfComments, setNumOfComments }) => {
+const UserComment: React.FC<CommentProps> = ({ id, username, comment, time }) => {
 
     const displayDeleteButton = username == "my_username" ? "" : "none";
 
