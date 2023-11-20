@@ -1,6 +1,5 @@
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { Condition } from '@/enums/condition';
 
 export default function ItemBody({ description, price, condition, pickup } : { description: string; price: number; condition: string; pickup: string }) {
     let item_condition = "none"
