@@ -39,6 +39,9 @@ export default function Listings({listings}: {listings:Array<any> | null}) {
       searchResults = []
     } else {
       searchResults = listings
+          .filter((item) => {
+            return item.sold === false;
+          })
         .filter((item) => {
             if (searchQuery) {
               return item.product_name.toLowerCase().includes(searchQuery.toLowerCase());
