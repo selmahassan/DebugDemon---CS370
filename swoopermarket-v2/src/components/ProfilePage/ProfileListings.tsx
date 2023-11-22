@@ -28,12 +28,20 @@ export default function ProfileListings({listings, user_info} : {listings: Array
             setLoggedIn(false)
         }
     }, []);
+
+    let openListings = listings.filter((item) => {
+      return item.sold === false;
+    })
+
+    let soldListings = listings.filter((item) => {
+        return item.sold === true;
+    })
     
     return (
         <>
             <Stack direction="row" spacing={2}>
                 <Typography sx={{ color: "#0033a0", padding: "5px 0px" }}>
-                    Results ({listings.length})
+                    Open Listings ({openListings.length})
                 </Typography>
                 {
                     loggedIn ?
@@ -43,13 +51,24 @@ export default function ProfileListings({listings, user_info} : {listings: Array
                 }
             </Stack>  
             <Grid id="personal listings" alignItems="center" container rowSpacing={3} columnSpacing={3} >
-                {listings.map((item: ItemType) => (
+                {openListings.map((item: ItemType) => (
                     <Grid key={item.listing_id} xs={12} sm={4} md={4}>
                         <ListingCard item={item}/>
                     </Grid>
                 ))}
             </Grid>
-            
+            <Stack direction="row" spacing={2}>
+                <Typography sx={{ color: "#0033a0", padding: "15px 0px",}}>
+                    Sold Listings ({listings.length})
+                </Typography>
+            </Stack>
+            <Grid id="personal listings" alignItems="center" container rowSpacing={3} columnSpacing={3} >
+                {soldListings.map((item: ItemType) => (
+                    <Grid key={item.listing_id} xs={12} sm={4} md={4}>
+                        <ListingCard item={item}/>
+                    </Grid>
+                ))}
+            </Grid>
         </>
     );
 }
