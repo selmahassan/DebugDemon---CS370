@@ -20,6 +20,9 @@ This project used the Next.js App Router example project from MUI as a starter t
 6. Run `npm run dev` to start a local server and follow the prompts to view the code running in a browser.
 7. See the installation.md file in the /docs directory for more detailed instructions. 
 
+### docs
+**Description** This directory contains the technical and user documentation for our SwooperMarket project. Check the docs/table-of-contents.md file for the description of each file within this directory.
+
 ### tutorials
 **Description:** This directory contains the code used to follow along with various tutorials. 
 1. react-tic-tac-toe: https://react.dev/learn/tutorial-tic-tac-toe
