@@ -35,6 +35,7 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
         condition: listing?.condition,
         price: listing?.price,
         pickup: listing?.pickup,
+        status: listing.sold ? "sold" : "available",
     });
 
     useEffect(() => {
@@ -74,7 +75,6 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
         }
     }
 
-    // TODO: replace API stuff with edit
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -94,6 +94,14 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
         let image = data.get('image')
         const image_url = await submitBlob(image as File)
 
+        let status_string = data.get('status');
+        let new_status = listing.sold;
+        if (status_string === "available") {
+            new_status = false;
+        } else {
+            new_status = true;
+        }
+
         const updated_listing: Listing = {
             title: data.get('title') as string,
             description: data.get('description') as string,
@@ -102,7 +110,8 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
             price: Number(data.get('price')),
             pickup: data.get('pickup') as string,
             image: image_url as string,
-            userid: userid
+            userid: userid,
+            sold: new_status,
         };
 
         try {
@@ -274,6 +283,25 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
                     <Typography variant="h6" gutterBottom sx={{mb:-2}}>
                     Item Specifics
                     </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                    id="status"
+                    name="status"
+                    select
+                    required
+                    fullWidth
+                    label="Status"
+                    value={formData.status}
+                    onChange={handleFormChange}
+                    >
+                        <MenuItem key={1} value={"available"}>
+                            Available
+                        </MenuItem>
+                        <MenuItem key={2} value={"sold"}>
+                            Sold
+                        </MenuItem>
+                    </TextField>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <TextField

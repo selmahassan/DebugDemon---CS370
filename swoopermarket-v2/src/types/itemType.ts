@@ -8,4 +8,5 @@ export type ItemType = {
     userid: string;
     condition: string;
     pickup: string;
+    sold: boolean;
 };

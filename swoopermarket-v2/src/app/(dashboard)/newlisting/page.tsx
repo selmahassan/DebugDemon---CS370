@@ -96,7 +96,8 @@ export default function StarredPage() {
       price: Number(data.get('price')),
       pickup: data.get('pickup') as string,
       image: image_url as string,
-      userid: userid
+      userid: userid,
+      sold: false,
     };
 
     try {
