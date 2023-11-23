@@ -56,30 +56,52 @@ Folders and pages here compose the login workflow of the website, which contains
 
 ### api
 
-`/comments/route.ts` - houses the POST functions for a listing’s comment section. Calls to these functions require a `listing_id`.
+`/comments/route.ts` - Houses the POST functions for a listing’s comment section. Calls to these functions require a `listing_id`.
 
-`/comments/[id]route.ts` - houses the GET and DELETE functions for a listing’s comment section. Calls to these functions require a `listing_id`.
+`/comments/[id]route.ts` - Houses the GET and DELETE functions for a listing’s comment section. Calls to these functions require a `listing_id`.
 
-`/forgotpassword/route.ts`- houses the POST and PUT functions for when a user forgets their password. The POST generates a unique password reset token and sends an email to reset the password. The PUT updates the password in the database for that user.
+`/forgotpassword/route.ts`- Houses the POST and PUT functions for when a user forgets their password. The POST generates a unique password reset token and sends an email to reset the password. The PUT updates the password in the database for that user.
 
-`/images/route.ts` - houses the POST and DELETE functions for files in our Vercel Blob store. The POST requires a filename while the DELET requires the URL generated during the POST for that blob.
+`/images/route.ts` - Houses the POST and DELETE functions for files in our Vercel Blob store. The POST requires a filename while the DELET requires the URL generated during the POST for that blob.
 
-`/listing/route.ts` - houses the GET and POST functions for product listings. Calls to these functions do not require a `listing_id`.
+`/listing/route.ts` - Houses the GET and POST functions for product listings. Calls to these functions do not require a `listing_id`.
 
-`/listing/[id]/route.ts` - houses the GET, PUT, and DELETE functions for product listings. The url must contain the `listing_id` after `api/listing/`. These api calls will look up the product listing using the `listing_id` in the database, and will fetch, update, or delete it.
+`/listing/[id]/route.ts` - Houses the GET, PUT, and DELETE functions for product listings. The url must contain the `listing_id` after `api/listing/`. These api calls will look up the product listing using the `listing_id` in the database, and will fetch, update, or delete it.
 
-`/logout/route.ts` - houses the POST functions for logging a user out. This function removes the user information from the cookies and local storage.
+`/logout/route.ts` - Houses the POST functions for logging a user out. This function removes the user information from the cookies and local storage.
 
-`/user/route.ts` - houses the POST function for adding a new user into the database. Calls to these functions will also create a `hashedPassword` for added user security.
+`/user/route.ts` - Houses the POST function for adding a new user into the database. Calls to these functions will also create a `hashedPassword` for added user security.
 
-`/user/[id]/route.ts` - houses the GET, PUT, and DELETE functions for users. The url must have the `user_id` after `api/user/`. These api calls will look up the user using the `user_id` in the database, and will fetch, update, or delete it.
+`/user/[id]/route.ts` - Houses the GET, PUT, and DELETE functions for users. The url must have the `user_id` after `api/user/`. These api calls will look up the user using the `user_id` in the database, and will fetch, update, or delete it.
 
-`/userlistings/[id]/route.ts` - houses the GET functions for a specific user's listings. The url must have the `user_id` after `/userlistings[id]/route.ts`. The GET api call will look up the listings with the specified `user_id` in the database.
+`/userlistings/[id]/route.ts` - Houses the GET functions for a specific user's listings. The url must have the `user_id` after `/userlistings[id]/route.ts`. The GET api call will look up the listings with the specified `user_id` in the database.
 
-`/userlogin/route.ts` - houses the POST and GET functions to check that a specific user exists in our database when logging in.
+`/userlogin/route.ts` - Houses the POST and GET functions to check that a specific user exists in our database when logging in.
 
-`/verify/route.ts` - houses the GET function to verify a user's email after signing up. After a user verifies their email, their verified status is turned to `true` in the database.
+`/verify/route.ts` - Houses the GET function to verify a user's email after signing up. After a user verifies their email, their verified status is turned to `true` in the database.
 
 ## src/components
 
 ## src/enums and src/types
+
+These files define the types for each object.
+
+`enums/category.ts` - Exports the types of categories for a listing and maps it out with the category_ids in the postgres database.
+
+`types/comment.ts` - Exports the types for the values in a Comment object.
+
+`types/commentProps.ts` - Exports the types for the values in a CommentProps object for the props passed to the AddComment and UserComment components.
+
+`types/deleteModalProps.ts` - Exports the types for the values in a DeleteModalProps object for the props passed to the DeleteModal component.
+
+`types/itemDescriptor.ts` - Exports the types for the values in a Descriptor object for a listing.
+
+`types/itemType.ts` - Exports the types for the values in a ItemType object for a single listing.
+
+`types/listing.ts` - Exports the types for the values in a Listing object for a single listing.
+
+`types/stickyAlert.ts` - Exports the types for the values in a StickyAlert object for alerts.
+
+`types/user.ts` - Exports the types for the values in User and Signup_User objects.
+
+`types/userType.ts` - Exports the types for the values in a User object.
