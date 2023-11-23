@@ -8,7 +8,6 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import SearchBar from '@/components/SearchBar';
 import { ItemType } from '@/types/itemType';
 import { Category } from '@/enums/category';
-import RequireLogin from '../ProfilePage/RequireLogin';
 import { redirect } from 'next/navigation'
 
 

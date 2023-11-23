@@ -15,7 +15,6 @@ import Box from '@mui/material/Box';
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router'; 
 
 const DRAWER_WIDTH = 240;
 

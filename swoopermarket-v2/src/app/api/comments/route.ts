@@ -22,26 +22,3 @@ export const POST = async (req: Request, res: Response) => {
         return NextResponse.json({message: "Error", error}, {status: 500});
     }
 };
-
-// fetch comments of specific listing
-export const GET = async (req: Request) => {
-    console.log("reached api");
-    try {
-        const url_id = req.url.split("api/comment/")[1];
-        let listing_id = parseInt(url_id);
-        console.log(listing_id);
-
-        const messages =  await sql`SELECT * FROM comments_table WHERE Listing_id = ${listing_id} ORDER BY created_at ASC;`; 
-        const comments = messages.rows;
-
-        if(comments.length == 0){
-            return NextResponse.json({message: "No Comments: ", comments}, {status: 200});
-        } else {
-            return NextResponse.json({message: "Messages: ", comments}, {status: 200});
-        }
-
-    } catch (error) {
-        return NextResponse.json({message: "Error", error}, {status: 500});
-    }
-
-};
