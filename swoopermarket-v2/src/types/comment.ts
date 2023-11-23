@@ -3,4 +3,5 @@ export type Comment = {
     user_id: string,
     comment_text: string,
     created_at: string,
+    user_name: string
 }

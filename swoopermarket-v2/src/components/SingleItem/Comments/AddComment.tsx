@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import { CommentProps } from '@/types/commentProps';
 
-export default function AddComment ({ commentsList, setCommentsList, numOfComments, setNumOfComments, listingid}) {
+export default function AddComment ({ commentsList, setCommentsList, numOfComments, setNumOfComments, listingid, username} : { commentsList: any, setCommentsList: any, numOfComments: number, setNumOfComments: any, listingid: string, username: string}) {
     const [comment, setComment] = useState('');
     const [buttonsVisable, setButtonsVisible] = useState("none");
     const [disabled, setDisabled] = useState(true);
@@ -43,50 +43,40 @@ export default function AddComment ({ commentsList, setCommentsList, numOfCommen
         }
     }, []);
 
-    const handleCommentClick = () => {
-
+    const handleCommentClick = async () => {
         const newComment = {
-            comment_text : comment,
-            user_id : userid,
-            listing_id : listingid
-        }
-        
-        fetch('../../api/comments', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newComment)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Handle the response data
-            // Update the state with the new comment
-            // You can refactor the logic below to update your state based on the response
-        })
-        .catch(error => {
-            // Handle any errors here
-            console.error('There was a problem with the fetch operation:', error);
-        });
-
-        let addNewComment = {
-            comment_id: "" + Math.random(),
-            user_id: userid,
             comment_text: comment,
-            created_at: "Just Now",
-        }
-        setCommentsList([addNewComment, ...commentsList]);
+            user_id: userid,
+            listing_id: listingid,
+        };
+    
+        // Post the comment to the server
+        try {
+            const response = await fetch('../../api/comments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newComment)
+            });
+    
+            if (response.ok) {
+                const responseData = await response.json();
+                const addedComment = responseData.messages.rows[0];
 
-        setNumOfComments(numOfComments + 1);
+                setCommentsList([addedComment, ...commentsList]);
+                setNumOfComments(numOfComments + 1);
+            } else {
+                console.error('Error updating comments list:', response.statusText);
+            }
+        } catch (error) {            
+            console.error('Error:', error);
+        }
+    
         setComment('');
         setDisabled(true);
         setButtonsVisible("none");
-    }
+    };
 
     return (
         <Stack direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={2} sx={{ width: '100%' }} paddingLeft={0} >

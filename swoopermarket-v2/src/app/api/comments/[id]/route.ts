@@ -8,7 +8,7 @@ export const GET = async (req: Request) => {
         const url_id = req.url.split("api/comments/")[1];
         let listing_id = parseInt(url_id);
 
-        const messages =  await sql`SELECT * FROM comments_table WHERE Listing_id = ${listing_id} ORDER BY created_at ASC;`; 
+        const messages =  await sql`SELECT * FROM comments_table WHERE Listing_id = ${listing_id} ORDER BY created_at DESC;`; 
         const comments = messages.rows;
 
         if(comments.length == 0){
@@ -47,21 +47,27 @@ export const DELETE = async (req: Request, res: Response) => {
     }
 };
 
-// post a new comment into DB
-export const POST = async (req: Request, res: Response) => {
-    const {comment_text, user_id, listing_id} = await req.json();
+// // post a new comment into DB
+// export const POST = async (req: Request, res: Response) => {
+//     const {comment_text, user_id, listing_id} = await req.json();
 
-    let comment = String(comment_text)
-    let userID = Number(user_id)
-    let listingID = Number(listing_id)
+//     let comment = String(comment_text)
+//     let userID = Number(user_id)
+//     let listingID = Number(listing_id)
 
-    try {
-        const messages = await sql`INSERT INTO comments_table (Comment_text, Listing_id, User_id) 
-        VALUES (${comment}, ${listingID}, ${userID});`;
+//     try {
+//         // Assuming 'sql' is your database query function
+//         const users = await sql` SELECT First_name FROM user_table WHERE Userid = ${user_id}`;
+//         console.log("users name");
+//         console.log(users);
+//         // const userName = users[]; // Assuming the first result is the user's name
+
+//         const messages = await sql`INSERT INTO comments_table (Comment_text, Listing_id, User_id) 
+//         VALUES (${comment}, ${listingID}, ${userID});`;
                 
-        return NextResponse.json({ messages }, { status: 200 });
-    } catch (error) {
-        console.log("Caught error")
-        return NextResponse.json({message: "Error", error}, {status: 500});
-    }
-};
+//         return NextResponse.json({ messages }, { status: 200 });
+//     } catch (error) {
+//         console.log("Caught error")
+//         return NextResponse.json({message: "Error", error}, {status: 500});
+//     }
+// };

@@ -7,7 +7,12 @@ import AddComment from './Comments/AddComment';
 import UserComment from './Comments/UserComment';
 import { Comment } from '@/types/comment';
 
-export default function CommentSection({ comments, listingid }: {comments: Comment[] | null, listingid: string}) {   
+function formatDate(isoDateString: string | number | Date) {
+    const date = new Date(isoDateString);
+    return date.toLocaleString(); 
+}
+
+export default function CommentSection({ comments, listingid, username }: {comments: Comment[] | null, listingid: string, username: string}) {   
     if (comments === null) {
         return <>Error in Generating Comments</>
     }
@@ -24,14 +29,15 @@ export default function CommentSection({ comments, listingid }: {comments: Comme
                 numOfComments={numOfComments}
                 setNumOfComments={setNumOfComments}
                 listingid={listingid}
+                username={username}
             />
             {commentsList.map((item) => (
                 <div key={item.comment_id}>
                     <UserComment
                         id={item.comment_id}
-                        username={item.user_id}
+                        username={item.user_name}
                         comment={item.comment_text}
-                        time={item.created_at}
+                        time={formatDate(item.created_at)}
                         commentsList={commentsList}
                         setCommentsList={setCommentsList}
                         numOfComments={numOfComments}
