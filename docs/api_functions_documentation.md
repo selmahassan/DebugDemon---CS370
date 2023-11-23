@@ -6,13 +6,19 @@ API (Application Programming Interface) calls are requests made by one software 
 
 All API functions are found in the `src/app/api` directory.
 
-`/comments/route.ts` - houses the GET, POST, and DELET functions for a listing’s comment section. Calls to these functions require a `listing_id`.
+`/comments/route.ts` - houses the POST functions for a listing’s comment section. Calls to these functions require a `listing_id`.
+
+`/comments/[id]route.ts` - houses the GET and DELETE functions for a listing’s comment section. Calls to these functions require a `listing_id`.
+
+`/forgotpassword/route.ts`- houses the POST and PUT functions for when a user forgets their password. The POST generates a unique password reset token and sends an email to reset the password. The PUT updates the password in the database for that user.
 
 `/images/route.ts` - houses the POST and DELETE functions for files in our Vercel Blob store. The POST requires a filename while the DELET requires the URL generated during the POST for that blob.
 
 `/listing/route.ts` - houses the GET and POST functions for product listings. Calls to these functions do not require a `listing_id`.
 
 `/listing/[id]/route.ts` - houses the GET, PUT, and DELETE functions for product listings. The url must contain the `listing_id` after `api/listing/`. These api calls will look up the product listing using the `listing_id` in the database, and will fetch, update, or delete it.
+
+`/logout/route.ts` - houses the POST functions for logging a user out. This function removes the user information from the cookies and local storage.
 
 `/user/route.ts` - houses the POST function for adding a new user into the database. Calls to these functions will also create a `hashedPassword` for added user security.
 
