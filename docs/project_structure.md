@@ -6,19 +6,55 @@ App Router is unique in how it has its routing built into its file and folder st
 
 ## Top-Level Folders and Files
 
-**public folder**: Contains static assets. `public/images/dooley.jpg` is the default profile image for users.
+**/public**: Contains static assets. `public/images/dooley.jpg` is the default profile image for users. This image is also used as the website's favicon (located at `src/app/favicon.ico`)
 
-**src folder**: The application source folder that contains all pages, components, types, and apis.
+**/src**: The application source folder that contains all pages, components, types, and apis.
 
-**next.config.js file**: Configuration file for Next.js
+**/next.config.js**: Configuration file for Next.js
 
-**package.json file**: Project dependencies and scripts
+**/package.json**: Project dependencies and scripts
 
-**next-env.d.ts file**: TypeScript declaration file for Next.js
+**/next-env.d.ts**: TypeScript declaration file for Next.js
 
-**tsconfig.json file**: Configuration file for TypeScript
+**/tsconfig.json file**: Configuration file for TypeScript
 
 ## src/app
+
+This directory contains all the pages of the website. These pages comply with the Next.js project structure, where each folder defines a new route. Each folder represents a route segment that maps to a URL segment (see [this page](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) on Next.js routes). `layout.tsx` files define the UI for pages in the same directory and child directories, while `page.tsx` files are the UI that is unique to a route. Folders named in parentheses (e.g., (dashboard) and (login) allow for different root layouts without affecting the route segments. Components can either be loaded on server or client side. By default, components are loaded server side unless there is a `'use client'` modifier at the top of the file.
+
+### /(dashboard)
+
+Folders and pages here compose the dashboard of the website, which contains the home page, new listing page, profile page, edit listing and profile pages, and single item page.
+
+**/layout.tsx**: Defines the root layout for dashboard pages. This layout includes the navigation bar (`/src/components/NavBar/NavBar.tsx`).
+
+**/page.tsx**: Defines the home page. This page fetches all listings from the postgres database and sends them to be displayed by the Listings component (`src/components/HomePage/Listings.tsx`)
+
+**/newlisting/page.tsx**: Defines the new listing page for users to create a new listing. After filling out the form and pressing the button to list an item, a POST request will be sent to the postgres database to post the new listing. If successful, the user is rerouted to their profile page.
+
+**/profile/[slug]/page.tsx**: Defines the profile page. The [slug] in the url is a dynamic route and specifies the userid for this profile page. This page fetches a user's info and their listings from the postgres database. The user's info is sent to the ProfileHeader component (`/src/components/ProfilePage/ProfileHeader.tsx`) and the user's listings are sent to the ProfileListing component (`src/components/ProfilePage/ProfileListings.tsx`).
+
+**/singleitem/[slug]/page.tsx**: Defines a single listing. The [slug] in the url is a dynamic route and specifies the listing_id for this listing. This page fetches the specified listing's info, the info of the user that listed the item, and that item's comments from the postgres database. The listing's photos are sent to the ItemPhotos component (`src/components/SingleItem/ItemPhotos.tsx`), the listing and user info are sent to the ItemDescriptors component (`src/components/SingleItem/ItemDescriptors.tsx`), and the comments are sent to the CommentSection component (`src/components/SingleItem/CommentSection.tsx`).
+
+**/editListing/[slug]/page.tsx**: Defines the page to edit a single listing. The [slug] in the url is a dynamic route and specifies the listing_id for this listing. This page fetches the specific listing's info and passes this info to the EditListingForm component (`src/components/EditListing/EditListingForm.tsx`).
+
+**/editProfile/[slug]/page.tsx**: Defines the page to edit a user's profile. The [slug] in the url is a dynamic route and specifies the userid for this profile. This page fetches the specific user info and passes this info to the EditProfileForm component (`src/components/EditProfile/EditProfileForm.tsx`).
+
+### /(login)
+
+Folders and pages here compose the login workflow of the website, which contains the login, forgot password, rest password, and signup pages.
+
+**/layout.tsx**: Defines the root layout for login pages.
+
+**/login/page.tsx**: Defines the login page, which is a client side page. After filling out the username and password fields and clicking Sign In, a POST request will be sent to the postgres database to check if the given user is valid. If the user is valid, then they will be routed to the home page. This page also has buttons that route to the signup and forgot password pages. If a user's info is not saved in their cookies and local storage, then they will be automatically redirected to this page.
+
+**/signup/page.tsx**: Defines the signup page, which is a client side page. After filling out the fields and clicking Sign Up, a POST request is sent to the postgres database to add a new user.
+
+**/forgot-password/page.tsx**: Defines the forgot password page, which is a client side page. After filling out the email field and clicking Reset My Password, a POST request will be sent to the postgres database, and an email will be sent to the user to reset their password.
+
+**/reset-password/page.tsx**: Defines the reset password page, which is a client side page. After filling out the fields for a new password and clicking Reset My Password, a PUT request will be sent to the postgres database to add a new request.
+
+### api
 
 ## src/components
 
