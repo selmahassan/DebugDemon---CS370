@@ -59,7 +59,7 @@ export default function ProfileListings({listings, user_info} : {listings: Array
             </Grid>
             <Stack direction="row" spacing={2}>
                 <Typography sx={{ color: "#0033a0", padding: "15px 0px",}}>
-                    Sold Listings ({listings.length})
+                    Sold Listings ({soldListings.length})
                 </Typography>
             </Stack>
             <Grid id="personal listings" alignItems="center" container rowSpacing={3} columnSpacing={3} >
