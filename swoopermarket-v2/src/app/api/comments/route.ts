@@ -24,3 +24,22 @@ export const POST = async (req: Request, res: Response) => {
     }
 
 };
+
+export const DELETE = async (req: Request, res: Response) => {
+    const {comment_id, user_id} = await req.json();
+    let commentId = Number(comment_id)
+
+    try {
+        const result = await sql`DELETE FROM comments_table WHERE Comment_id = ${commentId} RETURNING *;`; 
+        const deletedComment = result.rows;
+
+        if(deletedComment.length == 0){
+            return NextResponse.json({message: "Comment not found: ", deletedComment}, {status: 200});
+        } else {
+            return NextResponse.json({message: "Comment Deleted: ", deletedComment}, {status: 200});
+        }
+
+    } catch (error) {
+        return NextResponse.json({message: "Error", error}, {status: 500});
+    }
+};

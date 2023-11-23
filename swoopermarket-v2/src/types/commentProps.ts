@@ -1,8 +1,9 @@
 import { Comment } from "./comment"
 
 export type CommentProps = {
-    id?: string,
+    commentid?: string,
     username?: string,
+    userid?: string,
     comment?: string,
     time?: string
     commentsList: Comment[],

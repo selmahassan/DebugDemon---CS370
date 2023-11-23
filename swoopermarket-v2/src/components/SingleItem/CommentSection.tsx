@@ -34,8 +34,9 @@ export default function CommentSection({ comments, listingid, username }: {comme
             {commentsList.map((item) => (
                 <div key={item.comment_id}>
                     <UserComment
-                        id={item.comment_id}
+                        commentid={item.comment_id}
                         username={item.user_name}
+                        userid = {item.user_id}
                         comment={item.comment_text}
                         time={formatDate(item.created_at)}
                         commentsList={commentsList}
