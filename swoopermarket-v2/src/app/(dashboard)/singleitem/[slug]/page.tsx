@@ -130,6 +130,7 @@ export default async function SingleItem({ params }: { params: { slug: string } 
       price: listings.price,
       condition: listings.condition,
       pickup: listings.pickup,
+      sold: listings.sold,
     }
   } else {
     name = user.first_name
@@ -141,7 +142,8 @@ export default async function SingleItem({ params }: { params: { slug: string } 
       description: listings.descr,
       price: listings.price,
       condition: listings.condition,
-      pickup: listings.pickup
+      pickup: listings.pickup,
+      sold: listings.sold,
     }
   }
 

@@ -39,6 +39,9 @@ export default function Listings({listings}: {listings:Array<any> | null}) {
       searchResults = []
     } else {
       searchResults = listings
+          .filter((item) => {
+            return item.sold === false;
+          })
         .filter((item) => {
             if (searchQuery) {
               return item.product_name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -55,14 +58,17 @@ export default function Listings({listings}: {listings:Array<any> | null}) {
             if (conditionOption === 'all') {
               return item;
             }
-            else if (conditionOption === 'new') {
-              return item.condition === "New";
+            else if (conditionOption === 'brand_new') {
+              return item.condition === "brand_new";
             }
-            else if (conditionOption === 'likenew') {
-              return item.condition === "Like New";
+            else if (conditionOption === 'like_new') {
+              return item.condition === "like_new";
             }
-            else if (conditionOption === 'used') {
-              return item.condition === "Used";
+            else if (conditionOption === 'good') {
+              return item.condition === "good";
+            }
+            else if (conditionOption === 'fair') {
+              return item.condition === "fair";
             }
         })
         .filter((item) => {
@@ -175,9 +181,10 @@ export default function Listings({listings}: {listings:Array<any> | null}) {
                     onChange={handleConditionChange}
                     sx={{ color: "#0033a0" }}>
                     <MenuItem value="all">All</MenuItem>
-                    <MenuItem value="new">New</MenuItem>
-                    <MenuItem value="likenew">Like New</MenuItem>
-                    <MenuItem value="used">Used</MenuItem>
+                    <MenuItem value="brand_new">New</MenuItem>
+                    <MenuItem value="like_new">Like New</MenuItem>
+                    <MenuItem value="good">Used</MenuItem>
+                    <MenuItem value="fair">Fair</MenuItem>
                 </Select>
             </FormControl>
           </Grid>

@@ -27,6 +27,7 @@ export default function ItemDescriptors({ descriptors, listingId, userid, image 
         descriptors === null ? <></> : 
         <Stack direction="column" spacing={2}>
             <ItemHeader 
+                sold={descriptors.sold}
                 title={descriptors.listingTitle}
                 seller={descriptors.sellerId}
                 email={descriptors.email}
@@ -35,7 +36,7 @@ export default function ItemDescriptors({ descriptors, listingId, userid, image 
 
             />
             <Divider light />
-            <ItemBody 
+            <ItemBody
                 description={descriptors.description}
                 price={descriptors.price}
                 condition={descriptors.condition}

@@ -24,7 +24,7 @@ export const GET = async (req: Request) => {
 
 // edit listing 
 export const PUT = async (req: Request, res: Response) => {
-    const {title, description, category, condition, price, pickup, image} = await req.json();
+    const {title, description, category, condition, price, pickup, image, sold} = await req.json();
     
     try {
         const url_id = req.url.split("api/listing/")[1];
@@ -38,7 +38,8 @@ export const PUT = async (req: Request, res: Response) => {
                 modified_at = NOW(),
                 listing_img = ${image},
                 pickup = ${pickup},
-                condition = ${condition}
+                condition = ${condition},
+                sold = ${sold}
             WHERE listing_id = ${listing_id} 
             RETURNING *;`;
         const product = messages.rows;

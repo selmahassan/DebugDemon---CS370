@@ -20,13 +20,16 @@ This project used the Next.js App Router example project from MUI as a starter t
 6. Run `npm run dev` to start a local server and follow the prompts to view the code running in a browser.
 7. See the installation.md file in the /docs directory for more detailed instructions. 
 
+### docs
+**Description** This directory contains the technical and user documentation for our SwooperMarket project. Check the docs/table-of-contents.md file for the description of each file within this directory.
+
 ### tutorials
 **Description:** This directory contains the code used to follow along with various tutorials. 
 1. react-tic-tac-toe: https://react.dev/learn/tutorial-tic-tac-toe
 2. nextjs-blog: https://nextjs.org/learn/basics/create-nextjs-app
 
 ### database
-**Description:** This directoru contains the ER diagram and SQL commands used to create tables in Vercel Postgres.
+**Description:** This directory contains the ER diagram and SQL commands used to create tables in Vercel Postgres.
 
 ## Presentations
 * 09/18 - Project Proposal: https://docs.google.com/presentation/d/1CN1L5qzbfZ36iasnEfbnyM1ggaoaDLPaq4VrSelETxM/edit?usp=sharing

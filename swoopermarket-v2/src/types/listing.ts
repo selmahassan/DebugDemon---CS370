@@ -5,6 +5,7 @@ export type Listing = {
     condition: string,
     price: number,
     pickup: string,
-    image: string
-    userid: string
+    image: string,
+    userid: string,
+    sold: boolean,
 }
