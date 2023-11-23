@@ -43,7 +43,7 @@ const UserComment: React.FC<CommentProps> = ({ id, username, comment, time }) =>
     return (
         <Stack id={id} direction="row" justifyContent="flex-start" alignItems="flex-start" spacing={2} sx={{ width: '100%' }}>
             <Avatar src={'src'} sx={{ width: 28, height: 28 }}/>
-            <Stack direction="column" sx={{ width: '50%' }}>
+            <Stack direction="column">
                 <Stack direction="row" spacing={1}>
                     <Typography variant="body1" color="initial" sx={{ fontWeight: 'bold' }}>{`@${username}`}</Typography>
                     <Typography variant="body1" color="initial" sx={{ fontWeight: 'light', color: 'gray' }}>{time}</Typography>
