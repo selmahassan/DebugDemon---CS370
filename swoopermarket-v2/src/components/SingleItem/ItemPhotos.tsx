@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+
 import Grid from "@mui/material/Grid";
 
 type PhotoType = {
@@ -24,7 +24,6 @@ export default function ItemPhotos({ photos } : { photos: PhotoType[] }) {
                 <img
                     src={current_photos[0].src}
                     width='100%'
-                    // TODO: fix height
                     height='500px'
                     style={{
                         maxWidth: '100%',

@@ -267,7 +267,6 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
                     <Typography variant="h6" gutterBottom>
                     Upload New Image
                     </Typography>
-                    {/* TODO: option to add multiple images */}
                     <TextField
                     type="file"
                     id="image"

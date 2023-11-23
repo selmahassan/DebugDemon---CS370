@@ -1,5 +1,4 @@
 import { sql } from "@vercel/postgres";
-import { url } from "inspector";
 import { NextResponse } from "next/server";
 
 // fetch comments of specific listing
