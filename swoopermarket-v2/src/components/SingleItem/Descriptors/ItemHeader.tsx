@@ -5,8 +5,6 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Link from 'next/link';
 
-// export default function ItemHeader({ title, seller, email, phone, userid } : { title: string; seller: string, email: string, phone: string, userid:string }) {
-
 export default function ItemHeader({ sold, title, seller, email, phone, userid } : { sold: boolean, title: string; seller: string, email: string, phone: string, userid:string }) {
     let status_text = "Available"
     if (sold) {
