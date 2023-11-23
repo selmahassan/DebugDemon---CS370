@@ -1,5 +1,4 @@
 import { StickyAlert } from "@/types/stickyAlert";
-import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
