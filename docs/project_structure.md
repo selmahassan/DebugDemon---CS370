@@ -82,6 +82,48 @@ Folders and pages here compose the login workflow of the website, which contains
 
 ## src/components
 
+This directory contains React components used throughout the various pages.
+
+`/DeleteModal.tsx` - Defines the Delete modal shown if attempting to delete a listing or a profile.
+
+`/Header.tsx` - Defines the UI of the Header component for the Single Item page.
+
+`/SearchBar.tsx` - Defines the UI of the searchbar in the home page.
+
+`/StickyAlert.tsx` - Defines the UI of success and error alerts in the website.
+
+`/EditListing/EditListingForm.tsx` - Defines the edit listing form for users to edit an existing listing. After filling out the form and pressing the button to update the listing, a PUT request will be sent to the postgres database to update the existing listing. If successful, the user is rerouted to the existing listing. The UI of this form mirrors that of the New Listing page, with a few additional fields in the form.
+
+`/EditProfile/EditProfileForm.tsx` - Defines the edit profile form for users to edit an existing profile. After filling out the form and pressing the button to update the profile, a PUT request will be sent to the postgres database to update the existing profile. If successful, the user is rerouted to the existing profile.
+
+`/HomePage/ListingCard.tsx` - Defines the UI of a single listing card in the home page of the website.
+
+`/HomePage/Listings.tsx` - Defines the searchbar and filter on the home page of the website, as well as calls the ListingCard component to list out all relevant listings.
+
+`/NavBar/NavBar.tsx` - Defines the UI of the Navigation Bar that is called in the layout.tsx of the dashboard.
+
+`/ProfilePage/ProfileHeader.tsx` - Defines the header of the profile page, which includes the profile picture, name, edit profile button (if applicable), email, phone number, and user bio (if applicable).
+
+`/ProfilePage/ProfileListings.tsx` - Calls the ListingCard component to list out all listings for a user. The Available and Sold listings are separated.
+
+`/SingleItem/CommentSection.tsx` - Defines the UI of the comment section in a single listing page, calling the AddComment and UserComment components.
+
+`/SingleItem/ItemDescriptors,tsx` - Defines the UI of the descriptions in a single listing page, calling the ItemHeader, ItemBody, and ItemInterest components.
+
+`/SingleItem/ItemPhotos.tsx` - Defines the UI of the photo in a single listing page.
+
+`/SingleItem/Comments/AddComment.tsx` - Defines the UI of the input section to add a new comment.
+
+`/SingleItem/Comments/UserComment.tsx` - Defines the UI of how comments are displayed.
+
+`/SingleItem/Descriptors/ItemBody.tsx` - Defines the UI of the description, price, condition, and preferred pickup location for a single listing.
+
+`/SingleItem/Descriptors/ItemHeader.tsx` - Defines the UI of the title, status, seller, email, and phone number for a single listing.
+
+`/SingleItem/Descriptors/ItemInterest.tsx` - Defines the UI for the edit, delete, and share buttons on a single listing. If the user presses the delete button, then a DELETE request is sent to the postgres database for that listing.
+
+`/ThemeRegistry/` - Defines the default themes used in the dashboard and login layouts.
+
 ## src/enums and src/types
 
 These files define the types for each object.
