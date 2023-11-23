@@ -31,12 +31,12 @@ async function getSingleListing(id: string) {
     });
     
     if (!res.ok) {
-      console.log('Failed to fetch single item data')
+      // console.log('Failed to fetch single item data')
       return null
     }
     return res.json()
   } catch(error) {
-    console.log('Failed to fetch single item data')
+    // console.log('Failed to fetch single item data')
     return null
   }
 }
@@ -52,12 +52,12 @@ async function getUser(id: string) {
     });
     
     if (!res.ok) {
-      console.log('Failed to fetch user info')
+      // console.log('Failed to fetch user info')
       return null
     }
     return res.json()
   } catch(error) {
-    console.log('Failed to fetch user info')
+    // console.log('Failed to fetch user info')
     return null
   }
 }
@@ -72,23 +72,21 @@ async function getComments(id: string) {
       cache: 'no-store'
     });
 
-    const result = await res.json();
-    console.log("reached after res");
     if (!res.ok) {
-      console.log('Failed to fetch comments1')
+      // console.log('Failed to fetch comments')
       return null
     }
-
+    
     return res.json()
   } catch(error) {
-    console.log('Failed to fetch comments2')
+    // console.log('Failed to fetch comments')
     return null
   }
 }
 
 export default async function SingleItem({ params }: { params: { slug: string } }) {
   const { slug } = params
-  
+  let name : string = ''
   // fetch listing
   const res = await getSingleListing(slug);
   let listings: ItemType | null
@@ -109,12 +107,12 @@ export default async function SingleItem({ params }: { params: { slug: string } 
 
   // fetch comments
   const resCom = await getComments(slug);
-  let comment: Comment | null
+
+  let comment: Comment[] | null
   if(resCom === null){
     comment = null
   } else {
-    comment = resCom.comments[0];
-    // console.log(resCom);
+    comment = resCom.comments;
   }
 
   // Hard coded some variables
@@ -135,6 +133,7 @@ export default async function SingleItem({ params }: { params: { slug: string } 
       sold: listings.sold,
     }
   } else {
+    name = user.first_name
     descriptions = {
       listingTitle: listings.product_name,
       sellerId: user.first_name,
@@ -186,7 +185,9 @@ export default async function SingleItem({ params }: { params: { slug: string } 
             </Grid>
           </Grid>
           <CommentSection 
-            listingId={slug}
+            comments={comment}
+            listingid = {slug}
+            username = {name}
           />
         </Stack>
       </div>

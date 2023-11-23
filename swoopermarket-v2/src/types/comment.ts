@@ -1,9 +1,7 @@
 export type Comment = {
-    parentId?: string, // comment only has this if reply comment
-    id: string,
-    username: string,
-    comment: string,
-    numOfLikes: number,
-    time: string,
-    replies?: Comment[] // comment only has this if parent comment
+    comment_id: string,
+    user_id: string,
+    comment_text: string,
+    created_at: string,
+    user_name: string
 }

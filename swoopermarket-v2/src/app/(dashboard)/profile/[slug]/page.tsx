@@ -54,13 +54,16 @@ export default async function ProfilePage({ params }: { params: { slug: string }
   const user_res = await getUserInfo(slug);
   let user_info;
   if (user_res === null) {
-    redirect(`/login`);
+    console.log("user_res === null")
+    // redirect(`/login`);
   } else {
+    console.log(user_res)
     user_info = user_res.user[0]
   }
 
   if (user_info === undefined) {
-    redirect(`/login`);
+    console.log("in user_info === undefined")
+    // redirect(`/login`);
   }
   
   // fetch user listings

@@ -4,9 +4,8 @@ import { NextResponse } from "next/server";
 // fetch comments of specific listing
 export const GET = async (req: Request) => {
     try {
-        const url_id = req.url.split("api/listing/")[1];
+        const url_id = req.url.split("api/comments/")[1];
         let listing_id = parseInt(url_id);
-        console.log(url_id);
 
         const messages =  await sql`SELECT * FROM comments_table WHERE Listing_id = ${listing_id} ORDER BY created_at ASC;`; 
         const comments = messages.rows;
@@ -43,25 +42,6 @@ export const DELETE = async (req: Request, res: Response) => {
         }
 
     } catch (error) {
-        return NextResponse.json({message: "Error", error}, {status: 500});
-    }
-};
-
-// post a new comment into DB
-export const POST = async (req: Request, res: Response) => {
-    const {comment_text, user_id, listing_id} = await req.json();
-
-    let comment = String(comment_text)
-    let userID = Number(user_id)
-    let listingID = Number(listing_id)
-
-    try {
-        const messages = await sql`INSERT INTO comments_table (Comment_text, Listing_id, User_id) 
-        VALUES (${comment}, ${listingID}, ${userID});`;
-                
-        return NextResponse.json({ messages }, { status: 200 });
-    } catch (error) {
-        console.log("Caught error")
         return NextResponse.json({message: "Error", error}, {status: 500});
     }
 };
