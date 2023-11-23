@@ -7,7 +7,7 @@ export const GET = async (req: Request) => {
         const url_id = req.url.split("api/comments/")[1];
         let listing_id = parseInt(url_id);
 
-        const messages =  await sql`SELECT * FROM comments_table WHERE Listing_id = ${listing_id} ORDER BY created_at ASC;`; 
+        const messages =  await sql`SELECT * FROM comments_table WHERE Listing_id = ${listing_id} ORDER BY created_at DESC;`; 
         const comments = messages.rows;
 
         if(comments.length == 0){
