@@ -56,9 +56,9 @@ Folders and pages here compose the login workflow of the website, which contains
 
 ### api
 
-`/comments/route.ts` - Houses the POST functions for a listing’s comment section. Calls to these functions require a `listing_id`.
+`/comments/route.ts` - Houses the POST and DELETE functions for a listing’s comment section.
 
-`/comments/[id]route.ts` - Houses the GET and DELETE functions for a listing’s comment section. Calls to these functions require a `listing_id`.
+`/comments/[id]route.ts` - Houses the GET function for a listing’s comment section. Calls to these functions require a `listing_id`.
 
 `/forgotpassword/route.ts`- Houses the POST and PUT functions for when a user forgets their password. The POST generates a unique password reset token and sends an email to reset the password. The PUT updates the password in the database for that user.
 
