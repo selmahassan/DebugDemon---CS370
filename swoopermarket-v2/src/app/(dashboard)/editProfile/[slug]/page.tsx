@@ -26,10 +26,11 @@ async function getUser(id: string) {
 export default async function EditProfilePage({ params }: { params: { slug: string } }) {
   const { slug } = params
 
-  // fetch user
+  // fetch user info
   const res = await getUser(slug);
   let user: User
   if(res === null) {
+    // redirect back to profile page for user
     redirect(`/profile/${slug}`)
   } else {
     user = res.user[0]

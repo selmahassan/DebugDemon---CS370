@@ -30,6 +30,7 @@ export default async function EditListingPage({ params }: { params: { slug: stri
   const res = await getSingleListing(slug);
   let listing: ItemType
   if(res === null) {
+    // redirect back to single listing page
     redirect(`/singleitem/${slug}`)
   } else {
     listing = res.product[0]
