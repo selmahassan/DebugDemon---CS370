@@ -25,6 +25,7 @@ async function getListings() {
 }
 
 export default async function HomePage() {
+  // fetch all listings
   const res = await getListings();
   let listings
   if(res === null) {

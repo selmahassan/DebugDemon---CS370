@@ -24,7 +24,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               bgcolor: 'background.default',
               ml: {md: `${DRAWER_WIDTH}px`, lg: `${DRAWER_WIDTH}px`},
               mt: 3,
-              // mt: ['0px', '0px', '-25px'],
               p: 3,
               width: { sm: `calc(100% - ${DRAWER_WIDTH}px)` }
             }}
