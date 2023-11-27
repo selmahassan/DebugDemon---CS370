@@ -93,20 +93,71 @@ const some_component = () => {
 ```
 
 `/StickyAlert.tsx` - Defines the UI of success and error alerts in the website.
+```
+const [openSuccess, setOpenSuccess] = useState(false);
+const [openError, setOpenError] = useState(false);
+
+// depending on the state of the website, use setOpenSuccess() and setOpenError()
+...
+
+<StickyAlert
+  successMessage="You've successfully listed your item on SwooperMarket!"
+  errorMessage="An error has occurred with listing your item on SwooperMarket"
+  openSuccess={openSuccess}
+  setOpenSuccess={setOpenSuccess}
+  openError={openError}
+  setOpenError={setOpenError}
+/>
+```
 
 `/EditListing/EditListingForm.tsx` - Defines the edit listing form for users to edit an existing listing. After filling out the form and pressing the button to update the listing, a PUT request will be sent to the postgres database to update the existing listing. If successful, the user is rerouted to the existing listing. The UI of this form mirrors that of the New Listing page, with a few additional fields in the form.
+```
+<EditListingForm
+  listing={listing} // listing is an ItemType object obtained from the database
+/>
+```
 
 `/EditProfile/EditProfileForm.tsx` - Defines the edit profile form for users to edit an existing profile. After filling out the form and pressing the button to update the profile, a PUT request will be sent to the postgres database to update the existing profile. If successful, the user is rerouted to the existing profile.
+```
+<EditProfileForm
+  user={user} // user is an User object obtained from the database
+/>
+```
 
 `/HomePage/ListingCard.tsx` - Defines the UI of a single listing card in the home page of the website.
+```
+<ListingCard
+  item={item} // item is an ItemType object obtained from the database
+/>
+```
 
 `/HomePage/Listings.tsx` - Defines the searchbar and filter on the home page of the website, as well as calls the ListingCard component to list out all relevant listings.
+```
+<Listings
+  listings={listings} // listings is an array of product listings obtained from the database
+/>
+```
 
 `/NavBar/NavBar.tsx` - Defines the UI of the Navigation Bar that is called in the layout.tsx of the dashboard.
+```
+// there are no props for this component
+<NavBar/>
+```
 
 `/ProfilePage/ProfileHeader.tsx` - Defines the header of the profile page, which includes the profile picture, name, edit profile button (if applicable), email, phone number, and user bio (if applicable).
+```
+<ProfileHeader
+  user_info={user_info} // user_info is an User object obtained from the database
+/>
+```
 
 `/ProfilePage/ProfileListings.tsx` - Calls the ListingCard component to list out all listings for a user. The Available and Sold listings are separated.
+```
+<ProfileListings
+  listings={user_listings} // listings is an array of product listings obtained from the database
+  user_info={user_info} // user_info is an User object obtained from the database
+/>
+```
 
 `/SingleItem/CommentSection.tsx` - Defines the UI of the comment section in a single listing page, calling the AddComment and UserComment components.
 
