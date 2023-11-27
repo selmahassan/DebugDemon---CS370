@@ -1,6 +1,7 @@
 'use client'
 
 import Grid from "@mui/material/Grid";
+import Image from 'next/image';
 
 type PhotoType = {
     id: string;
@@ -21,13 +22,14 @@ export default function ItemPhotos({ photos } : { photos: PhotoType[] }) {
     return (
         <Grid container direction="row">
             <Grid item xs={10}>
-                <img
+                <Image
+                    alt="Listing Image"
                     src={current_photos[0].src}
-                    width='100%'
-                    height='500px'
+                    width={500}
+                    height={500}
                     style={{
                         maxWidth: '100%',
-                        objectFit: 'cover'
+                        objectFit: 'cover',
                     }}
                     loading='lazy'
                 />
