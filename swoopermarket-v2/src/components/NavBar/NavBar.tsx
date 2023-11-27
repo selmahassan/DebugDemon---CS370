@@ -20,9 +20,10 @@ const DRAWER_WIDTH = 240;
 
 export default function NavBar() {
     const [selectedIndex, setSelectedIndex] = useState(1);
-    const [mobileOpen, setMobileOpen] = useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false); // Navbar display when on small screen device
     const [userId, setUserId] = useState("0");
     
+    // Get user info from local storage
     useEffect(() => {
         const userInfo = localStorage.getItem('userInfo');
         if (userInfo) {
@@ -51,7 +52,6 @@ export default function NavBar() {
           localStorage.removeItem('userInfo'); // Clear user info from local storage
         } catch (error) {
           console.error('Logout failed:', error);
-          // Handle logout failure here (e.g., show an error message)
         }
       };
 

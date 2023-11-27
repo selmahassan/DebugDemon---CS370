@@ -29,10 +29,12 @@ export default function ProfileListings({listings, user_info} : {listings: Array
         }
     }, []);
 
+    // All listings still available for user
     let openListings = listings.filter((item) => {
       return item.sold === false;
     })
 
+    // All listings already sold for user
     let soldListings = listings.filter((item) => {
         return item.sold === true;
     })

@@ -10,8 +10,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams} from 'next/navigation';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -38,6 +37,7 @@ export default function Login() {
     event.preventDefault();
   };
 
+  // configure alerts
   useEffect(() => {
     if (isSuccess === 'true') {
       setOpenSuccess(true);
@@ -60,15 +60,12 @@ export default function Login() {
         try {
           const response = await fetch(`/api/verify?token=${verificationToken}`);
           if (response.ok) {
-            const data = await response.json();
-            console.log(data.message); // Do something with the response message
+            console.log('Verification Successful');
           } else {
             console.error('Failed to verify token');
-            // Handle unsuccessful verification here
           }
         } catch (error) {
           console.error('Error during token verification:', error);
-          // Handle error cases here
         }
       }
     };
@@ -76,50 +73,46 @@ export default function Login() {
     verifyToken();
   }, [[verificationToken]])
 
+  // Check valid login on submit
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-  const data = new FormData(event.currentTarget);
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
 
-  const email = data.get('email');
-  const password = data.get('password');
+    const email = data.get('email');
+    const password = data.get('password');
 
-  try {
-    const response = await fetch('/api/userlogin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, pass: password }),
-    });
+    try {
+      const response = await fetch('/api/userlogin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, pass: password }),
+      });
 
-    const result = await response.json();
+      const result = await response.json();
 
-    if (response.status === 200) {
-      // Assuming the response will now include the user data
-      localStorage.setItem('userInfo', JSON.stringify({
-        userid: result.user.userid,
-        first_name: result.user.first_name,
-        last_name: result.user.last_name,
-        email: result.user.email,
-        phone: result.user.phone
+      if (response.status === 200) {
+        localStorage.setItem('userInfo', JSON.stringify({
+          userid: result.user.userid,
+          first_name: result.user.first_name,
+          last_name: result.user.last_name,
+          email: result.user.email,
+          phone: result.user.phone
 
-      }));
-      router.push('/'); // Redirect to the dashboard or appropriate route
-    } else {
-      // If login was not successful, handle accordingly
-      setErrorMessage(result.message || 'Login failed.');
+        }));
+        router.push('/'); // Redirect to the dashboard or appropriate route
+      } else {
+        // If login was not successful, handle accordingly
+        setErrorMessage(result.message || 'Login failed.');
+        setOpenError(true);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setErrorMessage('An error occurred during login. Please try again.');
       setOpenError(true);
     }
-  } catch (error) {
-    console.error('Login error:', error);
-    setErrorMessage('An error occurred during login. Please try again.');
-    setOpenError(true);
-  }
-};
-
-// ...
-
-  
+  };
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>

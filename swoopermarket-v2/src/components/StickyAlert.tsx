@@ -4,6 +4,7 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Collapse from '@mui/material/Collapse';
 
+// UI for alerts
 const StickyAlert: React.FC<StickyAlert> = ({ successMessage, errorMessage, openSuccess, setOpenSuccess, openError, setOpenError }) => {
     const handleAlertClose = () => {
         if(openSuccess)

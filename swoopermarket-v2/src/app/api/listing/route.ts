@@ -13,7 +13,6 @@ export const GET = async (req: Request, res: Response) => {
 
 // post a new listing into DB
 export const POST = async (req: Request, res: Response) => {
-    const { searchParams } = new URL(req.url);
 
     const {userid, title, description, category, condition, price, pickup, image} = await req.json();
 

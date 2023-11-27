@@ -36,7 +36,7 @@ interface errors {
 
 export default function SignUp() {
     const [showPassword, setShowPassword] = React.useState(false); // hide/display password
-    const [showRePassword, setShowRePassword] = React.useState(false); // 
+    const [showRePassword, setShowRePassword] = React.useState(false);
     const [newUserForm, setNewUserForm] = React.useState<NewUserForm>({
         email: "",
         password: "",
@@ -49,6 +49,7 @@ export default function SignUp() {
     })
     const router = useRouter()
 
+    // Check valid email
     const onChangeEmail = (e: { target: { value: string; }; }) => {
         if (!e.target.value.match(".+@emory\.edu")) {
             setErrors({...errors, email: 'email must end in "@emory.edu"'})
@@ -63,6 +64,7 @@ export default function SignUp() {
         event.preventDefault();
     };
 
+    // Check valid password
     const onChangePassword = (e: { target: { value: string; }; }) => {
         setNewUserForm({...newUserForm, password: e.target.value});
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
@@ -78,6 +80,7 @@ export default function SignUp() {
         event.preventDefault();
     };
 
+    // Check passwords match
     const onChangeRePassword = (e: { target: { value: string; }; }) => {
         setNewUserForm({...newUserForm, rePassword: e.target.value});
         if (e.target.value !== newUserForm.password) {
@@ -91,6 +94,7 @@ export default function SignUp() {
     const [openError, setOpenError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     
+    // Post new user signup on submit, and send validation email
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -113,7 +117,6 @@ export default function SignUp() {
             });
     
             if (response.status === 201) {
-                // console.log("gets success status")
                 router.push('/login?isSuccess=true');
             } else if (response.status === 500){
                 setErrorMessage("Account already exists. Please sign in or use another email address.");
@@ -265,7 +268,6 @@ export default function SignUp() {
             </Grid>
             {(errors.rePassword || errors.email) ? 
                 <Button
-                    // type="submit"
                     disabled
                     fullWidth
                     variant="contained"

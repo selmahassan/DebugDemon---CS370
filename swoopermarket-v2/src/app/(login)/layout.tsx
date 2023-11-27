@@ -7,7 +7,7 @@ export const metadata = {
   description: 'SwooperMarket Buy/Sell/Giveaway Project using Next.js App Router + Material UI v5',
 };
 
-/* Creates project skeleton with app header and navigation bar */
+/* Creates project skeleton for login pages */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">

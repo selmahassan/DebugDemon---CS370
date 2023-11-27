@@ -1,7 +1,7 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 
-// fetch comments of specific listing
+// fetch comments for a specific listing
 export const GET = async (req: Request) => {
     try {
         const url_id = req.url.split("api/comments/")[1];

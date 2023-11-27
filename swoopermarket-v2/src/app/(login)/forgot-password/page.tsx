@@ -17,6 +17,7 @@ export default function ForgotPassword() {
   const [openError, setOpenError] = useState(false);
   const [errorMessage, setErrorMessage] = React.useState('');
 
+  // Send password reset email to user
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

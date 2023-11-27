@@ -31,12 +31,10 @@ async function getSingleListing(id: string) {
     });
     
     if (!res.ok) {
-      // console.log('Failed to fetch single item data')
       return null
     }
     return res.json()
   } catch(error) {
-    // console.log('Failed to fetch single item data')
     return null
   }
 }
@@ -52,12 +50,10 @@ async function getUser(id: string) {
     });
     
     if (!res.ok) {
-      // console.log('Failed to fetch user info')
       return null
     }
     return res.json()
   } catch(error) {
-    // console.log('Failed to fetch user info')
     return null
   }
 }
@@ -73,13 +69,11 @@ async function getComments(id: string) {
     });
 
     if (!res.ok) {
-      // console.log('Failed to fetch comments')
       return null
     }
     
     return res.json()
   } catch(error) {
-    // console.log('Failed to fetch comments')
     return null
   }
 }
@@ -115,12 +109,12 @@ export default async function SingleItem({ params }: { params: { slug: string } 
     comment = resCom.comments;
   }
 
-  // Hard coded some variables
   let descriptions: Descriptor | null
 
   if (listings === null) {
     descriptions = null
   } else if (user === null) {
+    // hard code some descriptions if null
     descriptions = {
       listingTitle: listings.product_name,
       sellerId: listings.userid,
@@ -146,7 +140,7 @@ export default async function SingleItem({ params }: { params: { slug: string } 
       sold: listings.sold,
     }
   }
-
+  
   const newPhoto: PhotoType[] = listings?.listing_img
   ? [
       {

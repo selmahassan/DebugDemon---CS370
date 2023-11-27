@@ -28,12 +28,14 @@ export default function Listings({listings}: {listings:Array<any> | null}) {
           cookie_userid = user.userid;
       }
       if(cookie_userid === "0") {
+        // Redirect if user not logged in
         redirect(`/login`)
       }
     }, []);
 
     let searchResults
 
+    // Filter listings based on searchbar and filter
     if(listings === null) {
       searchResults = []
     } else {

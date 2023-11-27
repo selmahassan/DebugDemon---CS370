@@ -47,10 +47,12 @@ export default function StarredPage() {
           setUserid(user.userid);
       }
       if (cookie_userid === "0") {
+        // redirect if user not logged in
         redirect(`/login`)
       }
   }, []);
 
+  // post image file to blob storage
   const submitBlob = async(image: File) => {
     try {
       const response = await fetch(
@@ -68,6 +70,7 @@ export default function StarredPage() {
     }
   }
 
+  // post new listing to postgres database on form submission
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -116,7 +119,7 @@ export default function StarredPage() {
         setOpenError(false);
         router.push('/profile/' + userid + '?isSuccessNewListing=true'); // Redirect to the listing page
       } else {
-        // Handle errors
+        // Handle error status
         setErrorMessage(result.message);
         setOpenError(true);
         setOpenSuccess(false);
@@ -128,6 +131,7 @@ export default function StarredPage() {
     }
   };
 
+  // set formData state
   const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({
@@ -137,6 +141,7 @@ export default function StarredPage() {
     
   };
 
+  // Check for file upload errors
   const onChangeImage = (event: { target: { files?: any; name?: any; value?: any; }; }) => {
     setImage('')
     const file_values = event.target.files[0]
@@ -208,7 +213,6 @@ export default function StarredPage() {
           <Typography
             component="h1"
             variant="h4"
-            // noWrap
             sx={{mb: 2}}
           >
             Create New Listing
@@ -251,7 +255,6 @@ export default function StarredPage() {
                 <Typography variant="h6" gutterBottom>
                   Upload Image
                 </Typography>
-                {/* TODO: option to add multiple images */}
                 <TextField
                   required
                   type="file"

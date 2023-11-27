@@ -3,6 +3,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 
+// UI for search bar on home page
 export default function SearchField({ placeHolderText, onSearch }: { placeHolderText: string; onSearch: (query: string) => void }) {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const query = event.target.value;

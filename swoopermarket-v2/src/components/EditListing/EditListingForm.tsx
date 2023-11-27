@@ -28,6 +28,7 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
     const [userid, setUserid] = useState('0');
     const router = useRouter();
 
+    // set initial form values
     const [formData, setFormData] = useState({
         title: listing?.product_name,
         description: listing?.descr,
@@ -49,6 +50,7 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
         }
 
         if (cookie_userid === "0") {
+            // redirect if user not logged in
             redirect(`/login`)
         }
 
@@ -58,6 +60,7 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
         }
     }, []);
 
+    // Post image file into blob
     const submitBlob = async(image: File) => {
         if (image.name !== '' && image.name !== listing.listing_img) {
             const response = await fetch(
@@ -75,6 +78,7 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
         }
     }
 
+    // Modify listing in database on submit
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -150,10 +154,12 @@ export default function EditListingPage({listing}: {listing: ItemType}) {
         });
     };
 
+    // Route to single item page on cancel
     const handleCancel = () => {
         router.push(`/singleitem/${listing.listing_id}`)
     }
 
+    // Check valid image file
     const onChangeImage = (event: { target: { files?: any; name?: any; value?: any; }; }) => {
         setImage('')
         const file_values = event.target.files[0]
