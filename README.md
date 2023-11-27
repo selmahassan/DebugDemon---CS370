@@ -30,7 +30,7 @@ Visit this Link: [https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/l
 
 ### docs
 
-**Description** This directory contains the technical and user documentation for our SwooperMarket project. Check the docs/table-of-contents.md file for the description of each folder and file within this directory.
+**Description** This directory contains the technical and user documentation for our SwooperMarket project. Check the `docs/table-of-contents.md` file for the description of each folder and file within this directory.
 
 ### tutorials
 
