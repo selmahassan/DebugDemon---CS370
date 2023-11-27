@@ -16,7 +16,7 @@ This project used the Next.js App Router example project from MUI as a starter t
 
 **How to Access the Code in Production**
 
-Visit this Link: [debug-demon-cs-370-git-main-swoopermarket.vercel.app/login](debug-demon-cs-370-git-main-swoopermarket.vercel.app/login)
+Visit this Link: [https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/login](https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/login)
 
 **How to Run the Code Locally**
 
