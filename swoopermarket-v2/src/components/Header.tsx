@@ -2,6 +2,7 @@ import * as React from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
+// Default header component
 export default function Header() {
     return (
         <Grid id="header" container direction="row" justifyContent="space-between" alignItems="center" padding="24px 0px">

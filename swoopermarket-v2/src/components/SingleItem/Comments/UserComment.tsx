@@ -2,12 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import Typography from '@mui/material/Typography';
 import { CommentProps } from '@/types/commentProps';
-import AddComment from './AddComment';
 import DeleteModal from '@/components/DeleteModal';
 
 const UserComment: React.FC<CommentProps> = ({ commentid, username, userid, comment, time, commentsList, setCommentsList, numOfComments, setNumOfComments }) => {
@@ -33,6 +29,7 @@ const UserComment: React.FC<CommentProps> = ({ commentid, username, userid, comm
     const isUserComment = loggedInUserId === userid;
     const displayDeleteButton = loggedInUserId === userid ? "" : "none";
 
+    // Delete comment in database
     const handleDelete = async () => {
     
         if (isUserComment) {

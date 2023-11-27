@@ -19,7 +19,8 @@ export default function ItemDescriptors({ descriptors, listingId, userid, image 
             cookie_userid = user.userid;
         }
         if (cookie_userid === "0") {
-          redirect(`/login`)
+            // Redirect if not logged in
+            redirect(`/login`) 
         }
     }, []);
     

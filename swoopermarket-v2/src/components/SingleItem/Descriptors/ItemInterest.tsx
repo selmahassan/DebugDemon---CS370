@@ -22,6 +22,7 @@ export default function ItemInterest({ listingId, userid, image } : { listingId:
         }
     }, []);
 
+    // Allow route to edit listing page
     const handleEdit = () => {
         router.push(`/editListing/${listingId}`)
     }
@@ -32,6 +33,7 @@ export default function ItemInterest({ listingId, userid, image } : { listingId:
         setShowDeleteModal(!showDeleteModal);
     };
 
+    // Delete listing
     const handleDelete = async() => {
 
         let response = await fetch('../api/listing/' + listingId, {
@@ -53,6 +55,7 @@ export default function ItemInterest({ listingId, userid, image } : { listingId:
     const [openSuccess, setOpenSuccess] = useState(false);
     const [openError, setOpenError] = useState(false);
 
+    // Copy URL link 
     const handleShare = () => {
         navigator.clipboard.writeText(window.location.href);
         setOpenSuccess(true);

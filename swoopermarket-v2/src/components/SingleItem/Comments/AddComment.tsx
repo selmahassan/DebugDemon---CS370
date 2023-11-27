@@ -6,7 +6,6 @@ import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-import { CommentProps } from '@/types/commentProps';
 
 export default function AddComment ({ commentsList, setCommentsList, numOfComments, setNumOfComments, listingid, username} : { commentsList: any, setCommentsList: any, numOfComments: number, setNumOfComments: any, listingid: string, username: string}) {
     const [comment, setComment] = useState('');
@@ -117,12 +116,5 @@ export default function AddComment ({ commentsList, setCommentsList, numOfCommen
             </Stack>
         </Stack>
     );
-}
-
-function setErrorMessage(arg0: string) {
-    throw new Error('Function not implemented.');
-}
-function setOpenError(arg0: boolean) {
-    throw new Error('Function not implemented.');
 }
 
