@@ -10,7 +10,7 @@ You will be prompted to the login screen. In the bottom right below the
 sign-in button, there is a button for you to sign-up if you do not have
 an account. You can click this button to sign up.
 
-![example-1.PNG](swoopermarket-v2/public/images/Screenshot 2023-11-27 at 4.31.52 PM.png)
+![Screenshot](swoopermarket-v2/public/images/Screenshot 2023-11-27 at 4.31.52 PM.png)
 
 <img src="Screenshot 2023-11-27 at 4.31.52 PM.png" width="100%" style="display: block; margin: auto;" />
 
