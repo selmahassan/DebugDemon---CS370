@@ -11,45 +11,28 @@ React.js is a JavaScript library for building user interfaces, primarily used fo
 
 Please refer to the [official React.js website](https://react.dev/) for more information about the advantages of using the language and how the library works.
 
-## Structure of Pages Overview
+## SwooperMarket Pages Overview
 
 The `src/app` directory contains all the pages of the website. These pages comply with the Next.js project structure, where each folder defines a new route. Each folder represents a route segment that maps to a URL segment (see [this page](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) on Next.js routes). `layout.tsx` files define the UI for pages in the same directory and child directories, while `page.tsx` files are the UI that is unique to a route. Folders named in parentheses (e.g., (dashboard) and (login) allow for different root layouts without affecting the route segments. Components can either be loaded on server or client side. By default, components are loaded server side unless there is a `'use client'` modifier at the top of the file.
 
-### /(dashboard)
+More information can be found for the pages under the `project_structure.md` documentation page.
 
-Folders and pages here compose the dashboard of the website, which contains the home page, new listing page, profile page, edit listing and profile pages, and single item page.
+## React.js Components Overview
 
-`/layout.tsx` - Defines the root layout for dashboard pages. This layout includes the navigation bar (`/src/components/NavBar/NavBar.tsx`).
+The `src/components` directory contains React components used throughout the various pages. Components are used extensively due to their **modular and reusable nature**, simplifying the development of complex user interfaces. Components in React encapsulate specific parts of the UI, making code more maintainable, readable, and scalable. They promote a declarative and component-based approach, allowing developers to build UI elements independently and compose them together to create larger, more intricate interfaces. Additionally, React's virtual DOM efficiently updates only the necessary parts of the UI when the underlying data changes, optimizing performance and providing a seamless user experience. 
 
-`/page.tsx` - Defines the home page. This page fetches all listings from the postgres database and sends them to be displayed by the Listings component (`src/components/HomePage/Listings.tsx`)
+As mentioned, components can be loaded on the server or client side, depending on where they're rendered and executed. Components that are client-side have a `'use-client'` line at the top of the file to specify the type. Otherwise, the component is server-side.
 
-`/newlisting/page.tsx` - Defines the new listing page for users to create a new listing. After filling out the form and pressing the button to list an item, a POST request will be sent to the postgres database to post the new listing. If successful, the user is rerouted to their profile page.
-
-`/profile/[slug]/page.tsx` - Defines the profile page. The [slug] in the url is a dynamic route and specifies the userid for this profile page. This page fetches a user's info and their listings from the postgres database. The user's info is sent to the ProfileHeader component (`/src/components/ProfilePage/ProfileHeader.tsx`) and the user's listings are sent to the ProfileListing component (`src/components/ProfilePage/ProfileListings.tsx`).
-
-`/singleitem/[slug]/page.tsx` - Defines a single listing. The [slug] in the url is a dynamic route and specifies the listing_id for this listing. This page fetches the specified listing's info, the info of the user that listed the item, and that item's comments from the postgres database. The listing's photos are sent to the ItemPhotos component (`src/components/SingleItem/ItemPhotos.tsx`), the listing and user info are sent to the ItemDescriptors component (`src/components/SingleItem/ItemDescriptors.tsx`), and the comments are sent to the CommentSection component (`src/components/SingleItem/CommentSection.tsx`).
-
-`/editListing/[slug]/page.tsx` - Defines the page to edit a single listing. The [slug] in the url is a dynamic route and specifies the listing_id for this listing. This page fetches the specific listing's info and passes this info to the EditListingForm component (`src/components/EditListing/EditListingForm.tsx`).
-
-`/editProfile/[slug]/page.tsx` - Defines the page to edit a user's profile. The [slug] in the url is a dynamic route and specifies the userid for this profile. This page fetches the specific user info and passes this info to the EditProfileForm component (`src/components/EditProfile/EditProfileForm.tsx`).
-
-### /(login)
-
-Folders and pages here compose the login workflow of the website, which contains the login, forgot password, rest password, and signup pages.
-
-`/layout.tsx` - Defines the root layout for login pages.
-
-`/login/page.tsx` - Defines the login page, which is a client side page. After filling out the username and password fields and clicking Sign In, a POST request will be sent to the postgres database to check if the given user is valid. If the user is valid, then they will be routed to the home page. This page also has buttons that route to the signup and forgot password pages. If a user's info is not saved in their cookies and local storage, then they will be automatically redirected to this page.
-
-`/signup/page.tsx` - Defines the signup page, which is a client side page. After filling out the fields and clicking Sign Up, a POST request is sent to the postgres database to add a new user.
-
-`/forgot-password/page.tsx` - Defines the forgot password page, which is a client side page. After filling out the email field and clicking Reset My Password, a POST request will be sent to the postgres database, and an email will be sent to the user to reset their password.
-
-`/reset-password/page.tsx` - Defines the reset password page, which is a client side page. After filling out the fields for a new password and clicking Reset My Password, a PUT request will be sent to the postgres database to add a new request.
-
-## Components
-
-The `src/compoments` directory contains React components used throughout the various pages.
+* **Client-Side**:
+  * Execution: Client-side components are executed in the browser. The entire component hierarchy is rendered on the client's device.
+  * Benefits: Improved performance after the initial load due to quicker interactions and reduced server load.
+  * Components that utilize useState must be client-side.
+ 
+* **Server-Side**:
+  * Execution: Server-side components are executed on the server before being sent to the client.
+  * Benefits: Faster initial page load, better SEO as search engines can crawl content easily, and improved performance on devices with limited processing power.
+ 
+## SwooperMarket Components
 
 `/DeleteModal.tsx` - Defines the Delete modal shown if attempting to delete a listing, comment, or a profile.
 ```
@@ -160,19 +143,113 @@ const [openError, setOpenError] = useState(false);
 ```
 
 `/SingleItem/CommentSection.tsx` - Defines the UI of the comment section in a single listing page, calling the AddComment and UserComment components.
+```
+<CommentSection 
+  comments={comment} // comments is an array of Comment objects
+  listingid = {slug} // slug is the product listing ID obtained from the single item page URL
+  username = {name}
+/>
+```
 
 `/SingleItem/ItemDescriptors,tsx` - Defines the UI of the descriptions in a single listing page, calling the ItemHeader, ItemBody, and ItemInterest components.
+```
+<ItemDescriptors
+  descriptors={descriptions} // descriptors is a Descriptor object
+  listingId={slug}
+  userid={listings.userid}
+  image={listings.listing_img} // image is a string
+/>
+```
 
 `/SingleItem/ItemPhotos.tsx` - Defines the UI of the photo in a single listing page.
+```
+<ItemPhotos
+  photos={newPhoto}
+/>
+```
 
 `/SingleItem/Comments/AddComment.tsx` - Defines the UI of the input section to add a new comment.
+```
+const [commentsList, setCommentsList] = useState(comments);
+const [numOfComments, setNumOfComments] = useState(comments.length);
+
+...
+
+<AddComment
+  commentsList={commentsList}
+  setCommentsList={setCommentsList}
+  numOfComments={numOfComments}
+  setNumOfComments={setNumOfComments}
+  listingid={listingid}
+  username={username}
+/>
+```
 
 `/SingleItem/Comments/UserComment.tsx` - Defines the UI of how comments are displayed.
+```
+const [commentsList, setCommentsList] = useState(comments);
+const [numOfComments, setNumOfComments] = useState(comments.length);
+
+...
+
+{commentsList.map((item) => (
+  <div key={item.comment_id}>
+    <UserComment
+      commentid={item.comment_id}
+      username={item.user_name}
+      userid = {item.user_id}
+      comment={item.comment_text}
+      time={formatDate(item.created_at)}
+      commentsList={commentsList}
+      setCommentsList={setCommentsList}
+      numOfComments={numOfComments}
+      setNumOfComments={setNumOfComments}
+    />
+  </div>
+))}
+```
 
 `/SingleItem/Descriptors/ItemBody.tsx` - Defines the UI of the description, price, condition, and preferred pickup location for a single listing.
+```
+<ItemBody
+  description={descriptors.description}
+  price={descriptors.price}
+  condition={descriptors.condition}
+  pickup={descriptors.pickup}
+/>
+```
 
 `/SingleItem/Descriptors/ItemHeader.tsx` - Defines the UI of the title, status, seller, email, and phone number for a single listing.
+```
+<ItemHeader 
+  sold={descriptors.sold}
+  title={descriptors.listingTitle}
+  seller={descriptors.sellerId}
+  email={descriptors.email}
+  phone={descriptors.phone}
+  userid={userid}
+/>
+```
 
 `/SingleItem/Descriptors/ItemInterest.tsx` - Defines the UI for the edit, delete, and share buttons on a single listing. If the user presses the delete button, then a DELETE request is sent to the postgres database for that listing.
+```
+<ItemInterest
+  listingId={listingId}
+  userid={userid}
+  image={image}
+/>
+```
 
 `/ThemeRegistry/` - Defines the default themes used in the dashboard and login layouts.
+```
+<ThemeRegistry>
+  <Box
+    component="main"
+    sx={{
+      bgcolor: 'background.default',
+    }}
+  >
+    {children}
+  </Box>
+</ThemeRegistry>
+```
