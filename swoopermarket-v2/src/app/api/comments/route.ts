@@ -25,8 +25,9 @@ export const POST = async (req: Request, res: Response) => {
 
 };
 
+// Delete specific comment
 export const DELETE = async (req: Request, res: Response) => {
-    const {comment_id, user_id} = await req.json();
+    const {comment_id} = await req.json();
     let commentId = Number(comment_id)
 
     try {

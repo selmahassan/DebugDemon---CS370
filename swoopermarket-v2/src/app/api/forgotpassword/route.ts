@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import nodemailer from 'nodemailer';
 
-const SALT_ROUNDS = 10;
+const SALT_ROUNDS = 10; // Randomization value in hash
 
 // generate unique password reset token and send email to reset password
 export const POST = async (req: Request, res: Response) => {
@@ -30,7 +30,7 @@ export const POST = async (req: Request, res: Response) => {
         const transporter = nodemailer.createTransport({
             service: 'Gmail',
             host: 'smtp.gmail.com',
-            port: 465, // or 465 if you're using SSL
+            port: 465,
             secure: true,
             auth: {
                 user: process.env.EMAIL_USERNAME,

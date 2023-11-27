@@ -1,6 +1,7 @@
 import { serialize } from 'cookie';
 import { NextResponse } from "next/server";
 
+// Logout user
 export const POST = async (req: Request, res: Response) =>  {
     const response = NextResponse.next();
 

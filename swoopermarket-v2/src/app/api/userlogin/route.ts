@@ -3,8 +3,6 @@ import { serialize } from 'cookie';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { NextApiRequest, NextApiResponse } from "next";
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY!; // Ensure this is set in your .env.local file
 
@@ -12,8 +10,9 @@ if (!JWT_SECRET_KEY) {
   throw new Error('JWT_SECRET_KEY is not set');
 }
 
+// Check valid user during login
 export const POST = async (req: Request, res: Response) => {
-    const { userid, email, pass, first_name, last_name, phone, bio, verified } = await req.json();
+    const { email, pass } = await req.json();
 
     try {
         // Fetch the user from the database
@@ -80,9 +79,8 @@ export const POST = async (req: Request, res: Response) => {
     }
 };
 
+// Fetch all users
 export const GET = async (req: Request, res: Response) => {
-    const { userid, first_name, last_name, email, phone } = await req.json();
-
     try {
         const result = await sql`SELECT * FROM user_table`;
         return NextResponse.json({ result }, { status: 201 });

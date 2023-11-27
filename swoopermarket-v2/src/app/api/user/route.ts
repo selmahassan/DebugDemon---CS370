@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import nodemailer from 'nodemailer';
 
-const SALT_ROUNDS = 10; // 
+const SALT_ROUNDS = 10; // Randomization for password hashing
 
 // add a new user to the DB with hashed password
 export const POST = async (req: Request, res: Response) => {
