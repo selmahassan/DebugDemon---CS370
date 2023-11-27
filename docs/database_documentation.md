@@ -48,18 +48,16 @@ CREATE TABLE product_listing (
     descr TEXT,
     category_id VARCHAR,
     FOREIGN KEY (category_id) REFERENCES product_category(category_id),
-    inventory_id INT,
     price FLOAT,
     created_at TIMESTAMP,
     modified_at TIMESTAMP,
-    sold_at TIMESTAMP,
     listing_img VARCHAR,
     pickup VARCHAR,
     condition VARCHAR,
     sold BOOLEAN
 );
 ```
-This table contains product listing information. It includes an auto-generated listing_id number, the userid from the user_table, product name, description, category_id from the product_category table, inventory identification number, price, timestamps for creation, modification, and selling, a URL for the listing image stored in the Vercel Blob, pickup location, condition, and a boolean indicating whether or not the item has been sold.<br /><br />
+This table contains product listing information. It includes an auto-generated listing_id number, the userid from the user_table, product name, description, category_id from the product_category table, price, timestamps for creation and modification, a URL for the listing image stored in the Vercel Blob, pickup location, condition, and a boolean indicating whether or not the item has been sold.<br /><br />
 
 ``` sql
 CREATE TABLE comments_table (
