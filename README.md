@@ -14,6 +14,10 @@ SwooperMarket is an application that allows Emory students, faculty, and staff t
 **Description** This directory contains the main code used in our SwooperMarket project.
 This project used the Next.js App Router example project from MUI as a starter template: https://github.com/mui/material-ui/tree/master/examples/material-ui-nextjs-ts
 
+**How to Access the Code in Production**
+
+Visit this Link: [debug-demon-cs-370-git-main-swoopermarket.vercel.app/login](debug-demon-cs-370-git-main-swoopermarket.vercel.app/login)
+
 **How to Run the Code Locally**
 
 1. Clone directory
