@@ -7,6 +7,12 @@ CS 370-3 Team Debug Demon's Repo
 
 SwooperMarket is an application that allows Emory students, faculty, and staff to list things they are selling in an efficient and clean manner. Rather than looking through hundreds of messages to see if someone is selling something you want just to find out it was already sold, SwooperMarket will provide a organized user interface for buyers and sellers to make and save some money. Technologies/Frameworks used in this project include: TypeScript, React, Next.js, MUI, and Vercel.
 
+Our front-end components are built on React and designed with the MUI component library, leveraging the power of TypeScript for a robust user interface. For the back end, Typescript is our language of choice. These components are combined with Next.js, which is a full-stack React framework that easily handles the tooling and configuration, structure, and optimization for React. The Next.js App Router project structure makes developing frontend pages, and backend API calls seamless. We deployed our project on Vercel, which is a cloud platform that allows developers like us to easily build, deploy, and scale our applications. Our Postgres database and image blob store are also hosted on Vercel, which allows us to store user and listing information while ensuring efficient and scalable data management.
+
+## Promotional Video
+
+[ADD LINK HERE]
+
 ## Directories
 
 ### swoopermarket-v2

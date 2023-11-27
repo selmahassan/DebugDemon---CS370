@@ -1,12 +1,6 @@
-# SwooperMarket Documentation
-
-## Overview
-
-Our front-end components are built on React and designed with the MUI component library, leveraging the power of TypeScript for a robust user interface. For the back end, Typescript is our language of choice. These components are combined with Next.js, which is a full-stack React framework that easily handles the tooling and configuration, structure, and optimization for React. The Next.js App Router project structure makes developing frontend pages, and backend API calls seamless. We deployed our project on Vercel, which is a cloud platform that allows developers like us to easily build, deploy, and scale our applications. Our Postgres database and image blob store are also hosted on Vercel, which allows us to store user and listing information while ensuring efficient and scalable data management.
+# SwooperMarket Documentation Table of Contents
 
 The documentation in this folder outlines all the information needed to interact with the website for both the user and the developer.
-
-## Table of Contents
 
 `/database` - This folder houses the ER Diagram of the initial database structure (ER Diagram.png) and the SQL queries used to create each table (tables.sql)
 
