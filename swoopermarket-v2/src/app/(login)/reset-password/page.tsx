@@ -17,8 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import StickyAlert from '@/components/StickyAlert';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import FormHelperText from '@mui/material/FormHelperText';
-import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 interface NewUserForm {
     password: string;
@@ -56,6 +55,7 @@ export default function ResetPassword() {
       event.preventDefault();
   };
 
+  // Check valid password
   const onChangePassword = (e: { target: { value: string; }; }) => {
       setNewUserForm({...newUserForm, password: e.target.value});
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
@@ -71,6 +71,7 @@ export default function ResetPassword() {
       event.preventDefault();
   };
 
+  // Check passwords match
   const onChangeRePassword = (e: { target: { value: string; }; }) => {
       setNewUserForm({...newUserForm, rePassword: e.target.value});
       if (e.target.value !== newUserForm.password) {
@@ -80,6 +81,7 @@ export default function ResetPassword() {
       }
   };
 
+  // Reset password on submit
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
