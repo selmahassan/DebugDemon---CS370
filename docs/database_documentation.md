@@ -5,18 +5,20 @@ Swoopermarket uses Vercel Postgres, a serverless SQL database designed to integr
 
 ## Vercel Postgres Database
 
-Our database contains the following tables:\
-`CREATE TABLE user_table (\
-  userid SERIAL PRIMARY KEY,\
-  pass TEXT,\
-  first_name VARCHAR(255),\
-  last_name VARCHAR(255),\
-  email TEXT UNIQUE,\
-  phone TEXT,\
-  bio TEXT,\
-  verification_token VARCHAR(128) UNIQUE,\
-  verified BOOLEAN\
-);`\
+Our database contains the following tables:
+``` sql
+CREATE TABLE user_table (
+  userid SERIAL PRIMARY KEY,
+  pass TEXT,
+  first_name VARCHAR(255),
+  last_name VARCHAR(255),
+  email TEXT UNIQUE,
+  phone TEXT,
+  bio TEXT,
+  verification_token VARCHAR(128) UNIQUE,
+  verified BOOLEAN
+);
+```
 
 This table contains user profile information, including a userid (auto-generated using the SERIAL database object generator), password, first and last name, a unique email address, phone number, profile bio, verification token, and a boolean indicating whether or not the user is verified.
 
