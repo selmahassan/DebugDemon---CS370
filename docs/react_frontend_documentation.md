@@ -242,14 +242,9 @@ const [numOfComments, setNumOfComments] = useState(comments.length);
 
 `/ThemeRegistry/` - Defines the default themes used in the dashboard and login layouts.
 ```
-<ThemeRegistry>
-  <Box
-    component="main"
-    sx={{
-      bgcolor: 'background.default',
-    }}
-  >
+<NextAppDirEmotionCacheProvider options={{ key: 'mui' }}>
+  <ThemeProvider theme={theme}>
     {children}
-  </Box>
-</ThemeRegistry>
+  </ThemeProvider>
+</NextAppDirEmotionCacheProvider>
 ```
