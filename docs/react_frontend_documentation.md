@@ -52,10 +52,45 @@ Folders and pages here compose the login workflow of the website, which contains
 The `src/compoments` directory contains React components used throughout the various pages.
 
 `/DeleteModal.tsx` - Defines the Delete modal shown if attempting to delete a listing, comment, or a profile.
+```
+const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+
+const handleDeleteModal = () => {
+  setShowDeleteModal(!showDeleteModal);
+};
+
+// some function to delete listing, comment, or profile from database
+const handleDelete = () => {...}
+
+const some_component = () => {
+  return (
+    <>
+      ...
+      {showDeleteModal &&
+        <DeleteModal
+            handleDeleteModal={handleDeleteModal}
+            handleDelete={handleDelete}
+            deleteType="comment"
+        />
+      }
+    </>
+  )
+}
+```
 
 `/Header.tsx` - Defines the UI of the Header component for the Single Item page.
+```
+// there are no props for this component
+<Header/>
+```
 
 `/SearchBar.tsx` - Defines the UI of the searchbar in the home page.
+```
+<SearchBar
+  placeHolderText="Search SwooperMarket"
+  onSearch={handleSearch} // some function to handle when the user submits their search
+/>
+```
 
 `/StickyAlert.tsx` - Defines the UI of success and error alerts in the website.
 
