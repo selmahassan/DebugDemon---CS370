@@ -9,9 +9,11 @@ React.js is a JavaScript library for building user interfaces, primarily used fo
 * **Virtual DOM**: React utilizes a virtual DOM, a lightweight copy of the actual DOM. When there are changes in the data, React updates the virtual DOM first and then efficiently updates the real DOM, reducing unnecessary re-rendering and improving performance.
 * **JSX**: React uses JSX (JavaScript XML), a syntax extension that allows mixing HTML-like code directly within JavaScript. This enables a more intuitive way to write UI components.
 
-## src/app
+Please refer to the [official React.js website](https://react.dev/) for more information about the advantages of using the language and how the library works.
 
-This directory contains all the pages of the website. These pages comply with the Next.js project structure, where each folder defines a new route. Each folder represents a route segment that maps to a URL segment (see [this page](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) on Next.js routes). `layout.tsx` files define the UI for pages in the same directory and child directories, while `page.tsx` files are the UI that is unique to a route. Folders named in parentheses (e.g., (dashboard) and (login) allow for different root layouts without affecting the route segments. Components can either be loaded on server or client side. By default, components are loaded server side unless there is a `'use client'` modifier at the top of the file.
+## Structure of Pages Overview
+
+The `src/app` directory contains all the pages of the website. These pages comply with the Next.js project structure, where each folder defines a new route. Each folder represents a route segment that maps to a URL segment (see [this page](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) on Next.js routes). `layout.tsx` files define the UI for pages in the same directory and child directories, while `page.tsx` files are the UI that is unique to a route. Folders named in parentheses (e.g., (dashboard) and (login) allow for different root layouts without affecting the route segments. Components can either be loaded on server or client side. By default, components are loaded server side unless there is a `'use client'` modifier at the top of the file.
 
 ### /(dashboard)
 
@@ -45,9 +47,9 @@ Folders and pages here compose the login workflow of the website, which contains
 
 `/reset-password/page.tsx` - Defines the reset password page, which is a client side page. After filling out the fields for a new password and clicking Reset My Password, a PUT request will be sent to the postgres database to add a new request.
 
-## src/components
+## Components
 
-This directory contains React components used throughout the various pages.
+The `src/compoments` directory contains React components used throughout the various pages.
 
 `/DeleteModal.tsx` - Defines the Delete modal shown if attempting to delete a listing, comment, or a profile.
 
