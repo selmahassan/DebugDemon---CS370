@@ -1,3 +1,4 @@
+# Purpose & Reasoning Behind SwooperMarket
 Currently, at Emory University, our undergraduate students have a group chat on the platform known as GroupMe for selling used or second-hand
 items that are no longer wanted. This method is very unorganized. For starters, students will get hundreds of unnecessary notifications
 for items they have no interest in. Everyone in the group chat gets unnecessary back-and-forth messages between random people. 
