@@ -20,9 +20,11 @@ Our front-end components are built on React and designed with the MUI component 
 **Description** This directory contains the main code used in our SwooperMarket project.
 This project used the Next.js App Router example project from MUI as a starter template: https://github.com/mui/material-ui/tree/master/examples/material-ui-nextjs-ts
 
-**How to Access the Code in Production**
+**Visit this link to access SwooperMarket**: [https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/login](https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/login)
 
-Visit this Link: [https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/login](https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/login)
+In the event that the login verification takes a long time to complete, you can visit the website using the following test user information:
+* Username: test.user@emory.edu
+* Password: SwooperMarket123
 
 **How to Run the Code Locally**
 
