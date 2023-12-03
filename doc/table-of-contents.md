@@ -15,3 +15,5 @@ The documentation in this folder outlines all the information needed to interact
 `/react_frontend_documentation.md` - Outlines technical information on the React frontend of the website.
 
 `/user-guide.md` - Outlines end-to-end steps for how a user uses the SwooperMarket website.
+
+`/purpose.md` - Outlines the purpose for creating SwooperMarket.
