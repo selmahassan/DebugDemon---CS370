@@ -11,7 +11,7 @@ Our front-end components are built on React and designed with the MUI component 
 
 ## Promotional Video
 
-[ADD LINK HERE]
+[SwooperMarket Demo Video Link](https://www.youtube.com/watch?v=OlX6z_ugQhw)
 
 ## Directories
 
