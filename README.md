@@ -9,9 +9,18 @@ SwooperMarket is an application that allows Emory students, faculty, and staff t
 
 Our front-end components are built on React and designed with the MUI component library, leveraging the power of TypeScript for a robust user interface. For the back end, Typescript is our language of choice. These components are combined with Next.js, which is a full-stack React framework that easily handles the tooling and configuration, structure, and optimization for React. The Next.js App Router project structure makes developing frontend pages, and backend API calls seamless. We deployed our project on Vercel, which is a cloud platform that allows developers like us to easily build, deploy, and scale our applications. Our Postgres database and image blob store are also hosted on Vercel, which allows us to store user and listing information while ensuring efficient and scalable data management.
 
+## SwooperMarket Website
+**Visit this link to access SwooperMarket**: [https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/login](https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/login)
+
+In the event that the login verification takes a long time to complete, you can visit the website using the following test user information:
+* Username: test.user@emory.edu
+* Password: SwooperMarket123
+
 ## Promotional Video
 
 [SwooperMarket Demo Video Link](https://www.youtube.com/watch?v=OlX6z_ugQhw)
+
+The video goes over the purpose, the technical aspects, and a user demo of the SwooperMarket website. 
 
 ## Directories
 
@@ -19,12 +28,6 @@ Our front-end components are built on React and designed with the MUI component 
 
 **Description** This directory contains the main code used in our SwooperMarket project.
 This project used the Next.js App Router example project from MUI as a starter template: https://github.com/mui/material-ui/tree/master/examples/material-ui-nextjs-ts
-
-**Visit this link to access SwooperMarket**: [https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/login](https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/login)
-
-In the event that the login verification takes a long time to complete, you can visit the website using the following test user information:
-* Username: test.user@emory.edu
-* Password: SwooperMarket123
 
 **How to Run the Code Locally**
 
@@ -51,4 +54,4 @@ In the event that the login verification takes a long time to complete, you can 
 
 - 09/18 - Project Proposal: https://docs.google.com/presentation/d/1CN1L5qzbfZ36iasnEfbnyM1ggaoaDLPaq4VrSelETxM/edit?usp=sharing
 - 09/25 - Sprint Review 1: https://docs.google.com/document/d/1qOvvU3PZ2Gv04pNsHEgQhKdodr8ctFujuvNLRG04Fw4/edit?usp=sharing
-- The remaining sprint reviews were presented using our team JIRA board, which displays tasks and sprint reports (e.g., velocity, sprint burndown charts, etc.)
+- The remaining sprint reviews were presented using a team JIRA board, which displays tasks and sprint reports (e.g., velocity, sprint burndown charts, etc.)
