@@ -10,17 +10,19 @@ SwooperMarket is an application that allows Emory students, faculty, and staff t
 Our front-end components are built on React and designed with the MUI component library, leveraging the power of TypeScript for a robust user interface. For the back end, Typescript is our language of choice. These components are combined with Next.js, which is a full-stack React framework that easily handles the tooling and configuration, structure, and optimization for React. The Next.js App Router project structure makes developing frontend pages, and backend API calls seamless. We deployed our project on Vercel, which is a cloud platform that allows developers like us to easily build, deploy, and scale our applications. Our Postgres database and image blob store are also hosted on Vercel, which allows us to store user and listing information while ensuring efficient and scalable data management.
 
 ## SwooperMarket Website
+
 **Visit this link to access SwooperMarket**: [https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/login](https://debug-demon-cs-370-git-main-swoopermarket.vercel.app/login)
 
 In the event that the login verification takes a long time to complete, you can visit the website using the following test user information:
-* Username: test.user@emory.edu
-* Password: SwooperMarket123
+
+- Username: test.user@emory.edu
+- Password: SwooperMarket123
 
 ## Promotional Video
 
 [SwooperMarket Demo Video Link](https://www.youtube.com/watch?v=OlX6z_ugQhw)
 
-The video goes over the purpose, the technical aspects, and a user demo of the SwooperMarket website. 
+The video goes over the purpose, the technical aspects, and a user demo of the SwooperMarket website.
 
 ## Directories
 
@@ -39,9 +41,9 @@ This project used the Next.js App Router example project from MUI as a starter t
 6. Run `npm run dev` to start a local server and follow the prompts to view the code running in a browser.
 7. See the installation.md file in the /docs directory for more detailed instructions.
 
-### docs
+### doc
 
-**Description** This directory contains the technical and user documentation for our SwooperMarket project. Check the `docs/table-of-contents.md` file for the description of each folder and file within this directory.
+**Description** This directory contains the technical and user documentation for our SwooperMarket project. Check the `doc/table-of-contents.md` file for the description of each folder and file within this directory.
 
 ### tutorials
 
