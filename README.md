@@ -52,8 +52,9 @@ This project used the Next.js App Router example project from MUI as a starter t
 1. react-tic-tac-toe: https://react.dev/learn/tutorial-tic-tac-toe
 2. nextjs-blog: https://nextjs.org/learn/basics/create-nextjs-app
 
-## Presentations
+## Presentations/Notes
 
 - 09/18 - Project Proposal: https://docs.google.com/presentation/d/1CN1L5qzbfZ36iasnEfbnyM1ggaoaDLPaq4VrSelETxM/edit?usp=sharing
+  - SwooperMarket Website Components: https://drive.google.com/file/d/1AqarFtQokeNpkvKHvDcFTvMRkKPZiOA0/view?usp=sharing
 - 09/25 - Sprint Review 1: https://docs.google.com/document/d/1qOvvU3PZ2Gv04pNsHEgQhKdodr8ctFujuvNLRG04Fw4/edit?usp=sharing
 - The remaining sprint reviews were presented using a team JIRA board, which displays tasks and sprint reports (e.g., velocity, sprint burndown charts, etc.)
